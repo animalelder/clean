@@ -10,25 +10,47 @@ export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname(); // Get the current path
 
-  // Function to determine buttons to render based on the current path
+  const routes = {
+    landing: [
+      "/",
+      "/founders-bio",
+      "/about",
+      "/Scholarship",
+      "/Scholarship-Application",
+    ],
+    hideButtons: [
+      "/LogIn",
+      "/SignUp",
+      "/Pricing",
+      "/AnotherPathToHide",
+      "/Dashboard",
+      "/DevLinks",
+      "/Foundation",
+      "/Settings",
+    ], // Add more paths where buttons should be hidden
+    default: [], // You can add more paths that should show the default buttons
+  };
+
   const renderButtons = () => {
-    if (pathname === "/") {
+    // Check if current path is the landing page
+    if (routes.landing.includes(pathname)) {
       return (
-        <>
-          <Link href="/Pricing">
-            <button className="px-4 py-2 bg-white border-2 rounded text-primary-red border-primary-red hover:bg-gray-100 focus:outline-none">
-              Start Your Journey
-            </button>
-          </Link>
-        </>
+        <Link href="/Pricing">
+          <button className="px-4 py-2 bg-white border-2 rounded text-primary-red border-primary-red hover:bg-gray-100 focus:outline-none">
+            Start Your Journey
+          </button>
+        </Link>
       );
-    } else if (pathname === "/Pricing") {
-      return <></>;
     }
-    // Default case for other pages
+
+    // Check if buttons should be hidden on this path
+    if (routes.hideButtons.includes(pathname)) {
+      return null; // Using null instead of empty fragment for clarity
+    }
+
+    // Default buttons for all other paths
     return (
       <>
-        {" "}
         <Link href="/LogIn">
           <button className="px-4 py-2 bg-white border-2 rounded text-primary-red border-primary-red hover:bg-gray-100 focus:outline-none">
             Log In

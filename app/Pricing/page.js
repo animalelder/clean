@@ -80,7 +80,7 @@ const PricingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen py-10 bg-gray-100">
+    <div className="min-h-screen py-10 pt-24 bg-gray-100">
       <div className="max-w-6xl px-4 mx-auto">
         <h1 className="mb-8 text-4xl font-bold text-center text-gray-800">
           Our Pricing Plans
