@@ -15,9 +15,6 @@ export default function Terms() {
         />
       </Head>
       <div className="container max-w-5xl p-6 mx-auto">
-        <div className="flex  flex-row mr-[2vw] items-start  mb-5">
-          <BackButton />
-        </div>
         <Image
           className="z-10 block mx-auto -mt-16 md:mt-16"
           src="/logo.png"
