@@ -1,86 +1,73 @@
-import Image from "next/image";
 import Link from "next/link";
-import { YTButton } from "../common/Footer/SocialButtons";
 import YouTubeVideo from "../common/YouTubeVideoEmbedding";
 
 export function AboutSection() {
   return (
-    <section className="py-16">
+    <section className="py-12 bg-gray-50">
       <div className="container px-4 mx-auto">
-        <div className="flex flex-col items-center gap-12 md:flex-row">
-          {/* Left Column: Video Embed */}
-          <div className="md:w-1/2">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {/* Left Column: Video and Brief Intro */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold md:text-4xl">
+              About 30 Mighty Men Ministries
+            </h2>
+            <p className="text-xl italic md:text-2xl text-primary">
+              30MMM: A Ministry for Men, by Men
+            </p>
             <YouTubeVideo videoId="tXCZLYmgmVc" />
-            <div className="flex items-center mt-8">
-              For more videos please see{" "}
+            <div className="flex items-center text-sm">
+              For more videos, visit our{" "}
               <Link
                 href="//linktr.ee/30mmm"
-                className="ml-2 text-blue-600 underline transition-colors duration-200 hover:text-blue-800"
+                className="ml-2 underline transition-colors duration-200 text-primary hover:text-primary/80"
               >
-                our linktree
+                Linktree
               </Link>
             </div>
           </div>
 
-          {/* Right Column: Content */}
-          <div className="mx-16 md:w-1/2">
-            <h2 className="mb-6 text-3xl font-bold md:text-4xl">
-              About 30 Mighty Men Ministries
-            </h2>
-            <p className="mb-8 text-xl italic md:text-2xl">
-              30MMM: A Ministry for Men, by Men
+          {/* Right Column: Founder's Bio */}
+          <div className="space-y-6">
+            <h3 className="text-2xl font-semibold">Dr. Donovan Anderson</h3>
+            <p className="text-muted-foreground">
+              Founder of 30MMM, Dr. Anderson combines academic excellence with a
+              passion for ministry:
             </p>
-
-            {/* Paragraph 1: Academic Background */}
-            <p className="mb-6 text-lg text-muted-foreground">
-              Founded by Dr. Donovan Anderson, a visionary leader with a
-              distinguished academic and ministerial background, 30MMM exists to
-              guide men toward a life of obedience, purpose, and brotherhood.
-              Dr. Anderson earned his BA in History from Howard University in
-              2004, graduating magna cum laude, followed by an MA in History
-              from Howard University in 2006, also magna cum laude. He further
-              pursued his passion for urban development, earning a PhD in City
-              and Regional Planning from UNC Chapel Hill in 2015.
+            <ul className="space-y-4 text-sm text-muted-foreground">
+              <li>
+                <strong>Education:</strong> BA & MA in History (Howard
+                University), PhD in City and Regional Planning (UNC Chapel
+                Hill), MA from Wesley Theological Seminary
+              </li>
+              <li>
+                <strong>Awards:</strong> Harry Hoosier Spirit Award, Margaret
+                Pittman Award in Urban Ministry
+              </li>
+              <li>
+                <strong>Ministry Experience:</strong> Small group leader at Zion
+                Church, Brothers-in-Discipleship program participant,
+                Deacon-in-Training
+              </li>
+              <li>
+                <strong>Community Engagement:</strong> Fellow at Wesley
+                Theological Seminary, Ministry Incubators Coaching Program
+                participant
+              </li>
+            </ul>
+            <p className="text-muted-foreground">
+              Dr. Anderson founded Thirty Mighty Men Ministries to equip men to
+              grow into the leaders, husbands, and fathers God intended them to
+              be, inspiring and empowering them to live lives of integrity,
+              purpose, and faith.
             </p>
-
-            {/* Paragraph 2: Theological Training and Awards */}
-            <p className="mb-6 text-lg text-muted-foreground">
-              Driven by a calling to ministry, Dr. Anderson completed an MA from
-              Wesley Theological Seminary in 2024 with honors. During his time
-              at Wesley, he was recognized with the Harry Hoosier Spirit Award
-              and the Margaret Pittman Award in Urban Ministry, reflecting his
-              dedication to spiritual growth and community service.
-            </p>
-
-            {/* Paragraph 3: Ministry Experience */}
-            <p className="mb-6 text-lg text-muted-foreground">
-              Dr. Anderson’s journey in ministry is marked by deep commitment
-              and hands-on leadership. He served as a small group leader at Zion
-              Church in Landover for 4.5 years and participated in the
-              Brothers-in-Discipleship program at First Baptist Church of
-              Glenarden for 2 years. He also completed the Deacon-in-Training
-              program at Zion Church, further solidifying his foundation in
-              pastoral care and discipleship.
-            </p>
-
-            {/* Paragraph 4: Community Engagement and Coaching */}
-            <p className="mb-6 text-lg text-muted-foreground">
-              His passion for community engagement was honed as a fellow at
-              Wesley Theological Seminary and through his participation in the
-              Ministry Incubators Coaching Program. These experiences equipped
-              him with the tools to address the unique challenges faced by men
-              in today’s world.
-            </p>
-
-            {/* Paragraph 5: Founding 30MMM */}
-            <p className="mb-6 text-lg text-muted-foreground">
-              Combining his theological expertise, academic rigor, and a heart
-              for discipleship, Dr. Anderson founded Thirty Mighty Men
-              Ministries to equip men to grow into the leaders, husbands, and
-              fathers God intended them to be. Through 30MMM, he continues to
-              inspire and empower men to live lives of integrity, purpose, and
-              faith.
-            </p>
+            <div className="pt-4">
+              <Link
+                href="/full-bio"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-md bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+              >
+                Read Full Bio
+              </Link>
+            </div>
           </div>
         </div>
       </div>
