@@ -86,6 +86,12 @@ export default function NavBar() {
       >
         Founder&apos;s Bio
       </Link>
+      <Link
+        href="/Scholarship"
+        className="transition-colors hover:text-gray-600"
+      >
+        Scholarship
+      </Link>
     </>
   );
 
