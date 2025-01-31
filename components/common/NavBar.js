@@ -1,14 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "@/public/logo.png";
+import { Menu, X } from "lucide-react"; // Assuming you're using lucide-react for icons
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname(); // Get the current path
+  const [isMobile, setIsMobile] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const routes = {
     landing: [
@@ -27,12 +40,11 @@ export default function NavBar() {
       "/DevLinks",
       "/Foundation",
       "/Settings",
-    ], // Add more paths where buttons should be hidden
-    default: [], // You can add more paths that should show the default buttons
+    ],
+    default: [],
   };
 
   const renderButtons = () => {
-    // Check if current path is the landing page
     if (routes.landing.includes(pathname)) {
       return (
         <Link href="/Pricing">
@@ -43,12 +55,10 @@ export default function NavBar() {
       );
     }
 
-    // Check if buttons should be hidden on this path
     if (routes.hideButtons.includes(pathname)) {
-      return null; // Using null instead of empty fragment for clarity
+      return null;
     }
 
-    // Default buttons for all other paths
     return (
       <>
         <Link href="/LogIn">
@@ -65,42 +75,75 @@ export default function NavBar() {
     );
   };
 
+  const navLinks = (
+    <>
+      <Link href="/about" className="transition-colors hover:text-gray-600">
+        About
+      </Link>
+      <Link
+        href="/founders-bio"
+        className="transition-colors hover:text-gray-600"
+      >
+        Founder&apos;s Bio
+      </Link>
+    </>
+  );
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm backdrop-blur-sm">
-      <div className="flex flex-row items-center justify-between p-4 mx-10 text-black">
+      <div className="flex flex-row items-center justify-between p-4 mx-4 text-black md:mx-10">
         {/* Left section: Logo and Text */}
         <div className="flex-1">
           <Link href="/">
             <div className="flex flex-row items-center gap-2">
               <Image
-                src={logo}
+                src={logo || "/placeholder.svg"}
                 alt="30 Mighty Men Ministries Logo"
                 width={35}
                 height={25}
               />
-              <div>30 Mighty Men Ministries</div>
+              <div className="hidden sm:block">30 Mighty Men Ministries</div>
             </div>
           </Link>
         </div>
 
-        {/* Center section: Navigation Links */}
-        <div className="flex flex-row items-center gap-6">
-          <Link href="/about" className="transition-colors hover:text-gray-600">
-            About
-          </Link>
-          <Link
-            href="/founders-bio"
-            className="transition-colors hover:text-gray-600"
-          >
-            Founder&apos;s Bio
-          </Link>
-        </div>
+        {/* Center section: Navigation Links (hidden on mobile) */}
+        {!isMobile && (
+          <div className="flex-row items-center hidden gap-6 md:flex">
+            {navLinks}
+          </div>
+        )}
 
-        {/* Right section: Buttons */}
+        {/* Right section: Buttons or Hamburger Menu */}
         <div className="flex flex-row items-center justify-end flex-1 gap-2">
-          {renderButtons()}
+          {isMobile ? (
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-primary-red focus:outline-none"
+            >
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          ) : (
+            renderButtons()
+          )}
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobile && isOpen && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute p-2 text-primary-red top-4 right-4 focus:outline-none"
+          >
+            <X size={24} />
+          </button>
+          <div className="flex flex-col items-center gap-6 text-xl">
+            {navLinks}
+            {renderButtons()}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
