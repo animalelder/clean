@@ -7,7 +7,10 @@ export default function Terms() {
   return (
     <>
       <Head>
-        <title>Terms of Service - Clean LMS</title>
+        <title>
+          Terms of Service for the Clean Program&apos;s Learning Management
+          System
+        </title>
         <meta
           name="description"
           content="Terms of Service for Clean LMS provided by Thirty Mighty Men Ministries"
