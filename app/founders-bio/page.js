@@ -41,13 +41,13 @@ function FounderBio() {
           >
             <div className="mt-16 md:w-1/3">
               {/* Replace with actual image path */}
-              <div className="w-64 h-64 overflow-hidden bg-gray-300 rounded-full">
+              <div className="w-64 overflow-hidden bg-gray-300 rounded-full h-90">
                 <Image
-                  src="/placeholder-founder.jpg"
+                  src="/donovan.png"
                   alt="Dr. Donovan Anderson"
                   width={256}
-                  height={256}
-                  className="object-cover"
+                  height={300}
+                  className="object-contain"
                 />
               </div>
             </div>
