@@ -5,9 +5,9 @@ import VideoBackground from "./LocalMultipleVideoPlayer";
 
 export function HeroSection() {
   const videoSources = [
-    "/videos/Hero Video Corrected.mov",
-    "/videos/Hero Video Corrected.mov",
-    "/videos/Hero Video Corrected.mov",
+    "/videos/Hero Video Corrected.mp4",
+    "/videos/Hero Video Corrected.mp4",
+    "/videos/Hero Video Corrected.mp4",
   ];
 
   return (
