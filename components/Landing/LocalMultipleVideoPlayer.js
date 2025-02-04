@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function VideoBackground({ videoSources }) {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
@@ -40,7 +40,7 @@ export default function VideoBackground({ videoSources }) {
       <div className="relative w-full h-full">
         <video
           ref={videoRef}
-          className="absolute w-full h-full object-cover"
+          className="absolute object-cover w-full h-full"
           autoPlay
           muted
           playsInline
@@ -48,7 +48,7 @@ export default function VideoBackground({ videoSources }) {
           <source src={videoSources[currentVideoIndex]} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-primary-red/50" /> {/* Overlay */}
+        <div className="absolute inset-0" /> {/* Overlay */}
       </div>
     </div>
   );
