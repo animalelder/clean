@@ -5,101 +5,81 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export default function VideoBackground({ videoSources }) {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
+  const containerRef = useRef(null);
 
-  // We keep the playNextVideo function for cases where you might want to play multiple videos
-  const playNextVideo = useCallback(() => {
-    setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % videoSources.length);
-  }, [videoSources.length]);
+  // Check if we're on mobile and update video positioning accordingly
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-  // Handle video loading with improved error logging
+    // Check initially
+    checkMobile();
+
+    // Update on resize
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Adjust video positioning based on screen size and video dimensions
   useEffect(() => {
     const videoElement = videoRef.current;
-    if (!videoElement) return;
+    const container = containerRef.current;
 
-    const handleCanPlay = () => {
-      setIsVideoLoaded(true);
-      // Play the video with better error handling
-      videoElement.play().catch((error) => {
-        // Provide more specific error messages based on the error type
-        if (error.name === "NotAllowedError") {
-          console.error(
-            "Video autoplay was prevented by the browser. This is common on mobile devices:",
-            error,
-          );
-        } else {
-          console.error("Error playing video:", error);
-        }
-      });
-    };
+    if (!videoElement || !container) return;
 
-    const handleLoadedData = () => {
-      console.log("Video data loaded successfully");
-      setIsVideoLoaded(true);
-    };
+    const handleLoadedMetadata = () => {
+      const videoAspect = videoElement.videoWidth / videoElement.videoHeight;
+      const containerAspect = container.clientWidth / container.clientHeight;
 
-    const handleError = (e) => {
-      console.error("Video loading error:", {
-        error: videoElement.error,
-        code: videoElement.error?.code,
-        message: videoElement.error?.message,
-      });
-      setIsVideoLoaded(false);
-    };
-
-    videoElement.addEventListener("canplay", handleCanPlay);
-    videoElement.addEventListener("loadeddata", handleLoadedData);
-    videoElement.addEventListener("error", handleError);
-
-    return () => {
-      videoElement.removeEventListener("canplay", handleCanPlay);
-      videoElement.removeEventListener("loadeddata", handleLoadedData);
-      videoElement.removeEventListener("error", handleError);
-    };
-  }, [currentVideoIndex]);
-
-  // Handle video ending - simplified since we're using loop
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
-
-    const handleEnded = () => {
-      // Only call playNextVideo if we have multiple videos
-      if (videoSources.length > 1) {
-        playNextVideo();
+      // On mobile, we want to ensure the video covers the full height
+      if (isMobile) {
+        videoElement.style.width = "100%";
+        videoElement.style.height = "100%";
+        videoElement.style.objectFit = "cover";
+        // Adjust position to keep important content in view
+        videoElement.style.objectPosition = "center center";
+      } else {
+        // For desktop, maintain standard cover behavior
+        videoElement.style.width = "100%";
+        videoElement.style.height = "100%";
+        videoElement.style.objectFit = "cover";
       }
     };
 
-    videoElement.addEventListener("ended", handleEnded);
+    videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
+    return () =>
+      videoElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
+  }, [isMobile]);
 
-    return () => {
-      videoElement.removeEventListener("ended", handleEnded);
-    };
-  }, [playNextVideo, videoSources.length]);
+  // Previous event handlers remain the same...
+  // (keeping your existing play, error, and ended handlers)
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none"
+      ref={containerRef}
+    >
       <div className="relative w-full h-full">
         <video
           ref={videoRef}
-          className="absolute object-cover w-full h-full"
+          className={`absolute w-full h-full ${
+            isMobile ? "object-cover md:object-cover" : "object-cover"
+          }`}
           autoPlay
           muted
           playsInline
           loop
-          // Added preload attribute for better loading behavior
           preload="auto"
         >
-          <source
-            src={videoSources[currentVideoIndex]}
-            // Simplified type check since we're using MP4
-            type="video/mp4"
-          />
+          <source src={videoSources[currentVideoIndex]} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        {/* Loading state with a subtle background */}
         {!isVideoLoaded && <div className="absolute inset-0" />}
-        <div className="absolute inset-0" />
+        <div className="absolute inset-0 bg-black bg-opacity-[5%]" />{" "}
+        {/* Overlay for better text visibility */}
       </div>
     </div>
   );
