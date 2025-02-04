@@ -18,7 +18,7 @@ export function HeroSection() {
           <span className="text-base font-medium sm:text-lg max-md:text-black">
             Take the Step
           </span>
-          <span className="animate-bounce">↓</span>
+          <span className="animate-bounce max-md:text-black">↓</span>
         </button>
       </div>
     </section>
