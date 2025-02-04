@@ -40,7 +40,7 @@ const metrics = [
     id: "flag",
     icon: "mapPin",
     value: 3,
-    label: "states reached",
+    label: "countries reached",
     subtitle: "(international reach)",
   },
 ];
