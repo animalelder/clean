@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
-import VideoBackground from "./LocalMultipleVideoPlayer";
+import React, { useState } from "react";
+import VideoBackground from "./VideoBackground";
 
 export function HeroSection() {
+  const [isMobile, setIsMobile] = useState(false);
   const videoSources = ["/videos/Hero Video Corrected.mp4"];
 
   return (
