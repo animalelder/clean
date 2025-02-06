@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,76 +15,88 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const PaymentForm = () => {
-  // State management for form fields
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState("");
 
-  // Price management
   const originalPrice = 99;
   const [finalPrice, setFinalPrice] = useState(originalPrice);
   const [isDiscounted, setIsDiscounted] = useState(false);
 
-  // Simulated discount code validation
+  // Discount code validation logic remains the same
   const validateDiscountCode = (code) => {
-    // Create an object to store valid discount codes and their corresponding discount percentages
     const discountCodes = {
-      ZION: 100, // 100% off - makes it free
-      CLEAN50: 50, // 50% off
-      SALE25: 25, // 25% off
-      WELCOME10: 10, // 10% off
+      ZION: 100,
+      CLEAN50: 50,
+      SALE25: 25,
+      WELCOME10: 10,
       DONOVAN: 59.6,
     };
 
-    // Convert the input code to uppercase to make validation case-insensitive
     const upperCode = code.toUpperCase();
-
-    // Check if the entered code exists in our valid codes
     if (discountCodes.hasOwnProperty(upperCode)) {
-      // Calculate the discounted price
-      // First get the discount percentage from our object
       const discountPercent = discountCodes[upperCode];
-
-      // Calculate the final price by subtracting the discount
-      // For example, if discount is 25%, multiply price by (100-25)/100 = 0.75
       const discountedPrice = Number(
         originalPrice * ((100 - discountPercent) / 100),
       ).toFixed(2);
-
-      // Update the state with the new price and mark as discounted
       setFinalPrice(discountedPrice);
       setIsDiscounted(true);
     } else {
-      // If code isn't valid, reset to original price
       setFinalPrice(originalPrice);
       setIsDiscounted(false);
     }
   };
 
-  // Simulated payment processing
   const handlePayment = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
+    setPaymentStatus("");
 
     try {
-      // Simulate API call to payment processor
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch(
+        "https://connect.squareupsandbox.com/v2/payments",
+        {
+          method: "POST",
+          headers: {
+            "Square-Version": "2025-01-23",
+            Authorization:
+              "Bearer EAAAl4mdsMBgGm3kqrw4TnDWU8CmwqGutwczivJD1VqmmX_5aLY8fpdM_9U7VEUt",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount_money: {
+              amount: Math.round(finalPrice * 100), // Convert to cents
+              currency: "USD",
+            },
+            idempotency_key: uuidv4(),
+            source_id: "cnon:card-nonce-ok", // In production, this would come from Square.js
+            email: email,
+          }),
+        },
+      );
 
-      // In a real application, you would make an API call here
-      console.log("Payment processed", {
-        email,
-        amount: finalPrice,
-        discountApplied: isDiscounted,
-      });
+      const result = await response.json();
 
-      // Reset form
-      setEmail("");
-      setPassword("");
-      setDiscountCode("");
-      setIsProcessing(false);
+      if (response.ok) {
+        setPaymentStatus("Payment successful!");
+        // Reset form
+        setEmail("");
+        setCardNumber("");
+        setExpiryDate("");
+        setCvv("");
+        setDiscountCode("");
+      } else {
+        setPaymentStatus(
+          `Payment failed: ${result.errors?.[0]?.detail || "Unknown error"}`,
+        );
+      }
     } catch (error) {
-      console.error("Payment failed:", error);
+      setPaymentStatus("Payment failed: Network error");
+    } finally {
       setIsProcessing(false);
     }
   };
@@ -93,7 +106,9 @@ const PaymentForm = () => {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Complete Your Purchase</CardTitle>
-          <CardDescription>Secure payment processing</CardDescription>
+          <CardDescription>
+            Secure payment processing with Square
+          </CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -112,15 +127,44 @@ const PaymentForm = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="cardNumber">Card Number</Label>
               <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                id="cardNumber"
+                type="text"
+                placeholder="1234 5678 9012 3456"
+                value={cardNumber}
+                onChange={(e) => setCardNumber(e.target.value)}
                 required
                 className="w-full"
               />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="expiryDate">Expiry Date</Label>
+                <Input
+                  id="expiryDate"
+                  type="text"
+                  placeholder="MM/YY"
+                  value={expiryDate}
+                  onChange={(e) => setExpiryDate(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="cvv">CVV</Label>
+                <Input
+                  id="cvv"
+                  type="text"
+                  placeholder="123"
+                  value={cvv}
+                  onChange={(e) => setCvv(e.target.value)}
+                  required
+                  className="w-full"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -152,6 +196,18 @@ const PaymentForm = () => {
                 )}
               </p>
             </div>
+
+            {paymentStatus && (
+              <div
+                className={`text-center ${
+                  paymentStatus.includes("successful")
+                    ? "text-green-600"
+                    : "text-red-600"
+                }`}
+              >
+                {paymentStatus}
+              </div>
+            )}
           </form>
         </CardContent>
 
@@ -161,7 +217,7 @@ const PaymentForm = () => {
             disabled={isProcessing}
             className="w-full bg-primary-red hover:bg-red-800"
           >
-            {isProcessing ? "Processing..." : "Confirm Payment"}
+            {isProcessing ? "Processing..." : "Pay Now"}
           </Button>
         </CardFooter>
       </Card>
