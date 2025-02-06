@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,23 +11,42 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const PaymentForm = () => {
   const [email, setEmail] = useState("");
   const [cardNumber, setCardNumber] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCvv] = useState("");
+  const [cardExpiration, setCardExpiration] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [cardCvv, setCardCvv] = useState("");
+  const [cardPostal, setCardPostal] = useState("");
   const [discountCode, setDiscountCode] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [saveCardInfo, setSaveCardInfo] = useState(false);
 
   const originalPrice = 99;
   const [finalPrice, setFinalPrice] = useState(originalPrice);
   const [isDiscounted, setIsDiscounted] = useState(false);
 
-  // Discount code validation logic remains the same
+  useEffect(() => {
+    // Initialize Square
+    initializeSquare();
+  }, []);
+
+  const initializeSquare = async () => {
+    if (!window.Square) {
+      const script = document.createElement("script");
+      script.src = "https://sandbox.web.squarecdn.com/v1/square.js";
+      script.onload = () => console.log("Square SDK loaded");
+      document.body.appendChild(script);
+    }
+  };
+
   const validateDiscountCode = (code) => {
     const discountCodes = {
       ZION: 100,
@@ -57,55 +76,46 @@ const PaymentForm = () => {
     setPaymentStatus("");
 
     try {
-      const response = await fetch(
-        "https://connect.squareupsandbox.com/v2/payments",
-        {
-          method: "POST",
-          headers: {
-            "Square-Version": "2025-01-23",
-            Authorization:
-              "Bearer EAAAl4mdsMBgGm3kqrw4TnDWU8CmwqGutwczivJD1VqmmX_5aLY8fpdM_9U7VEUt",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount_money: {
-              amount: Math.round(finalPrice * 100), // Convert to cents
-              currency: "USD",
-            },
-            idempotency_key: uuidv4(),
-            source_id: "cnon:card-nonce-ok", // In production, this would come from Square.js
-            email: email,
-          }),
-        },
-      );
+      // In a real implementation, you would use Square's SDK to tokenize the card
+      // and send the token to your server. For this example, we'll simulate the process.
 
-      const result = await response.json();
+      const simulatePayment = () => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (Math.random() > 0.2) {
+              resolve({ status: "success" });
+            } else {
+              reject(new Error("Payment failed"));
+            }
+          }, 2000);
+        });
+      };
 
-      if (response.ok) {
+      const result = await simulatePayment();
+
+      if (result.status === "success") {
         setPaymentStatus("Payment successful!");
-        // Reset form
         setEmail("");
         setCardNumber("");
-        setExpiryDate("");
-        setCvv("");
+        setCardExpiration("");
+        setCardCvv("");
+        setCardPostal("");
         setDiscountCode("");
       } else {
-        setPaymentStatus(
-          `Payment failed: ${result.errors?.[0]?.detail || "Unknown error"}`,
-        );
+        setPaymentStatus("Payment failed. Please try again.");
       }
     } catch (error) {
-      setPaymentStatus("Payment failed: Network error");
+      setPaymentStatus("Payment failed: " + error.message);
     } finally {
       setIsProcessing(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 mt-12 bg-gray-50">
-      <Card className="w-full max-w-md">
+    <div className="flex items-center justify-center min-h-screen p-4 mt-20 bg-gray-50">
+      <Card className="w-full max-w-lg">
         <CardHeader>
-          <CardTitle>Complete Your Purchase</CardTitle>
+          <CardTitle>Complete Your Purchase & Sign Up!</CardTitle>
           <CardDescription>
             Secure payment processing with Square
           </CardDescription>
@@ -113,6 +123,11 @@ const PaymentForm = () => {
 
         <CardContent>
           <form onSubmit={handlePayment} className="space-y-6">
+            <Label className="text-xl">User Information</Label>
+            <p>
+              This is the login information you will use to access the online
+              platform once the payment is processed
+            </p>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -127,43 +142,90 @@ const PaymentForm = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="cardNumber">Card Number</Label>
+              <Label htmlFor="password">Password</Label>
               <Input
-                id="cardNumber"
-                type="text"
-                placeholder="1234 5678 9012 3456"
-                value={cardNumber}
-                onChange={(e) => setCardNumber(e.target.value)}
+                id="password"
+                type="password"
+                placeholder="Y0uC@nG3tCl3@n2"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="passwordConfirm">Confirm Password</Label>
+              <Input
+                id="passwordConfirm"
+                type="password"
+                placeholder="Y0uC@nG3tCl3@n2"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
                 required
                 className="w-full"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="expiryDate">Expiry Date</Label>
-                <Input
-                  id="expiryDate"
-                  type="text"
-                  placeholder="MM/YY"
-                  value={expiryDate}
-                  onChange={(e) => setExpiryDate(e.target.value)}
-                  required
-                  className="w-full"
-                />
-              </div>
+            <div className="p-1 border rounded-md bg-primary-red"></div>
 
-              <div className="space-y-2">
-                <Label htmlFor="cvv">CVV</Label>
-                <Input
-                  id="cvv"
-                  type="text"
-                  placeholder="123"
-                  value={cvv}
-                  onChange={(e) => setCvv(e.target.value)}
-                  required
-                  className="w-full"
-                />
+            <div className="space-y-4">
+              <Label className="text-xl">Card Details</Label>
+              <p>
+                This is the card information you will use to pay for the plan;
+                please check the box if you&apos;d like to save the card for
+                future donations.
+              </p>
+              <div className="grid gap-4">
+                <div>
+                  <Label htmlFor="card-number">Card Number</Label>
+                  <Input
+                    id="card-number"
+                    type="text"
+                    placeholder="1234 5678 9012 3456"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
+                    required
+                    className="w-full"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="card-expiration">Expiration Date</Label>
+                    <Input
+                      id="card-expiration"
+                      type="text"
+                      placeholder="MM/YY"
+                      value={cardExpiration}
+                      onChange={(e) => setCardExpiration(e.target.value)}
+                      required
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="card-cvv">CVV</Label>
+                    <Input
+                      id="card-cvv"
+                      type="text"
+                      placeholder="123"
+                      value={cardCvv}
+                      onChange={(e) => setCardCvv(e.target.value)}
+                      required
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="card-postal">ZIP Code</Label>
+                  <Input
+                    id="card-postal"
+                    type="text"
+                    placeholder="12345"
+                    value={cardPostal}
+                    onChange={(e) => setCardPostal(e.target.value)}
+                    required
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
 
@@ -199,15 +261,42 @@ const PaymentForm = () => {
 
             {paymentStatus && (
               <div
-                className={`text-center ${
-                  paymentStatus.includes("successful")
-                    ? "text-green-600"
-                    : "text-red-600"
-                }`}
+                className={`text-center ${paymentStatus.includes("successful") ? "text-green-600" : "text-red-600"}`}
               >
                 {paymentStatus}
               </div>
             )}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="terms"
+                checked={agreedToTerms}
+                onCheckedChange={setAgreedToTerms}
+              />
+              <label
+                htmlFor="terms"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                I agree to the{" "}
+                <Link href="/Terms">
+                  <span className="text-primary-red hover:text-red-800 hover:underline hover:underline-offset-2 hover:decoration-primary-red ">
+                    terms and conditions
+                  </span>
+                </Link>
+              </label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="terms"
+                checked={agreedToTerms}
+                onCheckedChange={setSaveCardInfo}
+              />
+              <label
+                htmlFor="terms"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                I&apos;d like to save my card info for future donations.
+              </label>
+            </div>
           </form>
         </CardContent>
 
@@ -215,7 +304,7 @@ const PaymentForm = () => {
           <Button
             onClick={handlePayment}
             disabled={isProcessing}
-            className="w-full bg-primary-red hover:bg-red-800"
+            className="w-full bg-primary-red hover:bg-red-800 "
           >
             {isProcessing ? "Processing..." : "Pay Now"}
           </Button>
