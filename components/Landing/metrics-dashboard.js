@@ -39,7 +39,7 @@ const metrics = [
   {
     id: "flag",
     icon: "mapPin",
-    value: 3,
+    value: 4,
     label: "countries reached",
     subtitle: "(international reach)",
   },
