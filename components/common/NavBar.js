@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import logo from "@/public/logo.png";
-import { Menu, X } from "lucide-react"; // Assuming you're using lucide-react for icons
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function NavBar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const pathname = usePathname();
 
@@ -134,33 +134,24 @@ export default function NavBar() {
         {/* Right section: Buttons or Hamburger Menu */}
         <div className="flex flex-row items-center justify-end flex-1 gap-2">
           {isMobile ? (
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-primary-red focus:outline-none"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <button className="p-2 text-primary-red focus:outline-none">
+                  <Menu size={24} />
+                </button>
+              </SheetTrigger>
+              <SheetContent>
+                <div className="flex flex-col items-center gap-6 mt-10 text-xl">
+                  {navLinks}
+                  {renderButtons()}
+                </div>
+              </SheetContent>
+            </Sheet>
           ) : (
             renderButtons()
           )}
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMobile && isOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-white">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute p-2 text-primary-red top-4 right-4 focus:outline-none"
-          >
-            <X size={24} />
-          </button>
-          <div className="flex flex-col items-center gap-6 text-xl">
-            {navLinks}
-            {renderButtons()}
-          </div>
-        </div>
-      )}
     </nav>
   );
 }
