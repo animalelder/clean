@@ -22,19 +22,27 @@ const VideoBackground = ({ videoSources }) => {
     const updateVideoDimensions = () => {
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
+      const isMobile = window.innerWidth <= 768; // Adjust this breakpoint as needed
 
-      if (containerWidth / containerHeight > aspectRatio) {
+      if (isMobile) {
+        // On mobile, maintain aspect ratio and don't cover full height
+        const videoHeight = containerWidth / aspectRatio;
         videoElement.style.width = "100%";
-        videoElement.style.height = "auto";
+        videoElement.style.height = `${videoHeight}px`;
+        videoElement.style.top = "0";
+        videoElement.style.transform = "translateX(-50%)";
       } else {
-        videoElement.style.width = "auto";
-        videoElement.style.height = "100%";
+        // On desktop, cover the full container
+        if (containerWidth / containerHeight > aspectRatio) {
+          videoElement.style.width = "100%";
+          videoElement.style.height = "auto";
+        } else {
+          videoElement.style.width = "auto";
+          videoElement.style.height = "100%";
+        }
+        videoElement.style.top = "50%";
+        videoElement.style.transform = "translate(-50%, -50%)";
       }
-
-      videoElement.style.position = "absolute";
-      videoElement.style.top = "50%";
-      videoElement.style.left = "50%";
-      videoElement.style.transform = "translate(-50%, -50%)";
     };
 
     updateVideoDimensions();
@@ -53,7 +61,7 @@ const VideoBackground = ({ videoSources }) => {
     >
       <video
         ref={videoRef}
-        className="absolute object-cover w-full h-full"
+        className="absolute object-cover w-full left-1/2"
         autoPlay
         muted
         playsInline
