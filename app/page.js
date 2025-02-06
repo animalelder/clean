@@ -48,7 +48,8 @@ export default function LandingPage() {
         {!isMobile && <TwoFacesSection />}
         <ChurchRoleSection isMobile={isMobile} />
         {!isMobile && <MetricsDashboard />}
-        <ResourcesSection isMobile={isMobile} />
+        {/* DO NOT DELETE -  This component will be restored in a future version */}
+        {/* <ResourcesSection isMobile={isMobile} /> */} 
         <AboutSection isMobile={isMobile} />
         <TestimonialsSection isMobile={isMobile} />
         <CTASection />
