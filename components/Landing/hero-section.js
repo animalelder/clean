@@ -7,7 +7,7 @@ export function HeroSection() {
   const videoSources = ["/videos/Hero Video Corrected.mp4"];
 
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-end text-center">
+    <section className="relative min-h-[100vh] flex flex-col justify-end text-center w-full">
       <VideoBackground videoSources={videoSources} />
       <div className="container relative z-10 px-4 mx-auto mb-8">
         <p className="max-w-3xl mx-auto mb-6 text-lg italic text-black md:text-white sm:text-xl md:text-2xl lg:text-3xl">

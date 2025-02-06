@@ -2,18 +2,24 @@
 
 import { useEffect, useState } from "react";
 import logo from "@/public/logo.png";
-import { Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false);
-  const [open, setOpen] = useState(false); // Added state for Sheet
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  const closeSheet = () => setOpen(false); // Added function to close Sheet
+  const closeSheet = () => setOpen(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -50,26 +56,42 @@ export default function NavBar() {
     default: [],
   };
 
-  const NavLink = (
-    { href, children }, // Added NavLink component
-  ) => (
+  const NavLink = ({ href, children, className = "" }) => (
     <Link
       href={href}
-      className="transition-colors hover:text-gray-600"
+      className={`transition-colors hover:text-gray-600 ${className}`}
       onClick={closeSheet}
     >
       {children}
     </Link>
   );
 
+  const AboutDropdown = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex items-center transition-colors hover:text-gray-600">
+        About <ChevronDown size={16} className="ml-1" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>
+          <NavLink href="/individuals">Clean for Individuals</NavLink>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <NavLink href="/churches">Clean for Churches</NavLink>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <NavLink href="/founders-bio">Founder&apos;s Bio</NavLink>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <NavLink href="/Scholarship">Scholarship</NavLink>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
   const navLinks = (
     <>
       <NavLink href="/">Home</NavLink>
-      <NavLink href="/about">About</NavLink>
-      <NavLink href="/individuals">Clean For Individuals</NavLink>
-      <NavLink href="/churches">Clean For Churches</NavLink>
-      <NavLink href="/founders-bio">Founder&apos;s Bio</NavLink>
-      <NavLink href="/Scholarship">Scholarship</NavLink>
+      <AboutDropdown />
     </>
   );
 
@@ -106,61 +128,48 @@ export default function NavBar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm backdrop-blur-sm">
-      <div className="flex flex-row items-center justify-between p-4 mx-4 text-black md:mx-10">
+      <div className="flex items-center justify-between p-4 mx-4 text-black md:mx-10">
         {/* Left section: Logo and Text */}
-        <div className="flex-1">
+        <div className="flex items-center">
           <Link href="/">
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex items-center gap-2">
               <Image
                 src={logo || "/placeholder.svg"}
                 alt="Thirty Mighty Men Ministries Logo"
                 width={35}
                 height={25}
               />
-              <div>
-                <Image
-                  src={
-                    "/images-2/Thirty Mighty Men Ministries - text logo.png" ||
-                    "/placeholder.svg"
-                  }
-                  alt="Thirty Mighty Men Ministries Logo"
-                  width={175}
-                  height={125}
-                />
-              </div>
+              <Image
+                src="/images-2/Thirty Mighty Men Ministries - text logo.png"
+                alt="Thirty Mighty Men Ministries Logo"
+                width={175}
+                height={125}
+              />
             </div>
           </Link>
         </div>
 
-        {/* Center section: Navigation Links (hidden on mobile) */}
-        {!isMobile && (
-          <div className="flex-row items-center hidden gap-6 md:flex">
+        {/* Right section: Navigation Links and Buttons */}
+        {!isMobile ? (
+          <div className="flex items-center gap-6">
             {navLinks}
+            {renderButtons()}
           </div>
+        ) : (
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <button className="p-2 text-primary-red focus:outline-none">
+                <Menu size={24} />
+              </button>
+            </SheetTrigger>
+            <SheetContent>
+              <div className="flex flex-col items-center gap-6 mt-10 text-xl">
+                {navLinks}
+                {renderButtons()}
+              </div>
+            </SheetContent>
+          </Sheet>
         )}
-
-        {/* Right section: Buttons or Hamburger Menu */}
-        <div className="flex flex-row items-center justify-end flex-1 gap-2">
-          {isMobile ? (
-            <Sheet open={open} onOpenChange={setOpen}>
-              {" "}
-              {/* Updated Sheet component */}
-              <SheetTrigger asChild>
-                <button className="p-2 text-primary-red focus:outline-none">
-                  <Menu size={24} />
-                </button>
-              </SheetTrigger>
-              <SheetContent>
-                <div className="flex flex-col items-center gap-6 mt-10 text-xl">
-                  {navLinks}
-                  {renderButtons()}
-                </div>
-              </SheetContent>
-            </Sheet>
-          ) : (
-            renderButtons()
-          )}
-        </div>
       </div>
     </nav>
   );
