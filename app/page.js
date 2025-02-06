@@ -37,7 +37,7 @@ export default function LandingPage() {
   return (
     <>
       <Head>
-        <title>30 Mighty Men Ministries</title>
+        <title>Thirty Mighty Men Ministries</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1"
@@ -49,7 +49,7 @@ export default function LandingPage() {
         <ChurchRoleSection isMobile={isMobile} />
         {!isMobile && <MetricsDashboard />}
         {/* DO NOT DELETE -  This component will be restored in a future version */}
-        {/* <ResourcesSection isMobile={isMobile} /> */} 
+        {/* <ResourcesSection isMobile={isMobile} /> */}
         <AboutSection isMobile={isMobile} />
         <TestimonialsSection isMobile={isMobile} />
         <CTASection />

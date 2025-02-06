@@ -9,7 +9,7 @@ export function AboutSection() {
           {/* Left Column: Video and Brief Intro */}
           <div className="space-y-6">
             <h2 className="text-3xl font-bold md:text-4xl">
-              About 30 Mighty Men Ministries
+              About Thirty Mighty Men Ministries
             </h2>
             <p className="text-xl italic md:text-2xl text-primary">
               30MMM: A Ministry for Men, by Men

@@ -1,4 +1,4 @@
-# Clean: A 30 Mighty Men Ministries Program
+# Clean: A Thirty Mighty Men Ministries Program
 
 ## Overview
 

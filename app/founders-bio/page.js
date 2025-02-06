@@ -56,7 +56,7 @@ function FounderBio() {
                 Dr. Donovan Anderson
               </h1>
               <p className="text-xl text-gray-300 md:text-2xl">
-                Visionary Leader and Founder of 30 Mighty Men Ministries
+                Visionary Leader and Founder of Thirty Mighty Men Ministries
               </p>
             </div>
           </motion.div>
@@ -204,7 +204,7 @@ function FounderBio() {
             <p className="mb-8 text-xl leading-relaxed">
               Dr. Anderson&apos;s vision is clear: to create a world where men
               lead with integrity, families are restored, and communities
-              flourish. Through 30 Mighty Men Ministries, he continues to
+              flourish. Through Thirty Mighty Men Ministries, he continues to
               inspire and empower men to become the leaders, husbands, and
               fathers God intended them to be.
             </p>

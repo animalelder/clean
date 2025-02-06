@@ -159,7 +159,7 @@ const PaymentForm = () => {
           <Button
             onClick={handlePayment}
             disabled={isProcessing}
-            className="w-full"
+            className="w-full bg-primary-red hover:bg-red-800"
           >
             {isProcessing ? "Processing..." : "Confirm Payment"}
           </Button>

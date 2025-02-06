@@ -45,6 +45,7 @@ export default function NavBar() {
       "/DevLinks",
       "/Foundation",
       "/Settings",
+      "/payment",
     ],
     default: [],
   };
@@ -112,11 +113,13 @@ export default function NavBar() {
             <div className="flex flex-row items-center gap-2">
               <Image
                 src={logo || "/placeholder.svg"}
-                alt="30 Mighty Men Ministries Logo"
+                alt="Thirty Mighty Men Ministries Logo"
                 width={35}
                 height={25}
               />
-              <div className="hidden sm:block">30 Mighty Men Ministries</div>
+              <div className="hidden sm:block">
+                Thirty Mighty Men Ministries
+              </div>
             </div>
           </Link>
         </div>
