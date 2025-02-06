@@ -16,10 +16,10 @@ const PricingPage = () => {
         "Weekly Email Newsletters: Receive weekly emails with tips, encouragement, and updates.",
         "Value Proposition: Explore the CLEAN program with no financial commitment, connect with a community of like-minded men, and receive weekly encouragement to stay motivated on your journey.",
       ],
-      price: "Free",
+      price: "Coming Soon",
       link: "/clay-vessel.webp",
       cta1: "Ready to take the first step? Join CLEAN Starter today and start your transformation journey.",
-      cta2: "Join Today",
+      // cta2: "Join Today",
       donorsboxUrl: "https://donorsbox.com/your-clay-tier-campaign-url", // Add this
     },
     {
@@ -35,7 +35,7 @@ const PricingPage = () => {
         "Bonus Content: Exclusive video content, such as interviews with guest speakers and advanced teachings.",
         "Upsell Options: Group Coaching Add-On ($99/month) or One-on-One Coaching Add-On ($199/session).",
       ],
-      price: "$99/month",
+      price: "$99",
       link: "/wooden-vessel.webp",
       cta1: "Ready to start your transformation? Join CLEAN Essentials today and take the first step at your own pace. Add coaching for personalized guidance!",
       cta2: "Join Today",
@@ -121,7 +121,11 @@ const PricingPage = () => {
                   {resource.price}
                 </span>
                 <button
-                  onClick={() => window.open(resource.donorsboxUrl, "_blank")}
+                  onClick={() =>
+                    resource.price === "Coming Soon"
+                      ? null
+                      : window.open(resource.donorsboxUrl, "_blank")
+                  }
                   className="w-full px-4 py-2 text-sm text-white uppercase transition rounded bg-primary-red hover:bg-red-800"
                 >
                   {resource.cta2}

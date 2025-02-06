@@ -26,9 +26,9 @@ export function ResourcesSection() {
       ],
       callToAction:
         "Ready to take the first step? Join CLEAN Starter today and start your transformation journey.",
-      price: "Free",
+      price: "Coming Soon",
       link: "/clay-vessel.webp",
-      cta: "Start Today",
+      cta: "Coming Soon",
     },
     {
       title: "wood tier",
@@ -63,7 +63,7 @@ export function ResourcesSection() {
       ],
       callToAction:
         "Ready to start your transformation? Join CLEAN Essentials today and take the first step at your own pace.",
-      price: "$99/month",
+      price: "$99",
       link: "/wooden-vessel.webp",
       cta: "Start Today",
     },
@@ -200,7 +200,11 @@ export function ResourcesSection() {
                     {resource.price}
                   </span>
                   <Link
-                    href="/Pricing"
+                    href={
+                      resource.cta === "Coming Soon"
+                        ? "javascript:void(0)"
+                        : "/Pricing"
+                    }
                     className={`w-full px-4 py-2 text-center text-white rounded-md ${
                       resource.cta === "Coming Soon"
                         ? "bg-gray-500 cursor-not-allowed"
