@@ -30,6 +30,8 @@ export default function NavBar() {
       "/about",
       "/Scholarship",
       "/Scholarship-Application",
+      "/individuals",
+      "/churches",
     ],
     hideButtons: [
       "/LogIn",
@@ -79,6 +81,15 @@ export default function NavBar() {
     <>
       <Link href="/about" className="transition-colors hover:text-gray-600">
         About
+      </Link>
+      <Link
+        href="/individuals"
+        className="transition-colors hover:text-gray-600"
+      >
+        Clean For Individuals
+      </Link>
+      <Link href="/churches" className="transition-colors hover:text-gray-600">
+        Clean For Churches
       </Link>
       <Link
         href="/founders-bio"

@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import ComparisonSection from "@/components/Pricing/comparison-section";
 
 const PricingPage = () => {
+  const router = useRouter();
   const resourceDetails = [
     {
       title: "clay tier",
@@ -124,7 +126,7 @@ const PricingPage = () => {
                   onClick={() =>
                     resource.price === "Coming Soon"
                       ? null
-                      : window.open(resource.donorsboxUrl, "_blank")
+                      : router.push("/payment", "_blank")
                   }
                   className="w-full px-4 py-2 text-sm text-white uppercase transition rounded bg-primary-red hover:bg-red-800"
                 >
