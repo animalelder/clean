@@ -63,6 +63,7 @@ export default function NavBar() {
 
   const navLinks = (
     <>
+      <NavLink href="/">Home</NavLink>
       <NavLink href="/about">About</NavLink>
       <NavLink href="/individuals">Clean For Individuals</NavLink>
       <NavLink href="/churches">Clean For Churches</NavLink>
