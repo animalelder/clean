@@ -52,6 +52,7 @@ export default function NavBar() {
       "/Foundation",
       "/Settings",
       "/payment",
+      "/Contact",
     ],
     default: [],
   };
@@ -72,6 +73,9 @@ export default function NavBar() {
         About <ChevronDown size={16} className="ml-1" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuItem>
+          <NavLink href="/about">About the Program</NavLink>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <NavLink href="/individuals">Clean for Individuals</NavLink>
         </DropdownMenuItem>

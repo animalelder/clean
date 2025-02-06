@@ -58,7 +58,6 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative py-20 text-white bg-primary-red">
-        <div className="absolute inset-0 bg-black/50" />
         <div className="container relative px-4 mx-auto">
           <motion.div {...fadeIn} className="max-w-3xl mx-auto text-center">
             <h1 className="mt-8 mb-6 text-5xl font-bold">About CLEAN</h1>
