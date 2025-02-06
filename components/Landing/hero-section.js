@@ -9,7 +9,7 @@ export function HeroSection() {
     <section className="relative min-h-[100vh] flex flex-col justify-end text-center">
       <VideoBackground videoSources={videoSources} />
       <div className="container relative z-10 px-4 mx-auto mb-8">
-        <p className="max-w-3xl mx-auto mb-6 text-lg italic text-black text-white sm:text-xl md:text-2xl lg:text-3xl md:text-white">
+        <p className="max-w-3xl mx-auto mb-6 text-lg italic text-black md:text-white sm:text-xl md:text-2xl lg:text-3xl">
           Discover your purpose and grow into the man God designed you to be.
         </p>
         <button className="inline-flex flex-col items-center gap-2 px-6 py-3 transition-transform rounded-lg group hover:-translate-y-1">
