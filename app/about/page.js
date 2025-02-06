@@ -57,8 +57,8 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 text-white bg-primary-red">
-        <div className="container relative px-4 mx-auto">
+      <section className="relative pt-16 text-white bg-primary-red">
+        <div className="container relative px-8 pt-16 mx-auto">
           <motion.div {...fadeIn} className="max-w-3xl mx-auto text-center">
             <h1 className="mt-8 mb-6 text-5xl font-bold">About CLEAN</h1>
             <p className="text-xl leading-relaxed">
@@ -68,7 +68,7 @@ export default function AboutPage() {
               lack of purpose hold men back from becoming who God created them
               to be.
             </p>
-            <p className="mt-6 text-2xl font-semibold">
+            <p className="pb-16 mt-8 text-2xl font-semibold">
               CLEAN is here to change that.
             </p>
           </motion.div>
@@ -77,20 +77,20 @@ export default function AboutPage() {
 
       {/* Mission Section */}
       <section className="py-16 bg-white">
-        <div className="container px-4 mx-auto">
+        <div className="container auto">
           <motion.div {...fadeIn} className="max-w-3xl mx-auto">
             <h2 className="mb-8 text-3xl font-bold text-center">Our Mission</h2>
             <div className="space-y-8">
-              <div className="p-6 rounded-lg bg-gray-50">
-                <h3 className="mb-4 text-xl font-semibold">External Freedom</h3>
+              <div className="p-8 rounded-lg bg-gray-50">
+                <h3 className="mb-8 text-xl font-semibold">External Freedom</h3>
                 <p className="text-gray-700">
                   To help men break free from the chains of sexual sin by
                   equipping them with the tools and community they need to climb
                   out of any hole—no matter how deep it may seem.
                 </p>
               </div>
-              <div className="p-6 rounded-lg bg-gray-50">
-                <h3 className="mb-4 text-xl font-semibold">Internal Purpose</h3>
+              <div className="p-8 rounded-lg bg-gray-50">
+                <h3 className="mb-8 text-xl font-semibold">Internal Purpose</h3>
                 <p className="text-gray-700">
                   To help men discover and step into their God-given purpose. We
                   believe that once men gain self-control in this vital area,
@@ -108,9 +108,9 @@ export default function AboutPage() {
 
       {/* Statistics Section */}
       <section className="py-16 text-black bg-gradient-to-b from-gray-50 to-gray-100">
-        <div className="container px-4 mx-auto">
-          <motion.div {...fadeIn} className="max-w-4xl mx-auto">
-            <h2 className="mb-12 text-3xl font-bold text-center">Why CLEAN?</h2>
+        <div className="container mx-auto">
+          <motion.div {...fadeIn} className="w-full mx-auto">
+            <h2 className="mb-16 text-3xl font-bold text-center">Why CLEAN?</h2>
             <div className="grid gap-8 md:grid-cols-3">
               {statistics.map((item, index) => (
                 <div key={index} className="text-center">
