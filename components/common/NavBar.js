@@ -117,8 +117,16 @@ export default function NavBar() {
                 width={35}
                 height={25}
               />
-              <div className="hidden sm:block">
-                Thirty Mighty Men Ministries
+              <div>
+                <Image
+                  src={
+                    "/images-2/Thirty Mighty Men Ministries - text logo.png" ||
+                    "/placeholder.svg"
+                  }
+                  alt="Thirty Mighty Men Ministries Logo"
+                  width={175}
+                  height={125}
+                />
               </div>
             </div>
           </Link>
