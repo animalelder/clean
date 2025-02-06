@@ -10,7 +10,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false);
+  const [open, setOpen] = useState(false); // Added state for Sheet
   const pathname = usePathname();
+
+  const closeSheet = () => setOpen(false); // Added function to close Sheet
 
   useEffect(() => {
     const checkMobile = () => {
@@ -46,14 +49,36 @@ export default function NavBar() {
     default: [],
   };
 
+  const NavLink = (
+    { href, children }, // Added NavLink component
+  ) => (
+    <Link
+      href={href}
+      className="transition-colors hover:text-gray-600"
+      onClick={closeSheet}
+    >
+      {children}
+    </Link>
+  );
+
+  const navLinks = (
+    <>
+      <NavLink href="/about">About</NavLink>
+      <NavLink href="/individuals">Clean For Individuals</NavLink>
+      <NavLink href="/churches">Clean For Churches</NavLink>
+      <NavLink href="/founders-bio">Founder&apos;s Bio</NavLink>
+      <NavLink href="/Scholarship">Scholarship</NavLink>
+    </>
+  );
+
   const renderButtons = () => {
     if (routes.landing.includes(pathname)) {
       return (
-        <Link href="/Pricing">
+        <NavLink href="/Pricing">
           <button className="px-4 py-2 bg-white border-2 rounded text-primary-red border-primary-red hover:bg-gray-100 focus:outline-none">
             Start Your Journey
           </button>
-        </Link>
+        </NavLink>
       );
     }
 
@@ -63,48 +88,19 @@ export default function NavBar() {
 
     return (
       <>
-        <Link href="/LogIn">
+        <NavLink href="/LogIn">
           <button className="px-4 py-2 bg-white border-2 rounded text-primary-red border-primary-red hover:bg-gray-100 focus:outline-none">
             Log In
           </button>
-        </Link>
-        <Link href="/SignUp">
+        </NavLink>
+        <NavLink href="/SignUp">
           <button className="px-4 py-2 text-white rounded bg-primary-red hover:bg-red-800 focus:outline-none">
             Sign Up
           </button>
-        </Link>
+        </NavLink>
       </>
     );
   };
-
-  const navLinks = (
-    <>
-      <Link href="/about" className="transition-colors hover:text-gray-600">
-        About
-      </Link>
-      <Link
-        href="/individuals"
-        className="transition-colors hover:text-gray-600"
-      >
-        Clean For Individuals
-      </Link>
-      <Link href="/churches" className="transition-colors hover:text-gray-600">
-        Clean For Churches
-      </Link>
-      <Link
-        href="/founders-bio"
-        className="transition-colors hover:text-gray-600"
-      >
-        Founder&apos;s Bio
-      </Link>
-      <Link
-        href="/Scholarship"
-        className="transition-colors hover:text-gray-600"
-      >
-        Scholarship
-      </Link>
-    </>
-  );
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm backdrop-blur-sm">
@@ -134,7 +130,9 @@ export default function NavBar() {
         {/* Right section: Buttons or Hamburger Menu */}
         <div className="flex flex-row items-center justify-end flex-1 gap-2">
           {isMobile ? (
-            <Sheet>
+            <Sheet open={open} onOpenChange={setOpen}>
+              {" "}
+              {/* Updated Sheet component */}
               <SheetTrigger asChild>
                 <button className="p-2 text-primary-red focus:outline-none">
                   <Menu size={24} />
