@@ -1,8 +1,8 @@
-# Clean: A Thirty Mighty Men Ministries Program
+# CLEAN: A Thirty Mighty Men Ministries Program
 
 ## Overview
 
-A nextjs frontend for the Clean program. This will connect to the .NET backend previously developed.
+A nextjs frontend for the CLEAN program. This will connect to the .NET backend previously developed.
 
 ## Tech Stack
 

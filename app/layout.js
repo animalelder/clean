@@ -13,9 +13,10 @@ import NavBar from "@/components/common/NavBar";
 const alexandria = Alexandria({ subsets: ["latin"], display: "swap" });
 
 export const metadata = {
-  title: "Clean: A Thirty Mighty Men Ministries Program",
-  description: "Clean: A Thirty Mighty Men Ministries Program",
-  keywords: "Thirty Mighty Men Ministries, Clean, Donovan Anderson, 30mmm, 30 Mighty Men,",
+  title: "CLEAN: A Thirty Mighty Men Ministries Program",
+  description: "CLEAN: A Thirty Mighty Men Ministries Program",
+  keywords:
+    "Thirty Mighty Men Ministries, CLEAN, Donovan Anderson, 30mmm, 30 Mighty Men,",
 };
 
 export default function RootLayout({ children }) {

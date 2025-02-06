@@ -8,12 +8,12 @@ export default function Terms() {
     <>
       <Head>
         <title>
-          Terms of Service for the Clean Program&apos;s Learning Management
+          Terms of Service for the CLEAN Program&apos;s Learning Management
           System
         </title>
         <meta
           name="description"
-          content="Terms of Service for Clean LMS provided by Thirty Mighty Men Ministries"
+          content="Terms of Service for CLEAN LMS provided by Thirty Mighty Men Ministries"
         />
       </Head>
       <div className="container max-w-5xl p-6 mx-auto">
