@@ -2,36 +2,14 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function VideoBackground({ videoSources }) {
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+const VideoBackground = ({ videoSources }) => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const [videoAspect, setVideoAspect] = useState(null);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [videoAspect, setVideoAspect] = useState(16 / 9);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const handleDesktopVideo = () => {
-    const videoElement = videoRef.current;
-    const container = containerRef.current;
-
-    if (!videoElement || !container) return;
-
-    videoElement.style.width = "100%";
-    videoElement.style.height = "100%";
-    videoElement.style.objectFit = "cover";
-    videoElement.style.objectPosition = "center center";
-  };
-
-  const handleMobileVideo = useCallback(() => {
+  const handleVideo = useCallback(() => {
     const videoElement = videoRef.current;
     const container = containerRef.current;
 
@@ -42,21 +20,21 @@ export default function VideoBackground({ videoSources }) {
     setIsVideoLoaded(true);
 
     const updateVideoDimensions = () => {
-      const containerAspect = container.clientWidth / container.clientHeight;
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
 
-      if (containerAspect > aspectRatio) {
+      if (containerWidth / containerHeight > aspectRatio) {
         videoElement.style.width = "100%";
         videoElement.style.height = "auto";
-        const heightDiff =
-          (container.clientWidth / aspectRatio - container.clientHeight) / 2;
-        videoElement.style.transform = `translateY(-${heightDiff}px)`;
       } else {
         videoElement.style.width = "auto";
         videoElement.style.height = "100%";
-        const widthDiff =
-          (container.clientHeight * aspectRatio - container.clientWidth) / 2;
-        videoElement.style.transform = `translateX(-${widthDiff}px)`;
       }
+
+      videoElement.style.position = "absolute";
+      videoElement.style.top = "50%";
+      videoElement.style.left = "50%";
+      videoElement.style.transform = "translate(-50%, -50%)";
     };
 
     updateVideoDimensions();
@@ -65,42 +43,30 @@ export default function VideoBackground({ videoSources }) {
   }, []);
 
   useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
-
-    const handleLoadedMetadata = isMobile
-      ? handleMobileVideo
-      : handleDesktopVideo;
-    videoElement.addEventListener("loadedmetadata", handleLoadedMetadata);
-    return () =>
-      videoElement.removeEventListener("loadedmetadata", handleLoadedMetadata);
-  }, [isMobile, handleMobileVideo]);
+    handleVideo();
+  }, [handleVideo]);
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden pointer-events-none"
       ref={containerRef}
+      className="absolute inset-0 overflow-hidden pointer-events-none"
     >
-      <div className="relative w-full h-full">
-        <video
-          ref={videoRef}
-          className={
-            isMobile
-              ? "absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
-              : "absolute w-full h-full object-cover"
-          }
-          autoPlay
-          muted
-          playsInline
-          loop
-          preload="auto"
-        >
-          <source src={videoSources[currentVideoIndex]} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        {!isVideoLoaded && <div className="absolute inset-0" />}
-        <div className="absolute inset-0 bg-black bg-opacity-[5%]" />
-      </div>
+      <video
+        ref={videoRef}
+        className="absolute object-cover w-full h-full"
+        autoPlay
+        muted
+        playsInline
+        loop
+        preload="auto"
+      >
+        <source src={videoSources[currentVideoIndex]} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      {!isVideoLoaded && <div className="absolute inset-0" />}
+      <div className="absolute inset-0 bg-black bg-opacity-[5%]" />
     </div>
   );
-}
+};
+
+export default VideoBackground;
