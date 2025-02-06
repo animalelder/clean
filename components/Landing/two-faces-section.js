@@ -2,7 +2,10 @@ import Image from "next/image";
 
 export function TwoFacesSection() {
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-gray-100">
+    <section
+      className="py-24 bg-gradient-to-b from-gray-50 to-gray-100"
+      id="TwoFaces"
+    >
       <div className="container max-w-5xl px-4 mx-auto">
         {/* Header with visual emphasis - using decorative underline to reinforce importance */}
         <div className="mb-16 text-center">

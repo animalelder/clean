@@ -45,7 +45,7 @@ export default function LandingPage() {
       </Head>
       <div className="min-h-screen">
         <HeroSection />
-        {!isMobile && <TwoFacesSection />}
+        {!isMobile && <TwoFacesSection  id="TwoFaces"/>}
         <ChurchRoleSection isMobile={isMobile} />
         {!isMobile && <MetricsDashboard />}
         {/* DO NOT DELETE -  This component will be restored in a future version */}
