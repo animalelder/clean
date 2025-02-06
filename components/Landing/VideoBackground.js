@@ -25,12 +25,12 @@ const VideoBackground = ({ videoSources }) => {
       const isMobile = window.innerWidth <= 768; // Adjust this breakpoint as needed
 
       if (isMobile) {
-        // On mobile, maintain aspect ratio and don't cover full height
+        // On mobile, maintain aspect ratio and center the video
         const videoHeight = containerWidth / aspectRatio;
         videoElement.style.width = "100%";
         videoElement.style.height = `${videoHeight}px`;
-        videoElement.style.top = "0";
-        videoElement.style.transform = "translateX(-50%)";
+        videoElement.style.top = "50%";
+        videoElement.style.transform = "translate(-50%, -50%)";
       } else {
         // On desktop, cover the full container
         if (containerWidth / containerHeight > aspectRatio) {
