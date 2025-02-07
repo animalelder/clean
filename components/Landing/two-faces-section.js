@@ -41,11 +41,12 @@ export function TwoFacesSection() {
               </div>
               <div className="relative md:w-1/3 aspect-square h-[300] w-[300]">
                 <Image
-                  src="/images-2/IMG_8371.jpg"
+                  src="/images-2/IMG_8371.png"
                   alt="External Face of CLEAN"
-                  fill
                   style={{ objectFit: "cover" }}
                   priority
+                  width={300}
+                  height={300}
                 />
               </div>
             </div>
@@ -81,10 +82,11 @@ export function TwoFacesSection() {
               </div>
               <div className="relative md:w-1/3 aspect-square h-[300] w-[300]">
                 <Image
-                  src="/images-2/IMG_8365.jpg"
+                  src="/images-2/IMG_8365.png"
                   alt="Internal Face of CLEAN"
-                  fill
                   style={{ objectFit: "cover" }}
+                  width={300}
+                  height={300}
                 />
               </div>
             </div>
