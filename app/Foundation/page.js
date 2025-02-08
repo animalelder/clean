@@ -1,10 +1,6 @@
 import React from "react";
+import devotionalData from "@/sample-data/DevotionalData.json";
 import Divider from "@/components/common/Divider";
-import Footer from "@/components/common/Footer/Footer";
-// import Link from "next/link";
-// import BackLink from "@/components/common/BackLink";
-// local
-import BackButton from "@/components/Foundation/BackButton";
 import BCVT from "@/components/Foundation/BCVT";
 import CompleteLesson from "@/components/Foundation/CompleteLesson";
 import Description from "@/components/Foundation/Description";
@@ -20,18 +16,12 @@ import Title from "@/components/Foundation/Title";
 
 export default function Foundation() {
   return (
-    <div className="flex flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh] w-full">
-      {/* screen container */}
-      <div className="flex  flex-row mr-[2vw] items-start  justify-between gap-x-5">
-        <BackButton />
-        <SidePanel />
-      </div>
-
+    <div className="flex flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh] w-full mt-16">
       <div className="flex flex-col items-center">
         {/* back button */}
 
         {/* main content container */}
-        <div className="flex flex-col md:max-w-7xl lg:max-w-10xl">
+        <div className="flex flex-col mt-24 md:max-w-7xl lg:max-w-10xl">
           {/* text container */}
           <div className="flex flex-col items-start mb-8 bg-white md:flex-col">
             {/* title */}
