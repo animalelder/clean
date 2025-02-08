@@ -9,6 +9,7 @@ import MainLesson from "@/components/Foundation/MainLesson";
 import Quotes from "@/components/Foundation/Quotes";
 import ReadingTime from "@/components/Foundation/ReadingTime";
 import ReflectionBox from "@/components/Foundation/ReflectionBox";
+import ScripturesSection from "@/components/Foundation/ScripturesSection";
 import SectionTitle from "@/components/Foundation/SectionTitle";
 import SidePanel from "@/components/Foundation/SidePanel/SidePanel";
 import SubTitle from "@/components/Foundation/SubTitle";
@@ -17,21 +18,28 @@ import Title from "@/components/Foundation/Title";
 export default function Foundation() {
   return (
     <div className="flex flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh] w-full mt-16">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center mt-8">
         {/* back button */}
 
         {/* main content container */}
-        <div className="flex flex-col mt-24 md:max-w-7xl lg:max-w-10xl">
+        <div className="flex flex-col md:max-w-7xl lg:max-w-10xl">
           {/* text container */}
           <div className="flex flex-col items-start mb-8 bg-white md:flex-col">
             {/* title */}
             <div className="mt-[3vh]">
-              <Title />
+              <Title
+                weekTitle={devotionalData[1].weekTitle}
+                dayTitle={devotionalData[1].dayTitle}
+                daySubtitle={devotionalData[1].daySubtitle}
+              />
             </div>
 
             {/* sub title and pill status */}
             <div className="mt-[1vh] mb-[2vh]">
-              <SubTitle />
+              <SubTitle
+                week={devotionalData[1].week}
+                day={devotionalData[1].day}
+              />
             </div>
 
             {/* image with play button */}
@@ -43,29 +51,28 @@ export default function Foundation() {
             <div className="flex justify-center w-full">
               <Quotes />
             </div>
-            {/* description */}
+            {/* Scriptures section */}
             <div className="flex justify-center w-full mb-[3vh]">
-              <Description />
+              <ScripturesSection scriptures={devotionalData[1].Scriptures} />
             </div>
-            {/* Book, Chapter, Verse, Translation */}
-            <div className="flex justify-center w-full">
-              <BCVT />
-            </div>
-            {/* Section Title */}
-            <div className="flex w-full justify-left mt-[5vh]">
+
+            {/* Section Title -- RETAIN: may be needed for repositioning Day Title */}
+            {/* <div className="flex w-full justify-left mt-[5vh]">
               <SectionTitle />
-            </div>
+            </div> */}
             {/* reading estimate */}
             <div className="flex w-full justify-left mt-[1vh]">
-              <ReadingTime />
+              <ReadingTime devotionText={devotionalData[1].devotionText} />
             </div>
             {/* Text */}
             <div className="flex w-full justify-left mt-[3vh]">
-              <MainLesson />
+              <MainLesson devotionText={devotionalData[1].devotionText} />
             </div>
             {/* Reflection box */}
             <div className="flex w-full justify-center mt-[6vh] ">
-              <ReflectionBox />
+              <ReflectionBox
+                reflectionQuestion={devotionalData[1].reflectionQuestion}
+              />
             </div>
 
             {/* Divider */}
