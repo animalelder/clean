@@ -1,9 +1,13 @@
-export default function YouTubeVideo({ videoId }) {
+import getYouTubeVideoId from "@/lib/getYouTubeVideoId";
+
+export default function YouTubeVideo({ videoURL }) {
+  const videoId = getYouTubeVideoId(videoURL);
+
   return (
-    <div className="relative w-full pt-[56.25%]">
+    <div className="relative w-full h-full pt-[56.25%]">
       <iframe
-        width="560"
-        height="315"
+        width="500"
+        height="500"
         src={`https://www.youtube-nocookie.com/embed/${videoId}`}
         title="YouTube video player"
         frameBorder="0"

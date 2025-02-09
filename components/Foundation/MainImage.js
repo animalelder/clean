@@ -4,7 +4,7 @@ import Link from "next/link";
 import ImageSrc from "../../public/Jesus Washing Disciples Feet-full.png";
 import PlayButton from "./PlayButton";
 
-export default function MainImage() {
+export default function MainImage({ videoURL }) {
   return (
     <div className="relative w-3/5 mx-auto shadow-sm max-xs:w-full max-xs:mx-0">
       <Image
@@ -16,7 +16,7 @@ export default function MainImage() {
         className="rounded-lg max-h-[55vh] brightness-50"
       />
       <div className="absolute inset-0 flex items-center justify-center">
-        <Link href="/">
+        <Link href={videoURL} target="_blank">
           <PlayButton />
         </Link>
       </div>
