@@ -1,3 +1,4 @@
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import YouTubeVideo from "../common/YouTubeVideoEmbedding";
 
@@ -26,43 +27,39 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Right Column: Founder's Bio */}
+          {/* Right Column: Ministry Description */}
           <div className="space-y-6">
-            <h3 className="text-2xl font-semibold">Dr. Donovan Anderson</h3>
+            <h3 className="text-2xl font-semibold">
+              WATCH THE SERMON THAT STARTED IT ALL
+            </h3>
+
             <p className="text-muted-foreground">
-              Founder of 30MMM, Dr. Anderson combines academic excellence with a
-              passion for ministry:
+              Discover the heart behind Thirty Mighty Men Ministries and the
+              transformative CLEAN program. In this powerful sermon delivered at
+              King&apos;s City Church in Houston, TX, led by Pastor Dayo, Dr.
+              Donovan Anderson shares the vision and mission that drive our
+              ministry.
             </p>
-            <ul className="space-y-4 text-sm text-muted-foreground">
-              <li>
-                <strong>Education:</strong> BA & MA in History (Howard
-                University), PhD in City and Regional Planning (UNC Chapel
-                Hill), MA from Wesley Theological Seminary
-              </li>
-              <li>
-                <strong>Awards:</strong> Harry Hoosier Spirit Award, Margaret
-                Pittman Award in Urban Ministry
-              </li>
-              <li>
-                <strong>Ministry Experience:</strong> Small group leader at Zion
-                Church, Brothers-in-Discipleship program participant,
-                Deacon-in-Training
-              </li>
-              <li>
-                <strong>Community Engagement:</strong> Fellow at Wesley
-                Theological Seminary, Ministry Incubators Coaching Program
-                participant
-              </li>
-            </ul>
+
             <p className="text-muted-foreground">
-              Dr. Anderson founded Thirty Mighty Men Ministries to equip men to
-              grow into the leaders, husbands, and fathers God intended them to
-              be, inspiring and empowering them to live lives of integrity,
-              purpose, and faith.
+              This video offers a firsthand look at the principles and practices
+              that make CLEAN a life-changing experience for men. If you&apos;re
+              curious about how we help men rise above challenges and embrace a
+              life of purpose, this is a must-watch.
             </p>
+
+            <div className="space-y-2">
+              <h4 className="text-lg font-semibold">
+                Ready to see the impact of CLEAN?
+              </h4>
+              <p className="flex items-center gap-2 font-semibold">
+                <ArrowLeft className="w-5 h-5" /> Watch the Video Now
+              </p>
+            </div>
+
             <div className="pt-4">
               <Link
-                href="/full-bio"
+                href="/founders-bio"
                 className="inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-md bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
               >
                 Read Full Bio
@@ -74,3 +71,5 @@ export function AboutSection() {
     </section>
   );
 }
+
+export default AboutSection;

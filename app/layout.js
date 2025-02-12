@@ -10,7 +10,7 @@ export const metadata = {
   title: "CLEAN: A Thirty Mighty Men Ministries Program",
   description: "CLEAN: A Thirty Mighty Men Ministries Program",
   keywords:
-    "Thirty Mighty Men Ministries, CLEAN, Donovan Anderson, 30mmm, 30 Mighty Men,",
+    "30 Men Ministries, the-carpenters-son, thecleanprogram, Donovan Anderson",
 };
 
 export default function RootLayout({ children }) {
