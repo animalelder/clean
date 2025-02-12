@@ -34,8 +34,9 @@ const VideoBackground = ({ videoSources }) => {
       } else {
         // On desktop, cover the full container
         if (containerWidth / containerHeight > aspectRatio) {
-          videoElement.style.width = "100%";
+          videoElement.style.width = "100vw";
           videoElement.style.height = "auto";
+          videoElement.style.overflow = "clip";
         } else {
           videoElement.style.width = "auto";
           videoElement.style.height = "100%";
@@ -57,11 +58,11 @@ const VideoBackground = ({ videoSources }) => {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 overflow-hidden pointer-events-none"
+      className="absolute inset-0 pointer-events-none overflow-clip"
     >
       <video
         ref={videoRef}
-        className="absolute object-cover w-full left-1/2"
+        className="absolute inset-0 object-cover w-full h-full overflow-y-clip left-1/2"
         autoPlay
         muted
         playsInline

@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import VideoBackground from "./VideoBackground";
 
 export function HeroSection() {
-  const videoSources = ["/videos/Hero Video Corrected.mp4"];
+  const videoSources = ["/videos/hero_video3.mp4"];
 
   return (
-    <section className="relative min-h-[100vh] flex flex-col justify-end text-center w-full">
+    <section className="relative mt-[85px] flex flex-col justify-end w-full min-h-[100dvh] text-center">
       <VideoBackground videoSources={videoSources} />
       <div className="container relative z-10 px-4 mx-auto mb-8">
         <p className="max-w-3xl mx-auto mb-6 text-lg italic text-black md:text-white sm:text-xl md:text-2xl lg:text-3xl">
@@ -21,7 +20,7 @@ export function HeroSection() {
               .scrollIntoView({ behavior: "smooth" });
           }}
         >
-          <span className="text-base font-medium text-black md:text-white sm:text-lg">
+          <span className="mb-6 text-base font-medium text-black md:text-white sm:text-lg">
             Take the Step
           </span>
           <span className="text-black md:text-white animate-bounce">↓</span>

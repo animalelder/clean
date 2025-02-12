@@ -141,13 +141,14 @@ export default function NavBar() {
                 src={logo || "/placeholder.svg"}
                 alt="Thirty Mighty Men Ministries Logo"
                 width={35}
-                height={25}
+                height={35}
               />
               <Image
                 src="/images-2/Thirty Mighty Men Ministries - text logo.png"
                 alt="Thirty Mighty Men Ministries Logo"
-                width={175}
-                height={125}
+                className="w-auto h-fit max-w-[175px]"
+                width={602}
+                height={169}
               />
             </div>
           </Link>
