@@ -1,14 +1,8 @@
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Alexandria } from "next/font/google";
-import "./globals.css";
 import Footer from "@/components/common/Footer/Footer";
 import NavBar from "@/components/common/NavBar";
+import "./globals.css";
 
 const alexandria = Alexandria({ subsets: ["latin"], display: "swap" });
 
