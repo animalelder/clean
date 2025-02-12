@@ -29,7 +29,7 @@ export async function POST(req) {
     const mailOptions = {
       from: process.env.EMAIL_USER, // Gmail requires the 'from' to match the authenticated user
       to: process.env.EMAIL_TO,
-      subject: "Carpenter's Son: Contact Form",
+      subject: "CLEAN: Contact Form",
       text: `
         Name: ${name}
         Email: ${email}
@@ -58,7 +58,7 @@ export async function POST(req) {
         details: error.message,
         code: error.code,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

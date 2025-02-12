@@ -86,7 +86,7 @@ export default function ContactPage() {
             </h2>
 
             <p className="mb-6 text-lg text-description-gray">
-              Your message has been received. We'll get back to you as soon as
+              Your message has been received. We&apos;ll get back to you as soon as
               possible.
             </p>
 
