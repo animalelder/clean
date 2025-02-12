@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import YouTubeVideo from "../common/YouTubeVideoEmbedding";
+import YouTubeVideo from "./YouTubeVideoPlayerv2";
 
 export function AboutSection() {
   return (

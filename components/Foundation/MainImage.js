@@ -1,25 +1,23 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ImageSrc from "../../public/Jesus Washing Disciples Feet-full.png";
+import YoutubeVideo from "../Landing/YouTubeVideoPlayerv2";
 import PlayButton from "./PlayButton";
 
-export default function MainImage({ videoURL }) {
+export default function MainImage({ videoId }) {
   return (
-    <div className="relative w-3/5 mx-auto shadow-sm max-xs:w-full max-xs:mx-0">
-      <Image
-        src={ImageSrc}
-        alt="Jesus Washing Disciples Feet"
-        layout="responsive"
-        width={670}
-        height={327}
-        className="rounded-lg max-h-[55vh] brightness-50"
-      />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <Link href={videoURL} target="_blank">
-          <PlayButton />
-        </Link>
-      </div>
+    <div>
+      <iframe
+        id="player"
+        type="text/html"
+        width="640"
+        height="390"
+        src={`http://www.youtube.com/embed/${videoId}?enablejsapi=1`}
+        frameborder="0"
+      ></iframe>
     </div>
   );
 }

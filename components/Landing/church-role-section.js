@@ -1,5 +1,5 @@
 import Link from "next/link";
-import YouTubeVideo from "../common/YouTubeVideoEmbedding";
+import YouTubeVideo from "./YouTubeVideoPlayerv2";
 
 export function ChurchRoleSection() {
   return (

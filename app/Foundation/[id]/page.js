@@ -3,7 +3,6 @@ import React from "react";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import Divider from "@/components/common/Divider";
-import YouTubeVideo from "@/components/common/YouTubeVideoEmbedding";
 import BCVT from "@/components/Foundation/BCVT";
 import CompleteLesson from "@/components/Foundation/CompleteLesson";
 import Description from "@/components/Foundation/Description";
@@ -63,9 +62,8 @@ export default async function Foundation({ params }) {
               </div>
 
               <div className="flex justify-center w-full">
-                <div className="flex items-center justify-center w-1/2">
-                  <YouTubeVideo videoURL={devotionalData.videoURL} />
-                  {/* <MainImage videoURL={devotionalData.videoURL} /> */}
+                <div className="flex items-center justify-center">
+                  <MainImage videoId={devotionalData.videoId} />
                 </div>
               </div>
 
