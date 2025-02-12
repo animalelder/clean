@@ -53,6 +53,7 @@ export default function NavBar() {
       "/Settings",
       "/payment",
       "/Contact",
+      "/donate",
     ],
     default: [],
   };
@@ -96,6 +97,7 @@ export default function NavBar() {
     <>
       <NavLink href="/">Home</NavLink>
       <AboutDropdown />
+      <NavLink href="/donate">Donate</NavLink>
     </>
   );
 
