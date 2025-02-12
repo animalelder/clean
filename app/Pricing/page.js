@@ -35,7 +35,7 @@ const PricingPage = () => {
         "Digital Materials: Electronic book (eBook) included with your membership.",
         "Progress Tracking Tools: Access to tools to monitor your growth and goals throughout the program.",
         "Bonus Content: Exclusive video content, such as interviews with guest speakers and advanced teachings.",
-        "Upsell Options: Group Coaching Add-On ($99/month) or One-on-One Coaching Add-On ($199/session).",
+        "Available Additions: Group Coaching Add-On ($99/month) or One-on-One Coaching Add-On ($199/session).",
       ],
       price: "$99",
       link: "/wooden-vessel.webp",
