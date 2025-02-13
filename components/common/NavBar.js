@@ -78,7 +78,7 @@ export default function NavBar() {
   const AboutDropdown = () => (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center transition-colors hover:text-gray-600">
-        About {!isMobile && <ChevronDown size={16} className="ml-1" />}
+        About
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
@@ -100,6 +100,27 @@ export default function NavBar() {
     </DropdownMenu>
   );
 
+  const ProgramsDropdown = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex items-center transition-colors hover:text-gray-600">
+        Programs
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        {programsList.map((program) => (
+          <DropdownMenuItem key={program.name} asChild>
+            <Link href={program.href} target="_blank">
+              {program.name}
+            </Link>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
+  const programsList = [
+    { name: "Carpenter's Son Program", href: "https://the-carpenters-son.org" },
+  ];
+
   const aboutLinks = [
     { name: "About the Program", href: "/about" },
     { name: "Clean for Individuals", href: "/individuals" },
@@ -110,8 +131,8 @@ export default function NavBar() {
 
   const navLinks = (
     <>
-      <NavLink href="/">Home</NavLink>
       <AboutDropdown />
+      <ProgramsDropdown />
       <NavLink href="/donate">Donate</NavLink>
     </>
   );
@@ -156,8 +177,8 @@ export default function NavBar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm backdrop-blur-sm">
       <div className="flex items-center justify-between p-4 mx-4 text-black md:mx-10">
-        {/* Left section: Logo and Text */}
-        <div className="flex items-center">
+        {/* Left section: Logo */}
+        <div className="flex items-center w-1/4">
           <Link href="/">
             <div className="flex items-center gap-2">
               <Image
@@ -177,53 +198,59 @@ export default function NavBar() {
           </Link>
         </div>
 
-        {/* Right section: Navigation Links and Buttons */}
-        {!isMobile ? (
-          <div className="flex items-center gap-6">
+        {/* Center section: Navigation Links (desktop only) */}
+        {!isMobile && (
+          <div className="flex items-center justify-center w-1/2 gap-6">
             {navLinks}
-            {renderButtons()}
           </div>
-        ) : (
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="w-6 h-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:w-80">
-              <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              <div className="flex flex-col gap-4 mt-6">
-                <NavLink
-                  href="/"
-                  className="text-sm text-gray-600 hover:text-gray-900"
-                >
-                  Home
-                </NavLink>
-                <div className="flex flex-col gap-2">
-                  <h4 className="text-sm font-medium">About</h4>
-                  {aboutLinks.map((item) => (
-                    <NavLink
-                      key={item.name}
-                      href={item.href}
-                      className="text-sm text-gray-600 hover:text-gray-900"
-                    >
-                      {item.name}
-                    </NavLink>
-                  ))}
-                </div>
-                <NavLink
-                  href="/donate"
-                  className="text-sm text-gray-600 hover:text-gray-900"
-                >
-                  Donate
-                </NavLink>
-                {renderButtons()}
-              </div>
-            </SheetContent>
-          </Sheet>
         )}
+
+        {/* Right section: Buttons or Mobile Menu */}
+        <div className="flex items-center justify-end w-1/4">
+          {isMobile ? (
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="w-6 h-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-full sm:w-80">
+                <SheetHeader>
+                  <SheetTitle>Menu</SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-4 mt-6">
+                  <NavLink
+                    href="/"
+                    className="text-sm text-gray-600 hover:text-gray-900"
+                  >
+                    Home
+                  </NavLink>
+                  <div className="flex flex-col gap-2">
+                    <h4 className="text-sm font-medium">About</h4>
+                    {aboutLinks.map((item) => (
+                      <NavLink
+                        key={item.name}
+                        href={item.href}
+                        className="text-sm text-gray-600 hover:text-gray-900"
+                      >
+                        {item.name}
+                      </NavLink>
+                    ))}
+                  </div>
+                  <NavLink
+                    href="/donate"
+                    className="text-sm text-gray-600 hover:text-gray-900"
+                  >
+                    Donate
+                  </NavLink>
+                  {renderButtons()}
+                </div>
+              </SheetContent>
+            </Sheet>
+          ) : (
+            <div className="flex items-center gap-4">{renderButtons()}</div>
+          )}
+        </div>
       </div>
     </nav>
   );
