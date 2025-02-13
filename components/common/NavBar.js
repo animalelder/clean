@@ -6,13 +6,20 @@ import { ChevronDown, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export default function NavBar() {
   const [isMobile, setIsMobile] = useState(false);
@@ -71,7 +78,7 @@ export default function NavBar() {
   const AboutDropdown = () => (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center transition-colors hover:text-gray-600">
-        About <ChevronDown size={16} className="ml-1" />
+        About {!isMobile && <ChevronDown size={16} className="ml-1" />}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
@@ -93,6 +100,14 @@ export default function NavBar() {
     </DropdownMenu>
   );
 
+  const aboutLinks = [
+    { name: "About the Program", href: "/about" },
+    { name: "Clean for Individuals", href: "/individuals" },
+    { name: "Clean for Churches", href: "/churches" },
+    { name: "Founder's Bio", href: "/founders-bio" },
+    { name: "Scholarship", href: "/Scholarship" },
+  ];
+
   const navLinks = (
     <>
       <NavLink href="/">Home</NavLink>
@@ -105,9 +120,12 @@ export default function NavBar() {
     if (routes.landing.includes(pathname)) {
       return (
         <NavLink href="/Pricing">
-          <button className="px-4 py-2 bg-white border-2 rounded text-primary-red border-primary-red hover:bg-gray-100 focus:outline-none">
+          <Button
+            variant="outline"
+            className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
+          >
             Start Your Journey
-          </button>
+          </Button>
         </NavLink>
       );
     }
@@ -119,14 +137,17 @@ export default function NavBar() {
     return (
       <>
         <NavLink href="/LogIn">
-          <button className="px-4 py-2 bg-white border-2 rounded text-primary-red border-primary-red hover:bg-gray-100 focus:outline-none">
+          <Button
+            variant="outline"
+            className="w-full border-primary-red text-primary-red hover:bg-primary-red hover:text-white"
+          >
             Log In
-          </button>
+          </Button>
         </NavLink>
         <NavLink href="/SignUp">
-          <button className="px-4 py-2 text-white rounded bg-primary-red hover:bg-red-800 focus:outline-none">
+          <Button className="w-full text-white bg-primary-red hover:bg-red-800">
             Sign Up
-          </button>
+          </Button>
         </NavLink>
       </>
     );
@@ -165,13 +186,39 @@ export default function NavBar() {
         ) : (
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <button className="p-2 text-primary-red focus:outline-none">
-                <Menu size={24} />
-              </button>
+              <Button variant="ghost" size="icon">
+                <Menu className="w-6 h-6" />
+              </Button>
             </SheetTrigger>
-            <SheetContent>
-              <div className="flex flex-col items-center gap-6 mt-10 text-xl">
-                {navLinks}
+            <SheetContent side="right" className="w-full sm:w-80">
+              <SheetHeader>
+                <SheetTitle>Menu</SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col gap-4 mt-6">
+                <NavLink
+                  href="/"
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  Home
+                </NavLink>
+                <div className="flex flex-col gap-2">
+                  <h4 className="text-sm font-medium">About</h4>
+                  {aboutLinks.map((item) => (
+                    <NavLink
+                      key={item.name}
+                      href={item.href}
+                      className="text-sm text-gray-600 hover:text-gray-900"
+                    >
+                      {item.name}
+                    </NavLink>
+                  ))}
+                </div>
+                <NavLink
+                  href="/donate"
+                  className="text-sm text-gray-600 hover:text-gray-900"
+                >
+                  Donate
+                </NavLink>
                 {renderButtons()}
               </div>
             </SheetContent>
