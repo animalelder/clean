@@ -44,7 +44,7 @@ export async function POST(req) {
 				last_name: lastName
 			},
 			groups: [
-				"145613058614494607"
+				"145613058614494607", "145423618440955699"
 			]
 		  };
 		
