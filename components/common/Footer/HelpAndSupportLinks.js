@@ -15,6 +15,9 @@ export default function HelpAndSupportLinks() {
       <Link href="/Terms" className="transition-colors hover:text-gray-700">
         Terms of Service
       </Link>
+      <Link href="/newsletter" className="transition-colors hover:text-gray-700">
+        Newsletter
+      </Link>
     </nav>
   );
 }
