@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Icons } from "@/components/ui/icons";
 
-export default function LogIn() {
+export default function Page() {
   return (
     <div className="inset-auto flex flex-col w-screen min-w-[400px] min-h-screen md:flex-row">
       <div className="fixed z-20 py-1 rounded-md max-md:shadow-md bg-white/80 top-2 left-2 before:static "></div>
@@ -172,7 +172,7 @@ export default function LogIn() {
   );
 }
 
-export const Logo = () => {
+const Logo = () => {
   return (
     <svg
       width={120}

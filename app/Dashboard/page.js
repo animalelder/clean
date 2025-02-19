@@ -74,7 +74,7 @@ export default function Dashboard() {
   );
 }
 
-export const NavigationBar = () => {
+const NavigationBar = () => {
   return (
     <nav className="sticky top-0 z-50 flex-auto w-full bg-white">
       <div className="flex items-center px-2 self-stretch h-16 gap-2 lg:gap-3 border-b-2 border-b-[#E3E7ED] bg-white">
@@ -110,7 +110,7 @@ export const NavigationBar = () => {
   );
 };
 
-export const UserSelectCaret = () => {
+const UserSelectCaret = () => {
   return (
     <svg
       width="30"
@@ -131,7 +131,7 @@ export const UserSelectCaret = () => {
   );
 };
 
-export const CalendarIcon = () => {
+const CalendarIcon = () => {
   return (
     <svg
       width="20"
@@ -208,7 +208,7 @@ export const CalendarIcon = () => {
   );
 };
 
-export const DownCaret = () => {
+const DownCaret = () => {
   return (
     <svg
       width="16"
@@ -228,7 +228,7 @@ export const DownCaret = () => {
   );
 };
 
-export const WeekCard = ({ week, status }) => {
+const WeekCard = ({ week, status }) => {
   return (
     <div className="w-[320px] h-[290px] shadow-lg rounded-3xl bg-lesson-card bg-no-repeat bg-top flex-col justify-center items-center">
       <div className="w-full h-[158px]" />
@@ -275,7 +275,7 @@ export const WeekCard = ({ week, status }) => {
 
 // The mobile version of the DonateHero is a MESS
 // TODO: Fix the mobile version of the DonateHero
-export const DonateHero = () => {
+const DonateHero = () => {
   return (
     <>
       <div className="w-[90%] max-w-[1000px] h-80 md:h-60 mx-auto max-md:max-w-[340px] relative bg-donate-mobile bg-top bg-primaryred-900 md:bg-donate-desktop bg-no-repeat md:bg-right justify-self-center rounded-3xl">
