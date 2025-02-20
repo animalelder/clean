@@ -11,7 +11,7 @@ export function HeroSection() {
     <section className="relative mt-[85px] flex flex-col justify-end w-full min-h-[100dvh] text-center">
       <VideoBackground videoSources={videoSources} />
       <div className="container relative z-10 px-4 mx-auto mb-24">
-        <p className="max-w-3xl mx-auto mb-2 text-lg italic text-black md:text-white sm:text-xl md:text-2xl lg:text-3xl">
+        <p className="max-w-3xl mx-auto mb-8 text-lg italic text-black md:text-white sm:text-xl md:text-2xl lg:text-3xl">
           Discover your purpose and grow into the man God designed you to be.
         </p>
         <div className="space-x-3">
