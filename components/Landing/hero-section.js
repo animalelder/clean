@@ -33,10 +33,10 @@ export function HeroSection() {
                 .scrollIntoView({ behavior: "smooth" });
             }}
           >
-            <span className="text-base font-medium text-black md:text-white ">
+            <span className="text-base font-medium text-white ">
               Learn More
             </span>
-            <span className="text-black md:text-white animate-bounce">↓</span>
+            <span className="text-white animate-bounce">↓</span>
           </button>
         </div>
       </div>
