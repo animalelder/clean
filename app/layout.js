@@ -1,8 +1,8 @@
+import "@/app/globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Alexandria } from "next/font/google";
 import Footer from "@/components/common/Footer/Footer";
 import NavBar from "@/components/common/NavBar";
-import "./globals.css";
 
 const alexandria = Alexandria({ subsets: ["latin"], display: "swap" });
 

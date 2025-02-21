@@ -40,7 +40,8 @@ async function getDevotionalData(id) {
 }
 
 // Main page component
-export default async function Foundation({ params }) {
+export default async function Foundation(props) {
+  const params = await props.params;
   try {
     const devotionalData = await getDevotionalData(params.id);
 
