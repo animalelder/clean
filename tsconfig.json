@@ -5,7 +5,7 @@
     },
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "strict": false,
     "noEmit": true,
     "incremental": true,
