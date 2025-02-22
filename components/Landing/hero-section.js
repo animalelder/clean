@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import VideoBackground from "./VideoBackground";
 
 export function HeroSection() {
-  const videoSources = ["/videos/hero_video3.mp4"];
+  const videoSources = ["/videos/hero-3_1080_16-9.mp4"];
 
   return (
     <section className="relative mt-[85px] flex flex-col justify-end w-full min-h-[100dvh] text-center">
