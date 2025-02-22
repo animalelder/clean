@@ -41,6 +41,7 @@ export default function Hero() {
           </p>
           <Link
             href="/LogIn"
+            target="_blank"
             className="block w-full py-2 mb-6 text-center text-white transition duration-300 rounded-md bg-primaryred-700 hover:bg-primaryred-800"
           >
             Complete Your Signup
