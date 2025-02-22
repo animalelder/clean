@@ -55,7 +55,7 @@ export default function Hero() {
             strong.
           </p>
           <CyclingLink
-            urls={calenderUrls}
+            urls={calendarUrls}
             className="block w-full py-2 mb-6 text-center text-white transition duration-300 rounded-md bg-primaryred-700 hover:bg-primaryred-800"
           >
             Schedule My Call
