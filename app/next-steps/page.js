@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CyclingLink } from "@/components/common/CyclingLink";
 
 export default function Hero() {
   return (
@@ -52,13 +53,12 @@ export default function Hero() {
             leader. This is your opportunity to ask questions and get started
             strong.
           </p>
-          <Link
-            href="https://calendar.app.google/mhsKtSg2NA3Bj8qC7"
-            target="_blank"
+          <CyclingLink
+            urls={["https://calendar.app.google/mhsKtSg2NA3Bj8qC7"]}
             className="block w-full py-2 mb-6 text-center text-white transition duration-300 rounded-md bg-primaryred-700 hover:bg-primaryred-800"
           >
             Schedule My Call
-          </Link>
+          </CyclingLink>
 
           <h2 className="mb-2 text-xl font-semibold text-primaryred-600">
             Step 3: Decide If You&apos;re Ready
