@@ -2,6 +2,7 @@ import Link from "next/link";
 import { CyclingLink } from "@/components/common/CyclingLink";
 
 export default function Hero() {
+  const calendarUrls = ["https://calendar.app.google/mhsKtSg2NA3Bj8qC7"];
   return (
     <div
       className="min-h-[600px] bg-cover bg-center mt-20 relative"
@@ -54,7 +55,7 @@ export default function Hero() {
             strong.
           </p>
           <CyclingLink
-            urls={["https://calendar.app.google/mhsKtSg2NA3Bj8qC7"]}
+            urls={calendarUrls}
             className="block w-full py-2 mb-6 text-center text-white transition duration-300 rounded-md bg-primaryred-700 hover:bg-primaryred-800"
           >
             Schedule My Call
