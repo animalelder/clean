@@ -6,9 +6,11 @@
     "@ianvs/prettier-plugin-sort-imports"
   ],
   "importOrder": [
+    "",
+    "^next$",
     "^react$",
     "<THIRD_PARTY_MODULES>",
-    "^(@/app|@/components)(/.*)$",
+    "^(@/app|@/components|@/hooks|@/lib)(/.*)$",
     "^[.]"
   ],
   "importOrderParserPlugins": ["javascript", "jsx"]
