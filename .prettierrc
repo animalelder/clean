@@ -1,12 +1,19 @@
 {
   "singleQuote": false,
+  "tabWidth": 2,
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "always",
+  "singleAttributePerLine": true,
+  "printWidth": 80,
   "semi": true,
   "plugins": [
-    "prettier-plugin-tailwindcss",
-    "@ianvs/prettier-plugin-sort-imports"
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
   ],
+  "tailwindFunctions": ["cn"],
+  "tailwindConfig": "./tailwind.config.js",
   "importOrder": [
-    "",
     "^next$",
     "^react$",
     "<THIRD_PARTY_MODULES>",
