@@ -11,7 +11,7 @@
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,
-    "moduleDetection": "force",
+    "moduleDetection": "auto",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,

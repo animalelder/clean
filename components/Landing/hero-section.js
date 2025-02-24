@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import VideoBackground from "./VideoBackground";
 
+// Replacing the classNames in the first p element will bring in the shimmer text:
+// "max-w-3xl relative before:absolute before:inset-0 before:bg-white before:bg-clip-text bg-blend-hue  mx-auto mb-8 text-lg italic text-transparent bg-gradient-to-b from-yellow-50 via-yellow-400 to-amber-100 animate-shimmer bg-clip-text drop-shadow-[0_35px_35px_rgba(0,0,0,0.75)] sm:text-xl md:text-2xl lg:text-3xl lg:font-medium xl:text-4xl"
+
 export function HeroSection() {
   const videoSources = ["/videos/hero-3_1080_16-9.mp4"];
 

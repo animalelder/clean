@@ -111,10 +111,17 @@ module.exports = {
             opacity: "0",
           },
         },
+        shimmer: {
+          "0%, 100%": { backgroundSize: "100% 100%" },
+          "25%": { backgroundSize: "190% 140%" },
+          "50%": { backgroundSize: "180% 100%" },
+          "75%": { backgroundSize: "140% 190%" },
+        },
       },
       animation: {
         roll: "roll 1.5s ease-in-out infinite",
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        shimmer: "shimmer 6s ease-in-out infinite",
       },
       backgroundPosition: {
         "top-4": "left 20% top 0",
