@@ -56,13 +56,9 @@ const VideoBackground = ({ videoSources }) => {
   }, [handleVideo]);
 
   return (
-    <div
-      ref={containerRef}
-      className="absolute inset-0 pointer-events-none overflow-clip"
-    >
+    <div className="absolute inset-0 pointer-events-none overflow-clip">
       <video
-        ref={videoRef}
-        className="absolute inset-0 object-cover w-full h-full overflow-y-clip left-1/2"
+        className="absolute inset-0 object-cover w-full h-full -translate-x-1/2 overflow-y-clip left-1/2"
         autoPlay
         muted
         playsInline
@@ -72,8 +68,6 @@ const VideoBackground = ({ videoSources }) => {
         <source src={videoSources[currentVideoIndex]} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      {!isVideoLoaded && <div className="absolute inset-0" />}
-      <div className="absolute inset-0 bg-black bg-opacity-[5%]" />
     </div>
   );
 };
