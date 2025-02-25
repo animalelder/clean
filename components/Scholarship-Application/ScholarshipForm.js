@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 const formSections = [
   "Personal Information",
+  "How Did You Find Us?",
   "Family and Relationship Status",
   "Spiritual Journey and Family Background",
   "Church Engagement",
@@ -156,6 +157,7 @@ export default function ScholarshipForm() {
                 <Input
                   id="age"
                   type="number"
+                  defaultValue={18}
                   {...register("age", { required: true, min: 18 })}
                 />
                 {errors.age && (
@@ -222,14 +224,14 @@ export default function ScholarshipForm() {
               </div>
               <div>
                 <Label>Sexual Orientation</Label>
-                <RadioGroup defaultValue="Heterosexual">
+                <RadioGroup defaultValue="heterosexual">
                   {[
                     "heterosexual",
-                    "Homosexual",
-                    "Bisexual",
-                    "LBGTQ+",
-                    "Prefer not to say",
-                    "Other",
+                    "homosexual",
+                    "bisexual",
+                    "lgbtq+",
+                    "prefer not to say",
+                    "other",
                   ].map((option) => (
                     <div
                       className="flex items-center space-x-2"
@@ -276,6 +278,37 @@ export default function ScholarshipForm() {
         return (
           <>
             <h2 className="mb-4 text-2xl font-bold">
+              How did you hear about the CLEAN program?
+            </h2>
+            <div className="space-y-4">
+              <Select {...register("discoveryMethod")}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select below" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[
+                    "Social Media",
+                    "Church",
+                    "Friend/Family",
+                    "Online Search",
+                    "Other",
+                  ].map((option) => (
+                    <SelectItem
+                      key={option}
+                      value={option.toLowerCase()}
+                    >
+                      {option}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <h2 className="mb-4 text-2xl font-bold">
               Family and Relationship Status
             </h2>
             <div className="space-y-4">
@@ -315,7 +348,8 @@ export default function ScholarshipForm() {
                 </Label>
                 <Input
                   id="numOfMarriages"
-                  type="date"
+                  type="number"
+                  defaultValue={0}
                   {...register("numOfMarriages", { required: true })}
                 />
               </div>
