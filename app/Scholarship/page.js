@@ -12,12 +12,12 @@ import {
 
 export default function ScholarshipPage() {
   return (
-    <div className="container px-4 py-8 mx-auto">
-      <h1 className="mb-8 text-4xl font-bold text-center">
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="mb-8 text-center text-4xl font-bold">
         CLEAN for All Scholarship Program
       </h1>
 
-      <div className="grid gap-8 mb-12 md:grid-cols-2">
+      <div className="mb-12 grid gap-8 md:grid-cols-2">
         <div>
           <h2 className="mb-4 text-2xl font-semibold">Our Mission</h2>
           <p className="mb-4">
@@ -31,7 +31,7 @@ export default function ScholarshipPage() {
             who cannot afford the program but demonstrates a strong commitment
             to personal growth.
           </p>
-          <Button asChild>
+          <Button aschild>
             <Link href="/Scholarship-Application">Apply for a Scholarship</Link>
           </Button>
         </div>
@@ -49,7 +49,7 @@ export default function ScholarshipPage() {
       <h2 className="mb-4 text-2xl font-semibold">
         Benefits of Our Scholarship Program
       </h2>
-      <div className="grid gap-6 mb-12 md:grid-cols-3">
+      <div className="mb-12 grid gap-6 md:grid-cols-3">
         {[
           {
             title: "Increased Accessibility",
@@ -78,9 +78,12 @@ export default function ScholarshipPage() {
         ))}
       </div>
 
-      <div id="apply" className="p-8 mb-12 bg-gray-100 rounded-lg">
+      <div
+        id="apply"
+        className="mb-12 rounded-lg bg-gray-100 p-8"
+      >
         <h2 className="mb-4 text-2xl font-semibold">How to Apply</h2>
-        <ol className="mb-4 space-y-2 list-decimal list-inside">
+        <ol className="mb-4 list-inside list-decimal space-y-2">
           <li>
             Submit a brief form explaining your financial need and why you want
             to join CLEAN.
@@ -91,7 +94,10 @@ export default function ScholarshipPage() {
             tier or higher.
           </li>
         </ol>
-        <Link asChild href="/Scholarship-Application">
+        <Link
+          aschild
+          href="/Scholarship-Application"
+        >
           <Button>Start Your Application</Button>
         </Link>
       </div>
