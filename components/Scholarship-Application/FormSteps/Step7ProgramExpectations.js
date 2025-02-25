@@ -1,7 +1,12 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function Step7ProgramExpectations() {
+export default function Step7ProgramExpectations({
+  register,
+  watch,
+  setValue,
+  errors,
+}) {
   return (
     <>
       <h2 className="mb-4 text-2xl font-bold">

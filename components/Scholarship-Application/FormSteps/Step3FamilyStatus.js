@@ -39,6 +39,7 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
         setValue(`child${i}CurrentMarriage`, "");
         setValue(`child${i}PreviousRelationship`, "");
         setValue(`child${i}OtherRelationship`, "");
+        setValue(`child${i}OtherPreviousRelationship`, "");
       }
     }
   }, [childrenCount, setValue, childForms.length]);
@@ -66,6 +67,16 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
     if (value === "no") {
       setValue("childrenCount", "0");
       setChildForms([]);
+    }
+  };
+
+  // Helper function for handling relationship changes
+  const handleRelationshipChange = (childNumber, value) => {
+    setValue(`child${childNumber}Relationship`, value);
+
+    // Clear "other" field if not needed
+    if (value !== "other") {
+      setValue(`child${childNumber}OtherRelationship`, "");
     }
   };
 
@@ -201,8 +212,8 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
             <Input
               id="childrenCount"
               type="number"
-              min="1"
-              defaultValue="1"
+              min="0"
+              defaultValue="0"
               {...register("childrenCount", {
                 required: hasChildren === "yes",
                 min: 1,
@@ -265,22 +276,26 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
                     )}
                   </div>
 
-                  {/* Relationship to you */}
+                  {/* Relationship to you - FIXED VERSION */}
                   <div>
                     <Label className="mb-2 block">Relationship to You:</Label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <RadioGroup
+                      defaultValue=""
+                      value={watch(`child${childNumber}Relationship`) || ""}
+                      onValueChange={(value) =>
+                        handleRelationshipChange(childNumber, value)
+                      }
+                      className="space-y-2"
+                    >
                       {["Biological", "Adopted", "Stepchild", "Other"].map(
                         (type) => (
                           <div
                             key={`${childNumber}-${type}`}
                             className="flex items-center space-x-2"
                           >
-                            <Checkbox
-                              id={`child${childNumber}Relationship${type}`}
+                            <RadioGroupItem
                               value={type.toLowerCase()}
-                              {...register(`child${childNumber}Relationship`, {
-                                required: true,
-                              })}
+                              id={`child${childNumber}Relationship${type}`}
                             />
                             <Label
                               htmlFor={`child${childNumber}Relationship${type}`}
@@ -290,7 +305,7 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
                           </div>
                         ),
                       )}
-                    </div>
+                    </RadioGroup>
                     {errors[`child${childNumber}Relationship`] && (
                       <span className="mt-1 block text-sm text-red-500">
                         Please select a relationship
@@ -322,9 +337,10 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
                     </Label>
                     <RadioGroup
                       defaultValue="no"
-                      {...register(`child${childNumber}CurrentMarriage`, {
-                        required: true,
-                      })}
+                      value={watch(`child${childNumber}CurrentMarriage`) || ""}
+                      onValueChange={(value) =>
+                        setValue(`child${childNumber}CurrentMarriage`, value)
+                      }
                       className="flex space-x-4"
                     >
                       <div className="flex items-center space-x-2">
@@ -348,6 +364,11 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
                         </Label>
                       </div>
                     </RadioGroup>
+                    {errors[`child${childNumber}CurrentMarriage`] && (
+                      <span className="text-sm text-red-500">
+                        Please make a selection
+                      </span>
+                    )}
                   </div>
 
                   {/* If not from current marriage, ask about relationship source */}
@@ -358,14 +379,23 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
                       </Label>
                       <RadioGroup
                         defaultValue=""
-                        {...register(
-                          `child${childNumber}PreviousRelationship`,
-                          {
-                            required:
-                              watch(`child${childNumber}CurrentMarriage`) ===
-                              "no",
-                          },
-                        )}
+                        value={
+                          watch(`child${childNumber}PreviousRelationship`) || ""
+                        }
+                        onValueChange={(value) => {
+                          setValue(
+                            `child${childNumber}PreviousRelationship`,
+                            value,
+                          );
+
+                          // Clear "other" field if not needed
+                          if (value !== "other") {
+                            setValue(
+                              `child${childNumber}OtherPreviousRelationship`,
+                              "",
+                            );
+                          }
+                        }}
                         className="space-y-2"
                       >
                         <div className="flex items-center space-x-2">
@@ -398,6 +428,11 @@ const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
                           </Label>
                         </div>
                       </RadioGroup>
+                      {errors[`child${childNumber}PreviousRelationship`] && (
+                        <span className="text-sm text-red-500">
+                          Please make a selection
+                        </span>
+                      )}
 
                       {/* Show "please specify" if Other is selected */}
                       {watch(`child${childNumber}PreviousRelationship`) ===

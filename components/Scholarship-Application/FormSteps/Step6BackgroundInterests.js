@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function Step6BackgroundInterests() {
+export default function Step6BackgroundInterests({ register, watch, setValue, errors }) {
   return (
     <>
       <h2 className="mb-4 text-2xl font-bold">Background and Interests</h2>
