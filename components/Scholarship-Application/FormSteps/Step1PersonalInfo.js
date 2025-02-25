@@ -62,11 +62,17 @@ const Step1PersonalInfo = ({ register, errors }) => {
             </span>
           )}
         </div>
-        <div>
-          <Label>Gender</Label>
-          <RadioGroup defaultValue="male">
-            {["Male", "Female", "Non-Binary", "Prefer not to say", "Other"].map(
-              (option) => (
+        <div className="flex flex-row space-x-10">
+          <div>
+            <Label>Gender</Label>
+            <RadioGroup defaultValue="male">
+              {[
+                "Male",
+                "Female",
+                "Non-Binary",
+                "Prefer not to say",
+                "Other",
+              ].map((option) => (
                 <div
                   className="flex items-center space-x-2"
                   key={option}
@@ -80,41 +86,86 @@ const Step1PersonalInfo = ({ register, errors }) => {
                     {option}
                   </Label>
                 </div>
-              ),
-            )}
-          </RadioGroup>
+              ))}
+            </RadioGroup>
+          </div>
+          <div>
+            <Label>Ethinicity</Label>
+            <RadioGroup defaultValue="African American/Black">
+              {[
+                "African American/Black",
+                "European American",
+                "Hispanic/Latino",
+                "East Asian",
+                "Middle Eastern",
+                "Indigenous American",
+                "Multiracial",
+                "Prefer not to say",
+                "Other",
+              ].map((option) => (
+                <div
+                  className="flex items-center space-x-2"
+                  key={option}
+                >
+                  <RadioGroupItem
+                    value={option.toLowerCase()}
+                    id={`ethnicity-${option.toLowerCase()}`}
+                    {...register("ethnicity")}
+                  />
+                  <Label htmlFor={`ethnicity-${option.toLowerCase()}`}>
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+          <div>
+            <Label>Military Service</Label>
+            <RadioGroup defaultValue="No">
+              {["Yes - active duty", "Yes - reserves", "No"].map((option) => (
+                <div
+                  className="flex items-center space-x-2"
+                  key={option}
+                >
+                  <RadioGroupItem
+                    value={option.toLowerCase()}
+                    id={`militaryService-${option.toLowerCase()}`}
+                    {...register("militaryService")}
+                  />
+                  <Label htmlFor={`militaryService-${option.toLowerCase()}`}>
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+          <div>
+            <Label>Household Income</Label>
+            <RadioGroup defaultValue="No">
+              {[
+                "Less than $30,000",
+                "$30,000 - $50,000",
+                "$50,000 - $75,000",
+                "$75,000 - $100,000",
+                "More than $100,000",
+              ].map((option) => (
+                <div
+                  className="flex items-center space-x-3"
+                  key={option}
+                >
+                  <RadioGroupItem
+                    value={option.toLowerCase()}
+                    id={`income-${option.toLowerCase()}`}
+                    {...register("income")}
+                  />
+                  <Label htmlFor={`income-${option.toLowerCase()}`}>
+                    {option}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
         </div>
-        <div>
-          <Label>Ethinicity</Label>
-          <RadioGroup defaultValue="African American/Black">
-            {[
-              "African American/Black",
-              "European American",
-              "Hispanic/Latino",
-              "East Asian",
-              "Middle Eastern",
-              "Indigenous American",
-              "Multiracial",
-              "Prefer not to say",
-              "Other",
-            ].map((option) => (
-              <div
-                className="flex items-center space-x-2"
-                key={option}
-              >
-                <RadioGroupItem
-                  value={option.toLowerCase()}
-                  id={`ethnicity-${option.toLowerCase()}`}
-                  {...register("ethnicity")}
-                />
-                <Label htmlFor={`ethnicity-${option.toLowerCase()}`}>
-                  {option}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-        </div>
-        {/* Other fields from the original step 1 */}
       </div>
     </>
   );
