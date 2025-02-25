@@ -1,17 +1,22 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner"; // Import toast if available, or add a simple alert instead
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function Step8AdditionalInfo() {}
+export default function Step8AdditionalInfo() {
+  return (
+    <>
+      <h2 className="mb-4 text-2xl font-bold">Additional Information</h2>
+      <div className="space-y-4">
+        <div>
+          <Label htmlFor="additionalInfo">
+            Is there anything else you&apos;d like us to know about you?
+          </Label>
+          <Textarea
+            id="additionalInfo"
+            {...register("additionalInfo")}
+            className="min-h-32"
+          />
+        </div>
+      </div>
+    </>
+  );
+}
