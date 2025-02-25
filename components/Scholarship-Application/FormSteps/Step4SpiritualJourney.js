@@ -303,7 +303,7 @@ const SpiritualJourneySection = ({ register, watch, setValue, errors }) => {
           <RadioGroup
             defaultValue=""
             className="flex space-x-4"
-            {...register("grewUpInChurch", { required: true })}
+            {...register("grewUpInChurch", { required: false })}
           >
             <div className="flex items-center space-x-2">
               <RadioGroupItem
