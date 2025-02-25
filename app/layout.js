@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Alexandria } from "next/font/google";
 import Footer from "@/components/common/Footer/Footer";
 import NavBar from "@/components/common/NavBar";
+import { Toaster } from "@/components/ui/sonner";
 
 const alexandria = Alexandria({ subsets: ["latin"], display: "swap" });
 
@@ -37,6 +38,7 @@ export default function RootLayout({ children }) {
           <NavBar />
           {children}
           <Footer />
+          <Toaster />
         </body>
       </ClerkProvider>
     </html>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner"; // Import toast if available, or add a simple alert instead
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,19 +28,78 @@ const formSections = [
 
 export default function ScholarshipForm() {
   const [step, setStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  // Collect all form data across steps
+  const formData = watch();
+
+  const onSubmit = async (data) => {
+    // If not on the last step, just go to the next step
     if (step < formSections.length - 1) {
       setStep(step + 1);
-    } else {
-      console.log(data);
-      // Here you would typically send the data to your backend
-      setStep(step + 1); // Move to confirmation page
+      return;
+    }
+
+    // Otherwise, submit the full form data
+    try {
+      setIsSubmitting(true);
+      setSubmissionError(null);
+
+      // Send data to our API endpoint
+      const response = await fetch("/api/submit-scholarship", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit application");
+      }
+
+      // Show success message and move to confirmation page
+      if (toast) {
+        toast({
+          title: "Success!",
+          description: "Your application has been submitted successfully.",
+        });
+      } else {
+        alert("Your application has been submitted successfully!");
+      }
+
+      // Move to confirmation step
+      setStep(step + 1);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmissionError(error.message);
+
+      if (toast) {
+        toast({
+          title: "Error",
+          description:
+            error.message || "Failed to submit application. Please try again.",
+          variant: "destructive",
+        });
+      } else {
+        alert(
+          "Error: " +
+            (error.message ||
+              "Failed to submit application. Please try again."),
+        );
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -121,6 +181,7 @@ export default function ScholarshipForm() {
                       <RadioGroupItem
                         value={option.toLowerCase()}
                         id={`gender-${option.toLowerCase()}`}
+                        {...register("gender")}
                       />
                       <Label htmlFor={`gender-${option.toLowerCase()}`}>
                         {option}
@@ -141,7 +202,7 @@ export default function ScholarshipForm() {
             <div className="space-y-4">
               <div>
                 <Label>What is your current relationship status?</Label>
-                <Select onValueChange={(value) => console.log(value)}>
+                <Select {...register("relationshipStatus")}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
@@ -174,7 +235,7 @@ export default function ScholarshipForm() {
                   Do you identify with any particular school of thought as a
                   spritual practice or belief system?
                 </Label>
-                <Select onValueChange={(value) => console.log(value)}>
+                <Select {...register("spiritualPractice")}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
@@ -214,7 +275,7 @@ export default function ScholarshipForm() {
                 <Label>
                   Do you attend any particular religious service or church?
                 </Label>
-                <Select onValueChange={(value) => console.log(value)}>
+                <Select {...register("churchAttendance")}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
@@ -263,9 +324,10 @@ export default function ScholarshipForm() {
                   Also, please include any information you could share about the
                   need for a scholarship to this program?
                 </Label>
-                <Input
+                <Textarea
                   id="backgroundSummary"
                   {...register("backgroundSummary", { required: true })}
+                  className="min-h-32"
                 />
                 {errors.backgroundSummary && (
                   <span className="text-red-500">
@@ -279,9 +341,10 @@ export default function ScholarshipForm() {
                   if there is anything you feel called to do or become involved
                   in?
                 </Label>
-                <Input
+                <Textarea
                   id="interestsSummary"
                   {...register("interestsSummary", { required: false })}
+                  className="min-h-32"
                 />
                 {errors.interestsSummary && (
                   <span className="text-red-500">
@@ -306,9 +369,10 @@ export default function ScholarshipForm() {
                   breakthroughs are you hoping for, what sort of guidance could
                   be helpful)?
                 </Label>
-                <Input
+                <Textarea
                   id="expectationsSummary"
                   {...register("expectationsSummary", { required: false })}
+                  className="min-h-32"
                 />
               </div>
               <div>
@@ -317,9 +381,10 @@ export default function ScholarshipForm() {
                   need you have, and any additional or relevant information
                   about your situation?
                 </Label>
-                <Input
+                <Textarea
                   id="needsSummary"
                   {...register("needsSummary", { required: true })}
+                  className="min-h-32"
                 />
                 {errors.needsSummary && (
                   <span className="text-red-500">
@@ -342,6 +407,7 @@ export default function ScholarshipForm() {
                 <Textarea
                   id="additionalInfo"
                   {...register("additionalInfo")}
+                  className="min-h-32"
                 />
               </div>
             </div>
@@ -349,9 +415,18 @@ export default function ScholarshipForm() {
         );
       default:
         return (
-          <h2 className="mb-4 text-2xl font-bold">
-            Thank you for your application!
-          </h2>
+          <div className="text-center">
+            <h2 className="mb-4 text-2xl font-bold">
+              Thank you for your application!
+            </h2>
+            <p className="mb-4">
+              We&apos;ve received your scholarship application and will review
+              it shortly.
+            </p>
+            <p className="mb-4">
+              A confirmation email has been sent to your email address.
+            </p>
+          </div>
         );
     }
   };
@@ -375,6 +450,11 @@ export default function ScholarshipForm() {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {renderFormSection()}
+        {submissionError && (
+          <div className="mt-4 rounded bg-red-100 p-3 text-red-800">
+            <p>{submissionError}</p>
+          </div>
+        )}
         <div className="mt-8 flex justify-between">
           {step > 0 && step < formSections.length && (
             <Button
@@ -385,8 +465,15 @@ export default function ScholarshipForm() {
             </Button>
           )}
           {step < formSections.length && (
-            <Button type="submit">
-              {step === formSections.length - 1 ? "Submit" : "Next"}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? "Submitting..."
+                : step === formSections.length - 1
+                  ? "Submit"
+                  : "Next"}
             </Button>
           )}
         </div>
