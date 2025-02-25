@@ -73,7 +73,10 @@ export default function ScholarshipForm() {
               </div>
               <div>
                 <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" {...register("phone", { required: true })} />
+                <Input
+                  id="phone"
+                  {...register("phone", { required: true })}
+                />
                 {errors.phone && (
                   <span className="text-red-500">This field is required</span>
                 )}
@@ -111,7 +114,10 @@ export default function ScholarshipForm() {
                     "Prefer not to say",
                     "Other",
                   ].map((option) => (
-                    <div className="flex items-center space-x-2" key={option}>
+                    <div
+                      className="flex items-center space-x-2"
+                      key={option}
+                    >
                       <RadioGroupItem
                         value={option.toLowerCase()}
                         id={`gender-${option.toLowerCase()}`}
@@ -123,7 +129,6 @@ export default function ScholarshipForm() {
                   ))}
                 </RadioGroup>
               </div>
-              {/* Add more fields for race/ethnicity, sexual orientation, household income, etc. */}
             </div>
           </>
         );
@@ -143,7 +148,10 @@ export default function ScholarshipForm() {
                   <SelectContent>
                     {["Single", "Married", "Divorced", "Widowed", "Other"].map(
                       (option) => (
-                        <SelectItem key={option} value={option.toLowerCase()}>
+                        <SelectItem
+                          key={option}
+                          value={option.toLowerCase()}
+                        >
                           {option}
                         </SelectItem>
                       ),
@@ -151,11 +159,177 @@ export default function ScholarshipForm() {
                   </SelectContent>
                 </Select>
               </div>
-              {/* Add more fields for marriage date, number of marriages, children, etc. */}
             </div>
           </>
         );
-      // ... Add cases for other sections ...
+      case 2:
+        return (
+          <>
+            <h2 className="mb-4 text-2xl font-bold">
+              Spiritual Journey and Background
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <Label>
+                  Do you identify with any particular school of thought as a
+                  spritual practice or belief system?
+                </Label>
+                <Select onValueChange={(value) => console.log(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[
+                      "Christianity - denominational",
+                      "Christianity - non-denominational",
+                      "Islam",
+                      "Hinduism",
+                      "Buddhism",
+                      "Atheism",
+                      "Agnostic",
+                      "Spiritual",
+                      "Unaffiliated",
+                      "Other",
+                      "None",
+                    ].map((option) => (
+                      <SelectItem
+                        key={option}
+                        value={option.toLowerCase()}
+                      >
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <h2 className="mb-4 text-2xl font-bold">Church Engagement</h2>
+            <div className="space-y-4">
+              <div>
+                <Label>
+                  Do you attend any particular religious service or church?
+                </Label>
+                <Select onValueChange={(value) => console.log(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[
+                      "yes - all the time",
+                      "yes - often",
+                      "yes - infrequently",
+                      "yes - rarely",
+                      "online",
+                      "not at this time but in the past",
+                    ].map((option) => (
+                      <SelectItem
+                        key={option}
+                        value={option.toLowerCase()}
+                      >
+                        {option}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="churchOrService">
+                  If yes, which religious service or church?
+                </Label>
+                <Input
+                  id="churchOrService"
+                  {...register("churchOrService", { required: false })}
+                />
+              </div>
+            </div>
+          </>
+        );
+      case 4:
+        return (
+          <>
+            <h2 className="mb-4 text-2xl font-bold">
+              Background and Interests
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="backgroundSummary">
+                  Please give a brief explanation of your background, why CLEAN
+                  interests you, and what interests you have in the program?
+                  Also, please include any information you could share about the
+                  need for a scholarship to this program?
+                </Label>
+                <Input
+                  id="backgroundSummary"
+                  {...register("backgroundSummary", { required: true })}
+                />
+                {errors.backgroundSummary && (
+                  <span className="text-red-500">
+                    You must provide a brief background
+                  </span>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="interestsSummary">
+                  Please give a brief explanation of interests, any hobbies, and
+                  if there is anything you feel called to do or become involved
+                  in?
+                </Label>
+                <Input
+                  id="interestsSummary"
+                  {...register("interestsSummary", { required: false })}
+                />
+                {errors.interestsSummary && (
+                  <span className="text-red-500">
+                    You must provide summary of your interests
+                  </span>
+                )}
+              </div>
+            </div>
+          </>
+        );
+      case 5:
+        return (
+          <>
+            <h2 className="mb-4 text-2xl font-bold">
+              Program Expectations and Needs
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="expectationsSummary">
+                  Please give a brief explanation of what expectations or needs
+                  you might want to address through CLEAN (i.e. what you sort of
+                  breakthroughs are you hoping for, what sort of guidance could
+                  be helpful)?
+                </Label>
+                <Input
+                  id="expectationsSummary"
+                  {...register("expectationsSummary", { required: false })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="needsSummary">
+                  Please give a brief explanation of what level of scholarship
+                  need you have, and any additional or relevant information
+                  about your situation?
+                </Label>
+                <Input
+                  id="needsSummary"
+                  {...register("needsSummary", { required: true })}
+                />
+                {errors.needsSummary && (
+                  <span className="text-red-500">
+                    You must provide summary of your need for the scholarship
+                  </span>
+                )}
+              </div>
+            </div>
+          </>
+        );
       case 6:
         return (
           <>
@@ -165,7 +339,10 @@ export default function ScholarshipForm() {
                 <Label htmlFor="additionalInfo">
                   Is there anything else you&apos;d like us to know about you?
                 </Label>
-                <Textarea id="additionalInfo" {...register("additionalInfo")} />
+                <Textarea
+                  id="additionalInfo"
+                  {...register("additionalInfo")}
+                />
               </div>
             </div>
           </>
@@ -180,17 +357,17 @@ export default function ScholarshipForm() {
   };
 
   return (
-    <div className="max-w-2xl p-6 mx-auto">
+    <div className="mx-auto max-w-2xl p-6">
       <div className="mb-8">
-        <div className="flex justify-between mb-8">
+        <div className="mb-8 flex justify-between">
           {formSections.map((section, index) => (
             <div
               key={index}
-              className={`w-4 h-4 rounded-full ${index <= step ? "bg-primary-red" : "bg-gray-300"}`}
+              className={`h-4 w-4 rounded-full ${index <= step ? "bg-primary-red" : "bg-gray-300"}`}
             />
           ))}
         </div>
-        <div className="text-sm font-medium text-center">
+        <div className="text-center text-sm font-medium">
           {step < formSections.length
             ? `Step ${step + 1} of ${formSections.length}`
             : "Application Complete"}
@@ -198,9 +375,12 @@ export default function ScholarshipForm() {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {renderFormSection()}
-        <div className="flex justify-between mt-8">
+        <div className="mt-8 flex justify-between">
           {step > 0 && step < formSections.length && (
-            <Button type="button" onClick={() => setStep(step - 1)}>
+            <Button
+              type="button"
+              onClick={() => setStep(step - 1)}
+            >
               Previous
             </Button>
           )}
