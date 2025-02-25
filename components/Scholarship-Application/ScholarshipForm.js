@@ -190,6 +190,85 @@ export default function ScholarshipForm() {
                   ))}
                 </RadioGroup>
               </div>
+              <div>
+                <Label>Ethinicity</Label>
+                <RadioGroup defaultValue="African American/Black">
+                  {[
+                    "African American/Black",
+                    "European American",
+                    "Hispanic/Latino",
+                    "East Asian",
+                    "Middle Eastern",
+                    "Indigenous American",
+                    "Multiracial",
+                    "Prefer not to say",
+                    "Other",
+                  ].map((option) => (
+                    <div
+                      className="flex items-center space-x-2"
+                      key={option}
+                    >
+                      <RadioGroupItem
+                        value={option.toLowerCase()}
+                        id={`ethnicity-${option.toLowerCase()}`}
+                        {...register("ethnicity")}
+                      />
+                      <Label htmlFor={`ethnicity-${option.toLowerCase()}`}>
+                        {option}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div>
+                <Label>Sexual Orientation</Label>
+                <RadioGroup defaultValue="Heterosexual">
+                  {[
+                    "heterosexual",
+                    "Homosexual",
+                    "Bisexual",
+                    "LBGTQ+",
+                    "Prefer not to say",
+                    "Other",
+                  ].map((option) => (
+                    <div
+                      className="flex items-center space-x-2"
+                      key={option}
+                    >
+                      <RadioGroupItem
+                        value={option.toLowerCase()}
+                        id={`sexOrientation-${option.toLowerCase()}`}
+                        {...register("sexOrientation")}
+                      />
+                      <Label htmlFor={`sexOrientation-${option.toLowerCase()}`}>
+                        {option}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              <div>
+                <Label>Military Service</Label>
+                <RadioGroup defaultValue="No">
+                  {["Yes - active duty", "Yes - reservist", "No"].map(
+                    (option) => (
+                      <div
+                        className="flex items-center space-x-2"
+                        key={option}
+                      >
+                        <RadioGroupItem
+                          value={option.toLowerCase()}
+                          id={`military-${option.toLowerCase()}`}
+                          {...register("military")}
+                        />
+                        <Label htmlFor={`military-${option.toLowerCase()}`}>
+                          {option}
+                        </Label>
+                      </div>
+                    ),
+                  )}
+                </RadioGroup>
+              </div>
             </div>
           </>
         );
@@ -219,6 +298,26 @@ export default function ScholarshipForm() {
                     )}
                   </SelectContent>
                 </Select>
+              </div>
+              <div>
+                <Label htmlFor="dateMarried">
+                  If married, what date were you married on?
+                </Label>
+                <Input
+                  id="dateMarried"
+                  type="date"
+                  {...register("dateMarried", { required: true })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="numOfMarriages">
+                  How many times have you been married?
+                </Label>
+                <Input
+                  id="numOfMarriages"
+                  type="date"
+                  {...register("numOfMarriages", { required: true })}
+                />
               </div>
             </div>
           </>
