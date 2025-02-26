@@ -1,21 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ScholarshipPage() {
-  const router = useRouter();
-
-  const handleApply = () => {
-    router.push("/scholarship-application");
-  };
-
-  const handleDonate = () => {
-    router.push("/donate");
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-center text-4xl font-bold">
@@ -37,12 +27,9 @@ export default function ScholarshipPage() {
             to personal growth.
           </p>
 
-          <Button
-            variant="default"
-            onClick={handleApply}
-          >
-            Apply for a Scholarship
-          </Button>
+          <Link href="/scholarship-application">
+            <Button variant="default">Apply for a Scholarship</Button>
+          </Link>
         </div>
         <div>
           <Image
@@ -104,12 +91,9 @@ export default function ScholarshipPage() {
           </li>
         </ol>
 
-        <Button
-          variant="link"
-          onClick={handleApply}
-        >
-          Start Your Application
-        </Button>
+        <Link href="/scholarship-application">
+          <Button variant="link">Start Your Application</Button>
+        </Link>
       </div>
 
       <div className="text-center">
@@ -124,12 +108,9 @@ export default function ScholarshipPage() {
           towards helping other men grow in Christ.
         </p>
 
-        <Button
-          variant="outline"
-          onClick={handleDonate}
-        >
-          Contribute to Scholarships
-        </Button>
+        <Link href="/donate">
+          <Button variant="outline">Contribute to Scholarships</Button>
+        </Link>
       </div>
     </div>
   );

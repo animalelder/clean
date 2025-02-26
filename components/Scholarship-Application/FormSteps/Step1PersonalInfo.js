@@ -62,9 +62,11 @@ const Step1PersonalInfo = ({ register, errors }) => {
             </span>
           )}
         </div>
-        <div className="flex flex-row space-x-10">
+
+        {/* Radio groups section - made responsive with grid */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
           <div>
-            <Label>Gender</Label>
+            <Label className="mb-2 block">Gender</Label>
             <RadioGroup defaultValue="male">
               {[
                 "Male",
@@ -74,7 +76,7 @@ const Step1PersonalInfo = ({ register, errors }) => {
                 "Other",
               ].map((option) => (
                 <div
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 py-1"
                   key={option}
                 >
                   <RadioGroupItem
@@ -89,8 +91,9 @@ const Step1PersonalInfo = ({ register, errors }) => {
               ))}
             </RadioGroup>
           </div>
+
           <div>
-            <Label>Ethinicity</Label>
+            <Label className="mb-2 block">Ethnicity</Label>
             <RadioGroup defaultValue="African American/Black">
               {[
                 "African American/Black",
@@ -104,7 +107,7 @@ const Step1PersonalInfo = ({ register, errors }) => {
                 "Other",
               ].map((option) => (
                 <div
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 py-1"
                   key={option}
                 >
                   <RadioGroupItem
@@ -119,12 +122,13 @@ const Step1PersonalInfo = ({ register, errors }) => {
               ))}
             </RadioGroup>
           </div>
+
           <div>
-            <Label>Military Service</Label>
+            <Label className="mb-2 block">Military Service</Label>
             <RadioGroup defaultValue="No">
               {["Yes - active duty", "Yes - reserves", "No"].map((option) => (
                 <div
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 py-1"
                   key={option}
                 >
                   <RadioGroupItem
@@ -139,8 +143,9 @@ const Step1PersonalInfo = ({ register, errors }) => {
               ))}
             </RadioGroup>
           </div>
+
           <div>
-            <Label>Household Income</Label>
+            <Label className="mb-2 block">Household Income</Label>
             <RadioGroup defaultValue="No">
               {[
                 "Less than $30,000",
@@ -150,7 +155,7 @@ const Step1PersonalInfo = ({ register, errors }) => {
                 "More than $100,000",
               ].map((option) => (
                 <div
-                  className="flex items-center space-x-3"
+                  className="flex items-center space-x-2 py-1"
                   key={option}
                 >
                   <RadioGroupItem
