@@ -2,21 +2,22 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner"; // Import toast if available, or add a simple alert instead
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import Confirmation from "./FormSteps/Confirmation";
+// Import Step Components
+import Step1PersonalInfo from "./FormSteps/Step1PersonalInfo";
+import Step2Discovery from "./FormSteps/Step2Discovery";
+import Step3FamilyStatus from "./FormSteps/Step3FamilyStatus";
+import Step4SpiritualJourney from "./FormSteps/Step4SpiritualJourney";
+import Step5ChurchEngagement from "./FormSteps/Step5ChurchEngagement";
+import Step6BackgroundInterests from "./FormSteps/Step6BackgroundInterests";
+import Step7ProgramExpectations from "./FormSteps/Step7ProgramExpectations";
+import Step8AdditionalInfo from "./FormSteps/Step8AdditionalInfo";
 
 const formSections = [
   "Personal Information",
+  "How Did You Find Us?",
   "Family and Relationship Status",
   "Spiritual Journey and Family Background",
   "Church Engagement",
@@ -27,170 +28,109 @@ const formSections = [
 
 export default function ScholarshipForm() {
   const [step, setStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
+
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  // Collect all form data across steps
+  const formData = watch();
+
+  const onSubmit = async (data) => {
+    // If not on the last step, just go to the next step
     if (step < formSections.length - 1) {
       setStep(step + 1);
-    } else {
-      console.log(data);
-      // Here you would typically send the data to your backend
-      setStep(step + 1); // Move to confirmation page
+      return;
     }
-  };
 
+    // Otherwise, submit the full form data
+    try {
+      setIsSubmitting(true);
+      setSubmissionError(null);
+
+      // Send data to our API endpoint
+      const response = await fetch("/api/submit-scholarship", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit application");
+      }
+
+      // Show success message and move to confirmation page
+      alert("Your application has been submitted successfully!");
+
+      // Move to confirmation step
+      setStep(step + 1);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmissionError(error.message);
+      alert(
+        "Error: " +
+          (error.message || "Failed to submit application. Please try again."),
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }; // Added missing closing curly brace and semicolon here
+
+  // Render the appropriate form section based on current step
   const renderFormSection = () => {
+    // Common props to pass to all step components
+    const stepProps = {
+      register,
+      watch,
+      setValue,
+      errors,
+      formData,
+    };
+
     switch (step) {
       case 0:
-        return (
-          <>
-            <h2 className="mb-4 text-2xl font-bold">Personal Information</h2>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="fullName">Full Name</Label>
-                <Input
-                  id="fullName"
-                  {...register("fullName", { required: true })}
-                />
-                {errors.fullName && (
-                  <span className="text-red-500">This field is required</span>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="email">Email Address</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  {...register("email", { required: true })}
-                />
-                {errors.email && (
-                  <span className="text-red-500">This field is required</span>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="phone">Phone Number</Label>
-                <Input id="phone" {...register("phone", { required: true })} />
-                {errors.phone && (
-                  <span className="text-red-500">This field is required</span>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="location">City and State of Residence</Label>
-                <Input
-                  id="location"
-                  {...register("location", { required: true })}
-                />
-                {errors.location && (
-                  <span className="text-red-500">This field is required</span>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="age">Age</Label>
-                <Input
-                  id="age"
-                  type="number"
-                  {...register("age", { required: true, min: 18 })}
-                />
-                {errors.age && (
-                  <span className="text-red-500">
-                    You must be at least 18 years old
-                  </span>
-                )}
-              </div>
-              <div>
-                <Label>Gender</Label>
-                <RadioGroup defaultValue="male">
-                  {[
-                    "Male",
-                    "Female",
-                    "Non-Binary",
-                    "Prefer not to say",
-                    "Other",
-                  ].map((option) => (
-                    <div className="flex items-center space-x-2" key={option}>
-                      <RadioGroupItem
-                        value={option.toLowerCase()}
-                        id={`gender-${option.toLowerCase()}`}
-                      />
-                      <Label htmlFor={`gender-${option.toLowerCase()}`}>
-                        {option}
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
-              </div>
-              {/* Add more fields for race/ethnicity, sexual orientation, household income, etc. */}
-            </div>
-          </>
-        );
+        return <Step1PersonalInfo {...stepProps} />;
       case 1:
-        return (
-          <>
-            <h2 className="mb-4 text-2xl font-bold">
-              Family and Relationship Status
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <Label>What is your current relationship status?</Label>
-                <Select onValueChange={(value) => console.log(value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {["Single", "Married", "Divorced", "Widowed", "Other"].map(
-                      (option) => (
-                        <SelectItem key={option} value={option.toLowerCase()}>
-                          {option}
-                        </SelectItem>
-                      ),
-                    )}
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* Add more fields for marriage date, number of marriages, children, etc. */}
-            </div>
-          </>
-        );
-      // ... Add cases for other sections ...
+        return <Step2Discovery {...stepProps} />;
+      case 2:
+        return <Step3FamilyStatus {...stepProps} />;
+      case 3:
+        return <Step4SpiritualJourney {...stepProps} />;
+      case 4:
+        return <Step5ChurchEngagement {...stepProps} />;
+      case 5:
+        return <Step6BackgroundInterests {...stepProps} />;
       case 6:
-        return (
-          <>
-            <h2 className="mb-4 text-2xl font-bold">Additional Information</h2>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="additionalInfo">
-                  Is there anything else you&apos;d like us to know about you?
-                </Label>
-                <Textarea id="additionalInfo" {...register("additionalInfo")} />
-              </div>
-            </div>
-          </>
-        );
+        return <Step7ProgramExpectations {...stepProps} />;
+      case 7:
+        return <Step8AdditionalInfo {...stepProps} />;
       default:
-        return (
-          <h2 className="mb-4 text-2xl font-bold">
-            Thank you for your application!
-          </h2>
-        );
+        return <Confirmation email={formData.email} />;
     }
   };
 
   return (
-    <div className="max-w-2xl p-6 mx-auto">
+    <div className="mx-auto max-w-2xl p-6">
       <div className="mb-8">
-        <div className="flex justify-between mb-8">
+        <div className="mb-8 flex justify-between">
           {formSections.map((section, index) => (
             <div
               key={index}
-              className={`w-4 h-4 rounded-full ${index <= step ? "bg-primary-red" : "bg-gray-300"}`}
+              className={`h-4 w-4 rounded-full ${index <= step ? "bg-primary-red" : "bg-gray-300"}`}
             />
           ))}
         </div>
-        <div className="text-sm font-medium text-center">
+        <div className="text-center text-sm font-medium">
           {step < formSections.length
             ? `Step ${step + 1} of ${formSections.length}`
             : "Application Complete"}
@@ -198,15 +138,30 @@ export default function ScholarshipForm() {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         {renderFormSection()}
-        <div className="flex justify-between mt-8">
+        {submissionError && (
+          <div className="mt-4 rounded bg-red-100 p-3 text-red-800">
+            <p>{submissionError}</p>
+          </div>
+        )}
+        <div className="mt-8 flex justify-between">
           {step > 0 && step < formSections.length && (
-            <Button type="button" onClick={() => setStep(step - 1)}>
+            <Button
+              type="button"
+              onClick={() => setStep(step - 1)}
+            >
               Previous
             </Button>
           )}
           {step < formSections.length && (
-            <Button type="submit">
-              {step === formSections.length - 1 ? "Submit" : "Next"}
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting
+                ? "Submitting..."
+                : step === formSections.length - 1
+                  ? "Submit"
+                  : "Next"}
             </Button>
           )}
         </div>
