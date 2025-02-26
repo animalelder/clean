@@ -5,8 +5,6 @@ import nodemailer from "nodemailer";
 
 // MongoDB connection string - replace with your actual connection string
 const uri = process.env.MONGODB_URI;
-// Admin email to receive notifications
-const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com";
 
 // Export a named POST function instead of a default export
 export async function POST(request) {

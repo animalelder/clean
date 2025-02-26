@@ -70,39 +70,21 @@ export default function ScholarshipForm() {
       }
 
       // Show success message and move to confirmation page
-      if (toast) {
-        toast({
-          title: "Success!",
-          description: "Your application has been submitted successfully.",
-        });
-      } else {
-        alert("Your application has been submitted successfully!");
-      }
+      alert("Your application has been submitted successfully!");
 
       // Move to confirmation step
       setStep(step + 1);
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmissionError(error.message);
-
-      if (toast) {
-        toast({
-          title: "Error",
-          description:
-            error.message || "Failed to submit application. Please try again.",
-          variant: "destructive",
-        });
-      } else {
-        alert(
-          "Error: " +
-            (error.message ||
-              "Failed to submit application. Please try again."),
-        );
-      }
+      alert(
+        "Error: " +
+          (error.message || "Failed to submit application. Please try again."),
+      );
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }; // Added missing closing curly brace and semicolon here
 
   // Render the appropriate form section based on current step
   const renderFormSection = () => {
@@ -138,9 +120,9 @@ export default function ScholarshipForm() {
   };
 
   return (
-    <div className="max-w-2xl p-6 mx-auto">
+    <div className="mx-auto max-w-2xl p-6">
       <div className="mb-8">
-        <div className="flex justify-between mb-8">
+        <div className="mb-8 flex justify-between">
           {formSections.map((section, index) => (
             <div
               key={index}
@@ -148,7 +130,7 @@ export default function ScholarshipForm() {
             />
           ))}
         </div>
-        <div className="text-sm font-medium text-center">
+        <div className="text-center text-sm font-medium">
           {step < formSections.length
             ? `Step ${step + 1} of ${formSections.length}`
             : "Application Complete"}
@@ -157,11 +139,11 @@ export default function ScholarshipForm() {
       <form onSubmit={handleSubmit(onSubmit)}>
         {renderFormSection()}
         {submissionError && (
-          <div className="p-3 mt-4 text-red-800 bg-red-100 rounded">
+          <div className="mt-4 rounded bg-red-100 p-3 text-red-800">
             <p>{submissionError}</p>
           </div>
         )}
-        <div className="flex justify-between mt-8">
+        <div className="mt-8 flex justify-between">
           {step > 0 && step < formSections.length && (
             <Button
               type="button"
