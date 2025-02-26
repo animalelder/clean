@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -21,7 +21,6 @@ export default function Step6BackgroundInterests({
   const educationLevel = watch("educationLevel");
   const employmentStatus = watch("employmentStatus");
   const industry = watch("industry");
-  const hobbies = watch("hobbies") || [];
 
   // Handle education level change
   const handleEducationLevelChange = (value) => {
@@ -60,7 +59,7 @@ export default function Step6BackgroundInterests({
   };
 
   // Handle hobby selection changes
-  const [selectedHobbies, setSelectedHobbies] = useState({
+  const [_, __] = useState({
     sports: false,
     reading: false,
     music: false,
@@ -289,7 +288,7 @@ export default function Step6BackgroundInterests({
             What are your hobbies or interests?
           </Label>
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            <Card className="p-3 border">
+            <Card className="border p-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -298,7 +297,7 @@ export default function Step6BackgroundInterests({
                   onChange={(e) =>
                     handleHobbyChange("sports", e.target.checked)
                   }
-                  className="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <Label
                   htmlFor="hobbySports"
@@ -309,7 +308,7 @@ export default function Step6BackgroundInterests({
               </div>
             </Card>
 
-            <Card className="p-3 border">
+            <Card className="border p-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -318,7 +317,7 @@ export default function Step6BackgroundInterests({
                   onChange={(e) =>
                     handleHobbyChange("reading", e.target.checked)
                   }
-                  className="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <Label
                   htmlFor="hobbyReading"
@@ -329,14 +328,14 @@ export default function Step6BackgroundInterests({
               </div>
             </Card>
 
-            <Card className="p-3 border">
+            <Card className="border p-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
                   id="hobbyMusic"
                   checked={isHobbySelected("music")}
                   onChange={(e) => handleHobbyChange("music", e.target.checked)}
-                  className="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <Label
                   htmlFor="hobbyMusic"
@@ -347,7 +346,7 @@ export default function Step6BackgroundInterests({
               </div>
             </Card>
 
-            <Card className="p-3 border">
+            <Card className="border p-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -356,7 +355,7 @@ export default function Step6BackgroundInterests({
                   onChange={(e) =>
                     handleHobbyChange("volunteering", e.target.checked)
                   }
-                  className="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <Label
                   htmlFor="hobbyVolunteering"
@@ -367,14 +366,14 @@ export default function Step6BackgroundInterests({
               </div>
             </Card>
 
-            <Card className="p-3 border">
+            <Card className="border p-3">
               <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
                   id="hobbyOther"
                   checked={isHobbySelected("other")}
                   onChange={(e) => handleHobbyChange("other", e.target.checked)}
-                  className="w-4 h-4 border-gray-300 rounded text-primary focus:ring-primary"
+                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <Label
                   htmlFor="hobbyOther"

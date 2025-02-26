@@ -1,7 +1,4 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -16,8 +13,6 @@ export default function ScholarshipApplicationForm({
   // Watch values for conditional rendering
   const submissionTypeReason = watch("submissionTypeReason") || "text";
   const submissionTypeGains = watch("submissionTypeGains") || "text";
-  const challenges = watch("challenges") || [];
-  const supportAreas = watch("supportAreas") || [];
 
   // Handle challenges selection
   const handleChallengeChange = (challenge, checked) => {

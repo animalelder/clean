@@ -1,21 +1,19 @@
 // app/Foundation/[id]/page.js
 import React from "react";
-import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import Divider from "@/components/common/Divider";
-import BCVT from "@/components/Foundation/BCVT";
 import CompleteLesson from "@/components/Foundation/CompleteLesson";
-import Description from "@/components/Foundation/Description";
 import MainImage from "@/components/Foundation/MainImage";
 import MainLesson from "@/components/Foundation/MainLesson";
 import Quotes from "@/components/Foundation/Quotes";
 import ReadingTime from "@/components/Foundation/ReadingTime";
 import ReflectionBox from "@/components/Foundation/ReflectionBox";
 import ScripturesSection from "@/components/Foundation/ScripturesSection";
-import SectionTitle from "@/components/Foundation/SectionTitle";
-import SidePanel from "@/components/Foundation/SidePanel/SidePanel";
+// import SectionTitle from "@/components/Foundation/SectionTitle"; --> TO DO: will update in future
+// import SidePanel from "@/components/Foundation/SidePanel/SidePanel"; --> TO DO: will update in future
 import SubTitle from "@/components/Foundation/SubTitle";
 import Title from "@/components/Foundation/Title";
+import clientPromise from "@/lib/mongodb";
 
 // Server-side data fetching function
 async function getDevotionalData(id) {
@@ -46,9 +44,9 @@ export default async function Foundation(props) {
     const devotionalData = await getDevotionalData(params.id);
 
     return (
-      <div className="flex flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh] w-full mt-16">
+      <div className="mt-16 flex w-full flex-col justify-between px-2 py-2 md:px-4 md:py-4 lg:px-[1vw] lg:py-[1vh]">
         <div className="flex flex-col items-center mt-8">
-          <div className="flex flex-col md:max-w-7xl lg:max-w-10xl">
+          <div className="flex flex-col lg:max-w-10xl md:max-w-7xl">
             <div className="flex flex-col items-start mb-8 bg-white md:flex-col">
               <div className="mt-[3vh]">
                 <Title
@@ -58,8 +56,11 @@ export default async function Foundation(props) {
                 />
               </div>
 
-              <div className="mt-[1vh] mb-[2vh]">
-                <SubTitle week={devotionalData.week} day={devotionalData.day} />
+              <div className="mb-[2vh] mt-[1vh]">
+                <SubTitle
+                  week={devotionalData.week}
+                  day={devotionalData.day}
+                />
               </div>
 
               <div className="flex justify-center w-full">
@@ -72,19 +73,19 @@ export default async function Foundation(props) {
                 <Quotes />
               </div>
 
-              <div className="flex justify-center w-full mb-[3vh]">
+              <div className="mb-[3vh] flex w-full justify-center">
                 <ScripturesSection scriptures={devotionalData.Scriptures} />
               </div>
 
-              <div className="flex w-full justify-left mt-[1vh]">
+              <div className="justify-left mt-[1vh] flex w-full">
                 <ReadingTime devotionText={devotionalData.devotionText} />
               </div>
 
-              <div className="flex w-full justify-left mt-[3vh]">
+              <div className="justify-left mt-[3vh] flex w-full">
                 <MainLesson devotionText={devotionalData.devotionText} />
               </div>
 
-              <div className="flex w-full justify-center mt-[6vh]">
+              <div className="mt-[6vh] flex w-full justify-center">
                 <ReflectionBox
                   reflectionQuestion={devotionalData.reflectionQuestion}
                 />
@@ -92,7 +93,7 @@ export default async function Foundation(props) {
 
               <Divider />
 
-              <div className="flex w-full justify-center mt-[2vh]">
+              <div className="mt-[2vh] flex w-full justify-center">
                 <CompleteLesson />
               </div>
             </div>

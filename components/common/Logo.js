@@ -6,6 +6,7 @@ export default function Logo() {
     <Image
       className="mx-auto mt-32 place-self-center"
       src="/logo.png"
+      alt={"30mmm logo"}
       width={120}
       height={120}
     />

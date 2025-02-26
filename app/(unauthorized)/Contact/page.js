@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -41,11 +41,7 @@ export default function ContactPage() {
         throw new Error("Failed to send message");
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again later.",
-        variant: "destructive",
-      });
+      alert(`Error: ${error.message}. Please try again.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -53,12 +49,12 @@ export default function ContactPage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen pt-16 bg-off-white">
-        <main className="container px-4 py-8 mx-auto">
-          <div className="max-w-2xl p-8 mx-auto text-center bg-white rounded-lg shadow-md">
+      <div className="min-h-screen bg-off-white pt-16">
+        <main className="container mx-auto px-4 py-8">
+          <div className="mx-auto max-w-2xl rounded-lg bg-white p-8 text-center shadow-md">
             <div className="mb-6">
               <svg
-                className="w-16 h-16 mx-auto text-green-500"
+                className="mx-auto h-16 w-16 text-green-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 48 48"
@@ -86,13 +82,13 @@ export default function ContactPage() {
             </h2>
 
             <p className="mb-6 text-lg text-description-gray">
-              Your message has been received. We&apos;ll get back to you as soon as
-              possible.
+              Your message has been received. We&apos;ll get back to you as soon
+              as possible.
             </p>
 
             <Button
               onClick={() => setIsSubmitted(false)}
-              className="px-6 py-3 text-lg font-bold transition duration-300 rounded-lg bg-primary-red hover:bg-primaryred-800 text-off-white"
+              className="rounded-lg bg-primary-red px-6 py-3 text-lg font-bold text-off-white transition duration-300 hover:bg-primaryred-800"
             >
               Send Another Message
             </Button>
@@ -116,23 +112,26 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen pt-16 bg-off-white">
-      <main className="container px-4 py-8 mx-auto">
-        <h1 className="mb-8 text-4xl font-bold text-center text-title-black">
+    <div className="min-h-screen bg-off-white pt-16">
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="mb-8 text-center text-4xl font-bold text-title-black">
           Contact Us
         </h1>
 
-        <div className="max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-md">
+        <div className="mx-auto max-w-2xl rounded-lg bg-white p-8 shadow-md">
           <p className="mb-6 text-center text-description-gray">
             We&apos;d love to hear from you. Please fill out the form below and
             we&apos;ll get back to you as soon as possible.
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+          >
             <div>
               <label
                 htmlFor="name"
-                className="block mb-1 text-sm font-medium text-title-black"
+                className="mb-1 block text-sm font-medium text-title-black"
               >
                 Name
               </label>
@@ -149,7 +148,7 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block mb-1 text-sm font-medium text-title-black"
+                className="mb-1 block text-sm font-medium text-title-black"
               >
                 Email
               </label>
@@ -167,7 +166,7 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="message"
-                className="block mb-1 text-sm font-medium text-title-black"
+                className="mb-1 block text-sm font-medium text-title-black"
               >
                 Message
               </label>
@@ -184,7 +183,7 @@ export default function ContactPage() {
 
             <Button
               type="submit"
-              className="w-full px-6 py-3 text-lg font-bold transition duration-300 rounded-lg bg-primary-red hover:bg-primaryred-800 text-off-white"
+              className="w-full rounded-lg bg-primary-red px-6 py-3 text-lg font-bold text-off-white transition duration-300 hover:bg-primaryred-800"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Sending..." : "Send Message"}

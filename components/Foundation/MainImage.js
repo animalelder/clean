@@ -1,11 +1,6 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import ImageSrc from "../../public/Jesus Washing Disciples Feet-full.png";
-import YoutubeVideo from "../Landing/YouTubeVideoPlayerv2";
-import PlayButton from "./PlayButton";
 
 export default function MainImage({ videoId }) {
   return (

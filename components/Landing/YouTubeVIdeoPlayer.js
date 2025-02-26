@@ -1,5 +1,5 @@
-function VideoBackground({ videoId }) {
-  const videoSources = ["/videos/Hero Video Corrected.mov"];
+export default function VideoBackground({ videoId }) {
+  // const videoSources = ["/videos/Hero Video Corrected.mov"];
 
   useEffect(() => {
     // Load YouTube API
@@ -32,11 +32,11 @@ function VideoBackground({ videoId }) {
   }, [videoId]);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <div className="relative w-full h-full">
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="relative h-full w-full">
         <div
           id="youtube-player"
-          className="absolute w-[300%] h-[300%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-[100%] min-h-[100%]"
+          className="absolute left-1/2 top-1/2 h-[300%] min-h-[100%] w-[300%] min-w-[100%] -translate-x-1/2 -translate-y-1/2"
         />
         <div className="absolute inset-0 bg-primary-red/50" /> {/* Overlay */}
       </div>

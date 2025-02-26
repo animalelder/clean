@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Script from "next/script";
 import {
   Card,
@@ -12,15 +13,15 @@ import {
 
 const DonationPage = () => {
   return (
-    <div className="min-h-screen mt-20 bg-gradient-to-b from-blue-50 to-white">
+    <div className="mt-20 min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <Script
         src="https://donorbox.org/install-popup-button.js"
         strategy="afterInteractive"
         id="donorbox-popup-button-installer"
       />
 
-      <main className="container px-4 py-8 mx-auto">
-        <div className="max-w-2xl mx-auto mb-8 text-center">
+      <main className="container mx-auto px-4 py-8">
+        <div className="mx-auto mb-8 max-w-2xl text-center">
           <h1 className="mb-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
             Support Our Cause
           </h1>
@@ -30,7 +31,7 @@ const DonationPage = () => {
           </p>
         </div>
 
-        <div className="max-w-lg mx-auto">
+        <div className="mx-auto max-w-lg">
           <Card>
             <CardHeader>
               <CardTitle>Make a Donation</CardTitle>
@@ -57,7 +58,7 @@ const DonationPage = () => {
                   lineHeight: "24px",
                 }}
               >
-                <img
+                <Image
                   src="https://donorbox.org/images/white_logo.svg"
                   alt="Donorbox"
                   style={{ height: "24px" }}

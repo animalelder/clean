@@ -7,7 +7,7 @@ import { AboutSection } from "@/components/Landing/about-section";
 import { ChurchRoleSection } from "@/components/Landing/church-role-section";
 import { CTASection } from "@/components/Landing/cta-section";
 import { HeroSection } from "@/components/Landing/hero-section";
-import { ResourcesSection } from "@/components/Landing/resources-section";
+// import { ResourcesSection } from "@/components/Landing/resources-section"; --> TO DO: keeping for future implementation
 import { TestimonialsSection } from "@/components/Landing/testimonials-section";
 import { TwoFacesSection } from "@/components/Landing/two-faces-section";
 

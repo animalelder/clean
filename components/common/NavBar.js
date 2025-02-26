@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import logo from "@/public/logo.png";
-import { ChevronDown, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -107,8 +107,14 @@ export default function NavBar() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {programsList.map((program) => (
-          <DropdownMenuItem key={program.name} asChild>
-            <Link href={program.href} target="_blank">
+          <DropdownMenuItem
+            key={program.name}
+            asChild
+          >
+            <Link
+              href={program.href}
+              target="_blank"
+            >
               {program.name}
             </Link>
           </DropdownMenuItem>
@@ -166,7 +172,7 @@ export default function NavBar() {
           </Button>
         </NavLink>
         <NavLink href="/SignUp">
-          <Button className="w-full text-white bg-primary-red hover:bg-red-800">
+          <Button className="w-full bg-primary-red text-white hover:bg-red-800">
             Sign Up
           </Button>
         </NavLink>
@@ -175,10 +181,10 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm backdrop-blur-sm">
-      <div className="flex items-center justify-between p-4 mx-4 text-black md:mx-10">
+    <nav className="fixed left-0 right-0 top-0 z-50 bg-white shadow-sm backdrop-blur-sm">
+      <div className="mx-4 flex items-center justify-between p-4 text-black md:mx-10">
         {/* Left section: Logo */}
-        <div className="flex items-center w-1/4">
+        <div className="flex w-1/4 items-center">
           <Link href="/">
             <div className="flex items-center gap-2">
               <Image
@@ -190,7 +196,7 @@ export default function NavBar() {
               <Image
                 src="/images-2/Thirty Mighty Men Ministries - text logo.png"
                 alt="Thirty Mighty Men Ministries Logo"
-                className="w-auto h-fit max-w-[175px]"
+                className="h-fit w-auto max-w-[175px]"
                 width={602}
                 height={169}
               />
@@ -200,25 +206,34 @@ export default function NavBar() {
 
         {/* Center section: Navigation Links (desktop only) */}
         {!isMobile && (
-          <div className="flex items-center justify-center w-1/2 gap-6">
+          <div className="flex w-1/2 items-center justify-center gap-6">
             {navLinks}
           </div>
         )}
 
         {/* Right section: Buttons or Mobile Menu */}
-        <div className="flex items-center justify-end w-1/4">
+        <div className="flex w-1/4 items-center justify-end">
           {isMobile ? (
-            <Sheet open={open} onOpenChange={setOpen}>
+            <Sheet
+              open={open}
+              onOpenChange={setOpen}
+            >
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="w-6 h-6" />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                >
+                  <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:w-80">
+              <SheetContent
+                side="right"
+                className="w-full sm:w-80"
+              >
                 <SheetHeader>
                   <SheetTitle>Menu</SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col gap-4 mt-6">
+                <div className="mt-6 flex flex-col gap-4">
                   <NavLink
                     href="/"
                     className="text-sm text-gray-600 hover:text-gray-900"

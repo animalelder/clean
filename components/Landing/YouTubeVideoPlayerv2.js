@@ -35,7 +35,8 @@ export default function YoutubeVideo({
   };
 
   const onReady = (event) => {
-    null;
+    void event;
+    return null;
   };
 
   return (
@@ -50,7 +51,7 @@ export default function YoutubeVideo({
         videoId={videoId}
         opts={opts}
         onReady={onReady}
-        className="w-full h-full"
+        className="h-full w-full"
       />
     </div>
   );

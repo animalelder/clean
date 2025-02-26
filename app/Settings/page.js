@@ -2,16 +2,15 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import BackLink from "@/components/common/BackLink";
 
 export default function Settings() {
   const [firstTabActive, setFirstTabActive] = useState(true);
 
   return (
     <>
-      <div className="flex flex-col items-center justify-start w-full min-h-screen gap-3">
-        <h1 className="text-4xl font-semibold text-center">Account Settings</h1>
-        <div className="grid items-center justify-center rounded-full size-20 bg-rose-600">
+      <div className="flex min-h-screen w-full flex-col items-center justify-start gap-3">
+        <h1 className="text-center text-4xl font-semibold">Account Settings</h1>
+        <div className="grid size-20 items-center justify-center rounded-full bg-rose-600">
           <span className="text-4xl font-extrabold tracking-wider text-white">
             AD
           </span>
@@ -22,69 +21,87 @@ export default function Settings() {
         >
           Upload Picture
         </Link>
-        <div className="flex flex-col min-h-[200px] w-full max-w-screen-lg  items-center">
-          <div className="inline-flex flex-row justify-between my-2 overflow-y-hidden text-center min-h-max gap-x-3 rounded-3xl bg-gray-bg items-stetch p-0.5">
+        <div className="flex min-h-[200px] w-full max-w-screen-lg flex-col items-center">
+          <div className="items-stetch my-2 inline-flex min-h-max flex-row justify-between gap-x-3 overflow-y-hidden rounded-3xl bg-gray-bg p-0.5 text-center">
             <button
               onClick={() => setFirstTabActive(true)}
-              className={`w-full h-full px-2 py-2 text-xs font-light rounded-3xl text-nowrap hover:bg-almost-black hover:text-white active:text-white active:bg-almost-black hover:font-medium active:font-medium ${firstTabActive ? "bg-almost-black text-white font-medium" : ""}`}
+              className={`h-full w-full text-nowrap rounded-3xl px-2 py-2 text-xs font-light hover:bg-almost-black hover:font-medium hover:text-white active:bg-almost-black active:font-medium active:text-white ${firstTabActive ? "bg-almost-black font-medium text-white" : ""}`}
             >
               Personal Information
             </button>
             <button
               onClick={() => setFirstTabActive(false)}
-              className={`w-full h-full px-2 py-2 text-xs font-light rounded-3xl text-nowrap hover:bg-almost-black hover:text-white active:text-white active:bg-almost-black hover:font-medium active:font-medium ${firstTabActive ? "" : "bg-almost-black text-white font-medium"}`}
+              className={`h-full w-full text-nowrap rounded-3xl px-2 py-2 text-xs font-light hover:bg-almost-black hover:font-medium hover:text-white active:bg-almost-black active:font-medium active:text-white ${firstTabActive ? "" : "bg-almost-black font-medium text-white"}`}
             >
               Address
             </button>
           </div>
-          <form className="grid items-center flex-auto w-full grid-cols-1 my-3 font-normal md:grid-cols-2 text-md content-baseline h-min gap-y-2">
+          <form className="text-md my-3 grid h-min w-full flex-auto grid-cols-1 content-baseline items-center gap-y-2 font-normal md:grid-cols-2">
             {!!firstTabActive && (
               <>
-                <label htmlFor="first-name" className="block px-8">
+                <label
+                  htmlFor="first-name"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="first-name"
-                    className="w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="First Name"
                   />
                 </label>
-                <label htmlFor="last-name" className="block px-8">
+                <label
+                  htmlFor="last-name"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="last-name"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Last Name"
                   />
                 </label>
-                <label htmlFor="birthdate" className="block px-8">
+                <label
+                  htmlFor="birthdate"
+                  className="block px-8"
+                >
                   <input
                     type="date"
                     name="birthdate"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="12-25-1979"
                   />
                 </label>
-                <label htmlFor="marital-status" className="block px-8">
+                <label
+                  htmlFor="marital-status"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="marital-status"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Marital Status"
                   />
                 </label>
-                <label htmlFor="children-count" className="block px-8">
+                <label
+                  htmlFor="children-count"
+                  className="block px-8"
+                >
                   <input
                     type="number"
                     name="children-count"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Number of Children"
                   />
                 </label>
-                <label htmlFor="church-affiliation" className="block px-8">
+                <label
+                  htmlFor="church-affiliation"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="church-affiliation"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Church Affiliation"
                   />
                 </label>
@@ -93,62 +110,80 @@ export default function Settings() {
             {/* Second Tab */}
             {!firstTabActive && (
               <>
-                <label htmlFor="email" className="block px-8">
+                <label
+                  htmlFor="email"
+                  className="block px-8"
+                >
                   <input
                     type="email"
                     name="email"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Email"
                   />
                 </label>
-                <label htmlFor="telephone" className="block px-8">
+                <label
+                  htmlFor="telephone"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="telephone"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Phone Number"
                   />
                 </label>
-                <label htmlFor="address" className="block px-8">
+                <label
+                  htmlFor="address"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="address"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Street Address"
                   />
                 </label>
-                <label htmlFor="city" className="block px-8">
+                <label
+                  htmlFor="city"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="city"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="City"
                   />
                 </label>
-                <label htmlFor="state" className="block px-8">
+                <label
+                  htmlFor="state"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="state"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="State"
                   />
                 </label>
-                <label htmlFor="zipcode" className="block px-8">
+                <label
+                  htmlFor="zipcode"
+                  className="block px-8"
+                >
                   <input
                     type="text"
                     name="zipcode"
-                    className="block w-full mt-1 border-transparent bg-formfield rounded-2xl focus:border-white focus:bg-teal-50 focus:ring-0"
+                    className="mt-1 block w-full rounded-2xl border-transparent bg-formfield focus:border-white focus:bg-teal-50 focus:ring-0"
                     placeholder="Zip Code"
                   />
                 </label>
               </>
             )}
           </form>
-          <div className="inline-flex flex-row w-full px-8 my-2 max-sm:flex-col max-sm:gap-1.5 max-sm:order-2 min-h-max gap-x-3 rounded-3xl items-stetch">
-            <button className="peer w-full py-2 border-2 rounded-2xl border-primary-red text-primary-red hover:scale-[.98] hover:bg-primary-red hover:text-white peer-hover:saturate[0.1] transition-all">
+          <div className="items-stetch my-2 inline-flex min-h-max w-full flex-row gap-x-3 rounded-3xl px-8 max-sm:order-2 max-sm:flex-col max-sm:gap-1.5">
+            <button className="peer-hover:saturate[0.1] peer w-full rounded-2xl border-2 border-primary-red py-2 text-primary-red transition-all hover:scale-[.98] hover:bg-primary-red hover:text-white">
               Cancel
             </button>
-            <button className="peer w-full py-2 text-white rounded-2xl bg-primary-red hover:scale-[.98] hover:bg-white hover:text-primary-red hover:border-2 hover:border-primary-red peer-hover:saturate-[0.1] transition-all">
+            <button className="peer w-full rounded-2xl bg-primary-red py-2 text-white transition-all hover:scale-[.98] hover:border-2 hover:border-primary-red hover:bg-white hover:text-primary-red peer-hover:saturate-[0.1]">
               Save
             </button>
           </div>

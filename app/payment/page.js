@@ -27,7 +27,7 @@ const PaymentForm = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState("");
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-  const [saveCardInfo, setSaveCardInfo] = useState(false);
+  const [_, setSaveCardInfo] = useState(false);
 
   const originalPrice = 99;
   const [finalPrice, setFinalPrice] = useState(originalPrice);
@@ -112,7 +112,7 @@ const PaymentForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 mt-20 bg-gray-50">
+    <div className="mt-20 flex min-h-screen items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle>Complete Your Purchase & Sign Up!</CardTitle>
@@ -122,7 +122,10 @@ const PaymentForm = () => {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handlePayment} className="space-y-6">
+          <form
+            onSubmit={handlePayment}
+            className="space-y-6"
+          >
             <Label className="text-xl">User Information</Label>
             <p>
               This is the login information you will use to access the online
@@ -166,7 +169,7 @@ const PaymentForm = () => {
               />
             </div>
 
-            <div className="p-1 border rounded-md bg-primary-red"></div>
+            <div className="rounded-md border bg-primary-red p-1"></div>
 
             <div className="space-y-4">
               <Label className="text-xl">Card Details</Label>
@@ -278,7 +281,7 @@ const PaymentForm = () => {
               >
                 I agree to the{" "}
                 <Link href="/Terms">
-                  <span className="text-primary-red hover:text-red-800 hover:underline hover:underline-offset-2 hover:decoration-primary-red ">
+                  <span className="text-primary-red hover:text-red-800 hover:underline hover:decoration-primary-red hover:underline-offset-2">
                     terms and conditions
                   </span>
                 </Link>
@@ -304,7 +307,7 @@ const PaymentForm = () => {
           <Button
             onClick={handlePayment}
             disabled={isProcessing}
-            className="w-full bg-primary-red hover:bg-red-800 "
+            className="w-full bg-primary-red hover:bg-red-800"
           >
             {isProcessing ? "Processing..." : "Pay Now"}
           </Button>
