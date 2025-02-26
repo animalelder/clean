@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function VideoBackground({ videoSources }) {
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isVideoLoaded, _] = useState(false);
+  const [currentVideoIndex, __] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
@@ -31,9 +31,6 @@ export default function VideoBackground({ videoSources }) {
     if (!videoElement || !container) return;
 
     const handleLoadedMetadata = () => {
-      const videoAspect = videoElement.videoWidth / videoElement.videoHeight;
-      const containerAspect = container.clientWidth / container.clientHeight;
-
       // On mobile, we want to ensure the video covers the full height
       if (isMobile) {
         videoElement.style.width = "100%";
@@ -59,13 +56,13 @@ export default function VideoBackground({ videoSources }) {
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden pointer-events-none"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
       ref={containerRef}
     >
-      <div className="relative w-full h-full">
+      <div className="relative h-full w-full">
         <video
           ref={videoRef}
-          className={`absolute w-full h-full ${
+          className={`absolute h-full w-full ${
             isMobile ? "object-cover md:object-cover" : "object-cover"
           }`}
           autoPlay
@@ -74,7 +71,10 @@ export default function VideoBackground({ videoSources }) {
           loop
           preload="auto"
         >
-          <source src={videoSources[currentVideoIndex]} type="video/mp4" />
+          <source
+            src={videoSources[currentVideoIndex]}
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
         {!isVideoLoaded && <div className="absolute inset-0" />}

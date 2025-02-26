@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -12,9 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 
-const Step3FamilyStatus = ({ register, watch, setValue, errors, control }) => {
+const Step3FamilyStatus = ({ register, watch, setValue, errors, _ }) => {
   // Watch relevant fields for conditional rendering
   const relationshipStatus = watch("relationshipStatus");
   const hasChildren = watch("hasChildren");

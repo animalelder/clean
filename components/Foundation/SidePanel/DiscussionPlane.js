@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Sort } from "@mui/icons-material";
 import Image from "next/image";
 import { FaReply, FaThumbsUp } from "react-icons/fa";
 import SortByPill from "./SortByPillBox";
@@ -10,7 +9,7 @@ export default function DiscussionPlane({ comments, notes }) {
   const renderDiscussionItem = (item) => (
     <div
       key={item.id}
-      className="flex items-start p-4 my-2 bg-white rounded-lg shadow"
+      className="my-2 flex items-start rounded-lg bg-white p-4 shadow"
     >
       {/* User avatar */}
       <Image
@@ -18,12 +17,12 @@ export default function DiscussionPlane({ comments, notes }) {
         alt={item.userName}
         width={10}
         height={10}
-        className="w-12 h-12 mr-4 rounded-full"
+        className="mr-4 h-12 w-12 rounded-full"
       />
 
       <div className="flex-1">
         {/* User name and date */}
-        <div className="flex items-center justify-between mb-2">
+        <div className="mb-2 flex items-center justify-between">
           <p className="font-bold text-gray-800">{item.userName}</p>
           <span className="text-sm text-gray-500">{item.date}</span>
         </div>
@@ -47,15 +46,15 @@ export default function DiscussionPlane({ comments, notes }) {
   );
 
   return (
-    <div className="items-center p-4 space-y-5">
+    <div className="items-center space-y-5 p-4">
       <div className="flex flex-row items-center space-x-10">
         {/* Tab Selection (Comments or Notes) */}
         <div className="flex items-center justify-center">
-          <div className="flex text-sm font-semibold bg-gray-200 rounded-full shadow-lg">
+          <div className="flex rounded-full bg-gray-200 text-sm font-semibold shadow-lg">
             {/* Comments Tab */}
             <button
               onClick={() => setSelectedTab("comments")}
-              className={`px-4 py-2 rounded-l-full ${
+              className={`rounded-l-full px-4 py-2 ${
                 selectedTab === "comments"
                   ? "bg-black text-white"
                   : "bg-white text-gray-600"
@@ -67,7 +66,7 @@ export default function DiscussionPlane({ comments, notes }) {
             {/* Notes Tab */}
             <button
               onClick={() => setSelectedTab("notes")}
-              className={`px-4 py-2 rounded-r-full ${
+              className={`rounded-r-full px-4 py-2 ${
                 selectedTab === "notes"
                   ? "bg-black text-white"
                   : "bg-white text-gray-600"

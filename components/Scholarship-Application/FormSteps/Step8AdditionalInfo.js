@@ -3,9 +3,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function Step8AdditionalInfo({
   register,
-  watch,
-  setValue,
-  errors,
+  _watch,
+  _setValue,
+  _errors,
 }) {
   return (
     <>

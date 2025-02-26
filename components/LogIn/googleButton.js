@@ -1,12 +1,18 @@
 import React from "react";
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function GoogleButton() {
   return (
     <>
-      <button className="outline outline-1 outline-[#af3634] my-4 w-5/6 py-2 rounded-2xl flex columns-1 gap-7 items-center justify-center justify-self-center mx-auto">
-        <Image className='object-cover contain-layout overflow-x-clip' src="/googlelogo.png" width={20} height={20} />
-        <div className="text-[#af3634] text-lg font-semibold">
+      <button className="mx-auto my-4 flex w-5/6 columns-1 items-center justify-center gap-7 justify-self-center rounded-2xl py-2 outline outline-1 outline-[#af3634]">
+        <Image
+          className="overflow-x-clip object-cover contain-layout"
+          src="/googlelogo.png"
+          alt={"google logo"}
+          width={20}
+          height={20}
+        />
+        <div className="text-lg font-semibold text-[#af3634]">
           Login with Google
         </div>
       </button>

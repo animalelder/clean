@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner"; // Import toast if available, or add a simple alert instead
 import { Button } from "@/components/ui/button";
 import Confirmation from "./FormSteps/Confirmation";
 // Import Step Components

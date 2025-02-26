@@ -9,7 +9,7 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-	source: "30MMM CLEAN",
+    source: "30MMM CLEAN",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,35 +35,32 @@ export default function ContactPage() {
       });
 
       if (response.ok) {
-		setIsSubmitted(true)
+        setIsSubmitted(true);
         toast({
           title: "You're now subscribed!",
-          description: "You're now in the loop! Be on the lookout for our emails",
+          description:
+            "You're now in the loop! Be on the lookout for our emails",
         });
         setFormData({ name: "", email: "", source: "30MMM CLEAN" });
       } else {
         throw new Error("Failed to send message");
       }
     } catch (error) {
-		console.error("Failed to send subscribe. Please try again later.");
-      toast({
-        title: "Error",
-        description: "Failed to send subscribe. Please try again later.",
-        variant: "destructive",
-      });
+      console.error("Failed to send subscribe. Please try again later.");
+      alert(`Error: ${error.message}. Please try again.`);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   if (isSubmitted) {
-	return (
-		<div className="min-h-screen pt-16 bg-off-white">
-        <main className="container px-4 py-8 mx-auto">
-          <div className="max-w-2xl p-8 mx-auto text-center bg-white rounded-lg shadow-md">
+    return (
+      <div className="min-h-screen bg-off-white pt-16">
+        <main className="container mx-auto px-4 py-8">
+          <div className="mx-auto max-w-2xl rounded-lg bg-white p-8 text-center shadow-md">
             <div className="mb-6">
               <svg
-                className="w-16 h-16 mx-auto text-green-500"
+                className="mx-auto h-16 w-16 text-green-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 48 48"
@@ -91,12 +88,13 @@ export default function ContactPage() {
             </h2>
 
             <p className="mb-6 text-lg text-description-gray">
-              Your name and email has been received. Please remain on the lookout from 30MMM!
+              Your name and email has been received. Please remain on the
+              lookout from 30MMM!
             </p>
 
             <Button
               onClick={() => setIsSubmitted(false)}
-              className="px-6 py-3 text-lg font-bold transition duration-300 rounded-lg bg-primary-red hover:bg-primaryred-800 text-off-white"
+              className="rounded-lg bg-primary-red px-6 py-3 text-lg font-bold text-off-white transition duration-300 hover:bg-primaryred-800"
             >
               Add Additional Email to Newsletter
             </Button>
@@ -116,26 +114,29 @@ export default function ContactPage() {
           </div>
         </main>
       </div>
-	);
+    );
   }
 
   return (
-    <div className="min-h-screen pt-16 bg-off-white">
-      <main className="container px-4 py-8 mx-auto">
-        <h1 className="my-8 text-4xl font-bold text-center text-title-black">
+    <div className="min-h-screen bg-off-white pt-16">
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="my-8 text-center text-4xl font-bold text-title-black">
           Subscribe to Our Newsletter
         </h1>
 
-        <div className="max-w-2xl p-8 mx-auto bg-white rounded-lg shadow-md">
+        <div className="mx-auto max-w-2xl rounded-lg bg-white p-8 shadow-md">
           <p className="mb-6 text-center text-description-gray">
             Keep in touch!
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+          >
             <div>
               <label
                 htmlFor="name"
-                className="block mb-1 text-sm font-medium text-title-black"
+                className="mb-1 block text-sm font-medium text-title-black"
               >
                 Full Name (First & Last, seperated by space)
               </label>
@@ -152,7 +153,7 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block mb-1 text-sm font-medium text-title-black"
+                className="mb-1 block text-sm font-medium text-title-black"
               >
                 Email
               </label>
@@ -169,7 +170,7 @@ export default function ContactPage() {
 
             <Button
               type="submit"
-              className="w-full px-6 py-3 text-lg font-bold transition duration-300 rounded-lg bg-primary-red hover:bg-primaryred-800 text-off-white"
+              className="w-full rounded-lg bg-primary-red px-6 py-3 text-lg font-bold text-off-white transition duration-300 hover:bg-primaryred-800"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Subscribing..." : "Subscribe"}

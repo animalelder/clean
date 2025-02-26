@@ -3,9 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const VideoBackground = ({ videoSources }) => {
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [videoAspect, setVideoAspect] = useState(16 / 9);
+  const [currentVideoIndex, _] = useState(0);
+  const [__, setIsVideoLoaded] = useState(false);
+  const [___, setVideoAspect] = useState(16 / 9);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -56,16 +56,19 @@ const VideoBackground = ({ videoSources }) => {
   }, [handleVideo]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-clip">
+    <div className="pointer-events-none absolute inset-0 overflow-clip">
       <video
-        className="absolute inset-0 object-cover w-full h-full -translate-x-1/2 overflow-y-clip left-1/2"
+        className="absolute inset-0 left-1/2 h-full w-full -translate-x-1/2 overflow-y-clip object-cover"
         autoPlay
         muted
         playsInline
         loop
         preload="auto"
       >
-        <source src={videoSources[currentVideoIndex]} type="video/mp4" />
+        <source
+          src={videoSources[currentVideoIndex]}
+          type="video/mp4"
+        />
         Your browser does not support the video tag.
       </video>
     </div>

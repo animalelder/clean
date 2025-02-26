@@ -120,8 +120,8 @@ export default function ScholarshipPage() {
           By joining CLEAN or contributing to our &quot;Pay It Forward&quot;
           option, you&apos;re not only investing in your own growth but also
           helping provide scholarships for men in need. Please comment
-          "Scholarship" on the donation to ensure this donation counts towards
-          helping other men grow in Christ.
+          &quot;Scholarship&quot; on the donation to ensure this donation counts
+          towards helping other men grow in Christ.
         </p>
 
         <Button

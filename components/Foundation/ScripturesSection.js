@@ -2,14 +2,17 @@ import React from "react";
 
 export default function ScripturesSection({ scriptures }) {
   return (
-    <div className="flex flex-col m">
+    <div className="m flex flex-col">
       {Object.entries(scriptures).map(([key, scripture]) => (
-        <div key={scripture.verse} className="items-center mb-16">
-          <div className="flex mb-4 text-xl font-bold text-center capitalize lg:text-2xl max-xs:text-lg max-xs:px-10">
+        <div
+          key={key}
+          className="mb-16 items-center"
+        >
+          <div className="mb-4 flex text-center text-xl font-bold capitalize max-xs:px-10 max-xs:text-lg lg:text-2xl">
             {scripture.text}
           </div>
-          <div className="flex border-t-[5px] border-t-[#F5BD4F] w-80 mx-auto"></div>
-          <div className="pt-3 mx-auto font-semibold text-center lg:text-xl">
+          <div className="mx-auto flex w-80 border-t-[5px] border-t-[#F5BD4F]"></div>
+          <div className="mx-auto pt-3 text-center font-semibold lg:text-xl">
             {scripture.book} {scripture.chapter}:{scripture.verse} (
             {scripture.translation})
           </div>

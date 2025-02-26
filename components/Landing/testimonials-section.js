@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export function TestimonialsSection() {
   const testimonials = [
     {
@@ -20,12 +18,12 @@ export function TestimonialsSection() {
   ];
 
   return (
-    <section className="py-16 text-white bg-primary-red">
-      <div className="container px-4 mx-auto">
-        <h2 className="mb-12 text-3xl font-bold text-center md:text-4xl">
+    <section className="bg-primary-red py-16 text-white">
+      <div className="container mx-auto px-4">
+        <h2 className="mb-12 text-center text-3xl font-bold md:text-4xl">
           What People Are Saying
         </h2>
-        <p className="mb-12 text-xl text-center md:text-xl">
+        <p className="mb-12 text-center text-xl md:text-xl">
           These testimonials are kept anonymous for the privacy and safety of
           our community.
         </p>
@@ -33,12 +31,12 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="p-6 text-gray-800 bg-white rounded-lg shadow-md"
+              className="rounded-lg bg-white p-6 text-gray-800 shadow-md"
             >
               <blockquote className="mb-4 text-lg">
                 &quot;{testimonial.quote}&quot;
               </blockquote>
-              <blockquote className="mb-4 text-md">
+              <blockquote className="text-md mb-4">
                 {testimonial.name}
               </blockquote>
             </div>

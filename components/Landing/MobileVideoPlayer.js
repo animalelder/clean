@@ -4,9 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function VideoBackground({ videoSources }) {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [currentVideoIndex, _] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const [videoAspect, setVideoAspect] = useState(null);
+  const [__, setVideoAspect] = useState(null);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -82,20 +82,23 @@ export default function VideoBackground({ videoSources }) {
 
   return (
     <div
-      className="absolute inset-0 overflow-hidden pointer-events-none"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
       ref={containerRef}
     >
-      <div className="relative w-full h-full">
+      <div className="relative h-full w-full">
         <video
           ref={videoRef}
-          className="absolute -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
           autoPlay
           muted
           playsInline
           loop
           preload="auto"
         >
-          <source src={videoSources[currentVideoIndex]} type="video/mp4" />
+          <source
+            src={videoSources[currentVideoIndex]}
+            type="video/mp4"
+          />
           Your browser does not support the video tag.
         </video>
         {!isVideoLoaded && <div className="absolute inset-0" />}
