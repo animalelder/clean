@@ -27,9 +27,14 @@ export default function ScholarshipPage() {
             to personal growth.
           </p>
 
-          <Link href="/scholarship-application">
-            <Button variant="default">Apply for a Scholarship</Button>
-          </Link>
+          <Button
+            variant="default"
+            asChild
+          >
+            <Link href="/scholarship-application">
+              Apply for a Scholarship{" "}
+            </Link>
+          </Button>
         </div>
         <div>
           <Image
@@ -91,9 +96,12 @@ export default function ScholarshipPage() {
           </li>
         </ol>
 
-        <Link href="/scholarship-application">
-          <Button variant="link">Start Your Application</Button>
-        </Link>
+        <Button
+          variant="link"
+          asChild
+        >
+          <Link href="/scholarship-application">Start Your Application</Link>
+        </Button>
       </div>
 
       <div className="text-center">
@@ -108,9 +116,12 @@ export default function ScholarshipPage() {
           towards helping other men grow in Christ.
         </p>
 
-        <Link href="/donate">
-          <Button variant="outline">Contribute to Scholarships</Button>
-        </Link>
+        <Button
+          variant="outline"
+          asChild
+        >
+          <Link href="/donate">Contribute to Scholarships</Link>
+        </Button>
       </div>
     </div>
   );
