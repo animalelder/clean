@@ -1,16 +1,21 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ScholarshipPage() {
+  const router = useRouter();
+
+  const handleApply = () => {
+    router.push("/scholarship-application");
+  };
+
+  const handleDonate = () => {
+    router.push("/donate");
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-8 text-center text-4xl font-bold">
@@ -31,8 +36,12 @@ export default function ScholarshipPage() {
             who cannot afford the program but demonstrates a strong commitment
             to personal growth.
           </p>
-          <Button aschild>
-            <Link href="/Scholarship-Application">Apply for a Scholarship</Link>
+
+          <Button
+            variant="default"
+            onClick={handleApply}
+          >
+            Apply for a Scholarship
           </Button>
         </div>
         <div>
@@ -94,12 +103,13 @@ export default function ScholarshipPage() {
             tier or higher.
           </li>
         </ol>
-        <Link
-          aschild
-          href="/Scholarship-Application"
+
+        <Button
+          variant="link"
+          onClick={handleApply}
         >
-          <Button>Start Your Application</Button>
-        </Link>
+          Start Your Application
+        </Button>
       </div>
 
       <div className="text-center">
@@ -109,9 +119,17 @@ export default function ScholarshipPage() {
         <p className="mb-4">
           By joining CLEAN or contributing to our &quot;Pay It Forward&quot;
           option, you&apos;re not only investing in your own growth but also
-          helping provide scholarships for men in need.
+          helping provide scholarships for men in need. Please comment
+          "Scholarship" on the donation to ensure this donation counts towards
+          helping other men grow in Christ.
         </p>
-        <Button variant="outline">Contribute to Scholarships</Button>
+
+        <Button
+          variant="outline"
+          onClick={handleDonate}
+        >
+          Contribute to Scholarships
+        </Button>
       </div>
     </div>
   );
