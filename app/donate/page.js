@@ -62,6 +62,8 @@ const DonationPage = () => {
                   src="https://donorbox.org/images/white_logo.svg"
                   alt="Donorbox"
                   style={{ height: "24px" }}
+                  width={24}
+                  height={24}
                 />
                 <span
                   className="cta-label"
