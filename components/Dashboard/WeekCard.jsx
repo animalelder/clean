@@ -1,10 +1,13 @@
-export default function WeekCard({ week, status }) {
+export default function WeekCard({ week, status, title, progress }) {
+
+
+  
   return (
     <div className="h-[290px] w-[320px] flex-col items-center justify-center rounded-3xl bg-lesson-card bg-top bg-no-repeat shadow-lg">
       <div className="h-[158px] w-full" />
       <div className="flex h-[132px] w-full items-center justify-center rounded-bl-3xl rounded-br-3xl">
         <div className="flex h-[86px] w-[280px] flex-col justify-evenly gap-y-2">
-          <div className="inline-flex w-full items-start justify-between self-stretch">
+          <div className="inline-flex items-start self-stretch justify-between w-full">
             <div className="text-[10px] font-medium uppercase leading-[14px] tracking-wide text-slate-500">
               Week {week}
             </div>
@@ -14,8 +17,8 @@ export default function WeekCard({ week, status }) {
               </div>
             </div>
           </div>
-          <div className="text-base font-medium capitalize leading-relaxed text-zinc-900">
-            Foundation
+          <div className="text-base font-medium leading-relaxed capitalize text-zinc-900">
+            {title}
           </div>
           <div className="relative h-1.5 w-[279.02px]">
             <div className="absolute left-0 top-0 h-1.5 w-[279.02px] rounded-[52px] bg-gray-200 opacity-60" />
@@ -29,12 +32,12 @@ export default function WeekCard({ week, status }) {
               <div className="h-1.5 w-[38.43px] rounded-[52px] bg-lime-500" />
             </div>
           </div>
-          <div className="mt-2 inline-flex w-full items-start justify-between self-stretch">
+          <div className="inline-flex items-start self-stretch justify-between w-full mt-2">
             <div className="text-xs font-medium capitalize leading-[18px] text-slate-500">
               Progress
             </div>
             <div className="text-xs font-bold capitalize leading-[18px] text-zinc-900">
-              100%
+              {progress}
             </div>
           </div>
         </div>

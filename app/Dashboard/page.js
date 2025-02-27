@@ -20,6 +20,16 @@ const userProgress = {
   startDate: new Date(),
   previousDay: null,
   currentDayTitle: "Sanctification",
+  daysCompleted: {
+    totalDays: 0,
+    week1: 0,
+    week2: 0,
+    week3: 0,
+    week4: 0,
+    week5: 0,
+    week6: 0,
+    week7: 0,
+  },
 };
 
 export default function Dashboard() {
