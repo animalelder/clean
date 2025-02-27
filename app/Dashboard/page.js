@@ -19,6 +19,7 @@ const userProgress = {
   currentDay: "1",
   startDate: new Date(),
   previousDay: null,
+  currentDayTitle: "Sanctification",
 };
 
 export default function Dashboard() {

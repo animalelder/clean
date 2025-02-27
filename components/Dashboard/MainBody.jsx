@@ -17,7 +17,8 @@ export default function MainBody({ userProgress, userInfo }) {
         <h2 className="w-full text-base font-normal text-gray-400">
           Today is{" "}
           <span className="font-semibold text-almost-black">
-            Week 1 Day 1: Sanctification
+            Week {userProgress.currentWeek} Day {userProgress.currentDay}:{" "}
+            {userProgress.currentDayTitle}
           </span>
         </h2>
       </div>
