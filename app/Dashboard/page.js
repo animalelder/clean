@@ -2,7 +2,7 @@
 
 import React from "react";
 import { SignedIn } from "@clerk/nextjs";
-import { DailySurvey } from "@/components/Dashboard/DailySurvey";
+import DailySurvey from "@/components/Dashboard/DailySurvey";
 import MainBody from "@/components/Dashboard/MainBody";
 import NavigationBar from "@/components/Dashboard/NavigationBar";
 
@@ -11,7 +11,7 @@ const userInfo = {
   avatarUrl: "",
   firstName: "Donovan",
   fullName: "Donovan Anderson",
-  cohort: "23",
+  cohort: 23,
 };
 
 const userProgress = {
@@ -24,7 +24,7 @@ const userProgress = {
 export default function Dashboard() {
   return (
     <SignedIn>
-      <div className="relative mx-auto flex min-h-screen flex-col items-center justify-start">
+      <div className="relative mx-16 flex min-h-screen flex-col items-center justify-start">
         <NavigationBar
           initials={userInfo.initials}
           avatarUrl={userInfo.avatarUrl}
