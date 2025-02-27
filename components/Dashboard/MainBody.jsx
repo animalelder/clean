@@ -2,12 +2,12 @@ import { FaChevronDown, FaRegCalendarAlt } from "react-icons/fa";
 import DonateHero from "@/components/Dashboard/DonateHero";
 import WeekCard from "@/components/Dashboard/WeekCard";
 
-export default function MainBody() {
+export default function MainBody({ userProgress, userInfo }) {
   return (
     <div className="relative mx-auto mb-8 mt-8 flex min-h-screen w-full max-w-[1200px] flex-col items-start gap-y-5 space-y-4 pt-12 max-lg:mx-2">
-      <div className="flex w-full flex-wrap items-center justify-start gap-2 md:gap-y-5">
+      <div className="mt-20 flex w-full flex-wrap items-center justify-start gap-2 md:gap-y-5">
         <h1 className="text-3xl font-bold leading-relaxed md:text-4xl">
-          Hello, Donovan Anderson
+          Hello, {userInfo.fullName}
         </h1>
         <FaChevronDown size={16} />
 

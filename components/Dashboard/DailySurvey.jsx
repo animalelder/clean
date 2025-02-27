@@ -11,7 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export const DailySurvey = ({ userProgress }) => {
+export const DailySurvey = ({ userProgress, userInfo }) => {
   return (
     <Sheet>
       <SheetTrigger>

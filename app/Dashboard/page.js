@@ -11,6 +11,7 @@ const userInfo = {
   avatarUrl: "",
   firstName: "Donovan",
   fullName: "Donovan Anderson",
+  cohort: "23",
 };
 
 const userProgress = {
@@ -30,8 +31,14 @@ export default function Dashboard() {
           firstName={userInfo.firstName}
         />
 
-        <DailySurvey userProgress={userProgress} />
-        <MainBody userProgress={userProgress} />
+        <DailySurvey
+          userProgress={userProgress}
+          userInfo={userInfo}
+        />
+        <MainBody
+          userProgress={userProgress}
+          userInfo={userInfo}
+        />
       </div>
     </SignedIn>
   );
