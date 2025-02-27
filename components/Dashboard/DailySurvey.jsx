@@ -11,13 +11,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-export const DailySurvey = () => {
+export const DailySurvey = ({ userProgress }) => {
   return (
     <Sheet>
       <SheetTrigger>
         <Button>Daily Survey</Button>
       </SheetTrigger>
-      <SheetContent className="w-[299px] sm:w-[320px] overflow-clip z-[51]">
+      <SheetContent className="z-[51] w-[299px] overflow-clip sm:w-[320px]">
         <SheetHeader>
           <SheetTitle>Daily Survey</SheetTitle>
           <SheetDescription>
@@ -40,7 +40,7 @@ export const DailySurvey = () => {
 };
 
 const Button = ({ children }) => (
-  <button className=" fixed right-0 end-0 top-1/2 z-[51] origin-right data-[state=open]:opacity-0 mr-2 -translate-y-1/2 -rotate-90 p-0 m-0 justify-center items-center gap-2.5 text-white bg-primary-red px-4 py-2 rounded-[16px_16px_0px_0px]">
+  <button className="fixed end-0 right-0 top-1/2 z-[51] m-0 mr-2 origin-right -translate-y-1/2 -rotate-90 items-center justify-center gap-2.5 rounded-[16px_16px_0px_0px] bg-primary-red p-0 px-4 py-2 text-white data-[state=open]:opacity-0">
     {children}
   </button>
 );
@@ -49,7 +49,7 @@ const SubmitButton = () => {
   return (
     <button
       type="submit"
-      className="bg-primary-red text-white px-4 py-2 rounded-[16px]"
+      className="rounded-[16px] bg-primary-red px-4 py-2 text-white"
     >
       Submit
     </button>
