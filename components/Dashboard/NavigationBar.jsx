@@ -1,13 +1,15 @@
 import React from "react";
-import { SignOutButton } from "@clerk/nextjs";
+import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import Image from "next/image";
 import Link from "next/link";
 import { FaChevronDown } from "react-icons/fa";
-import { FaPhoneFlip } from "react-icons/fa6";
-import { RxHamburgerMenu } from "react-icons/rx";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export default function NavigationBar({ initials, firstName, avatarUrl }) {
+export default function NavigationBar() {
+  const { userInfo } = useDashboardContext();
+
+  const { initials, avatarUrl, firstName } = userInfo;
+
   return (
     <nav className="fixed left-0 right-0 top-0 z-50 bg-white shadow-sm backdrop-blur-sm">
       <div className="flex items-center justify-between p-4 md:mx-10">

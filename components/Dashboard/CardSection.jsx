@@ -1,8 +1,13 @@
+import { useDashboardContext } from "@/contexts/dashboard/dashboard-provider";
 import { FaChevronDown, FaRegCalendarAlt } from "react-icons/fa";
 import WeekCard from "./WeekCard";
 import WeekCards from "./WeekCards";
 
-export default function CardSection({ userInfo, userProgress, cohortText }) {
+export default function CardSection() {
+  const { userInfo, userProgress } = useDashboardContext();
+
+  const cohortText = userInfo.cohortRoman;
+
   return (
     <>
       <div className="inline-flex h-[30px] w-full items-center justify-between px-0.5 py-1.5 sm:px-2">
