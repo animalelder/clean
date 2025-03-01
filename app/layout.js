@@ -1,4 +1,5 @@
 import "@/app/globals.css";
+import DashboardProvider from "@/contexts/dashboard/dashboard-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Alexandria } from "next/font/google";
 import Footer from "@/components/common/Footer/Footer";
@@ -33,11 +34,13 @@ export default function RootLayout({ children }) {
           },
         }}
       >
-        <body className={`${alexandria.className} subpixel-antialiased`}>
-          <NavBar />
-          {children}
-          <Footer />
-        </body>
+        <DashboardProvider>
+          <body className={`${alexandria.className} subpixel-antialiased`}>
+            <NavBar />
+            {children}
+            <Footer />
+          </body>
+        </DashboardProvider>
       </ClerkProvider>
     </html>
   );
