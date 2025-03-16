@@ -140,6 +140,7 @@ export default function NavBar() {
       <AboutDropdown />
       <ProgramsDropdown />
       <NavLink href="/donate">Donate</NavLink>
+      <NavLink href="/testimonials">Testimonials</NavLink>
     </>
   );
 
