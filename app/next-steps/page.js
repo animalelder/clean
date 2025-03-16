@@ -5,14 +5,14 @@ export default function Hero() {
   const calendarUrls = ["https://calendar.app.google/mhsKtSg2NA3Bj8qC7"];
   return (
     <div
-      className="min-h-[600px] bg-cover bg-center mt-20 relative"
+      className="relative mt-20 min-h-[600px] bg-cover bg-center"
       style={{
         backgroundImage: `url(/jesus_hero.svg)`,
       }}
     >
-      <div className="absolute inset-0 " />
-      <div className="relative px-4 py-20 mx-auto max-md:justify-center max-md:items-center max-md:flex top-4 max-w-7xl">
-        <div className="max-w-xl p-8 space-y-8 rounded-md shadow-2xl bg-white/95 backdrop-blur-sm">
+      <div className="absolute inset-0" />
+      <div className="relative top-4 mx-auto max-w-7xl px-4 py-20 max-md:flex max-md:items-center max-md:justify-center">
+        <div className="max-w-xl space-y-8 rounded-md bg-white/95 p-8 shadow-2xl backdrop-blur-sm">
           <div className="space-y-4">
             <h1 className="mb-4 text-3xl font-bold text-primaryred-700">
               Welcome to CLEAN — Here&apos;s What to Do Next
@@ -33,7 +33,8 @@ export default function Hero() {
           </p>
           <p className="mb-6 text-gray-600">CLEAN is here to change that.</p>
 
-          <h2 className="mb-2 text-xl font-semibold text-primaryred-600">
+          {/* TODO: re-do step 1 as a link to fill out scholarship information / user profile in future */}
+          {/* <h2 className="mb-2 text-xl font-semibold text-primaryred-600">
             Step 1: Sign Up
           </h2>
           <p className="mb-4 text-gray-600">
@@ -45,10 +46,10 @@ export default function Hero() {
             className="block w-full py-2 mb-6 text-center text-white transition duration-300 rounded-md bg-primaryred-700 hover:bg-primaryred-800"
           >
             Complete Your Signup
-          </Link>
+          </Link> */}
 
           <h2 className="mb-2 text-xl font-semibold text-primaryred-600">
-            Step 2: Schedule Your 30-Minute Kickoff Call
+            Schedule Your 30-Minute Kickoff Call
           </h2>
           <p className="mb-4 text-gray-600">
             After signing up, pick a convenient time to connect with a CLEAN
@@ -57,13 +58,13 @@ export default function Hero() {
           </p>
           <CyclingLink
             urls={calendarUrls}
-            className="block w-full py-2 mb-6 text-center text-white transition duration-300 rounded-md bg-primaryred-700 hover:bg-primaryred-800"
+            className="mb-6 block w-full rounded-md bg-primaryred-700 py-2 text-center text-white transition duration-300 hover:bg-primaryred-800"
           >
             Schedule My Call
           </CyclingLink>
 
           <h2 className="mb-2 text-xl font-semibold text-primaryred-600">
-            Step 3: Decide If You&apos;re Ready
+            Decide If You&apos;re Ready
           </h2>
           <p className="mb-6 text-gray-600">
             Following your call, you&apos;ll receive the next steps to begin
@@ -74,13 +75,20 @@ export default function Hero() {
           <h2 className="mb-2 text-xl font-semibold text-primaryred-600">
             Learn More
           </h2>
+
           <p className="mb-6 text-gray-600">
-            For more information about the CLEAN program, visit our main
-            website.
+            For more information about the CLEAN program,{" "}
+            <Link
+              href={"/"}
+              className="text-primary-red hover:underline"
+            >
+              visit our main website.
+            </Link>
           </p>
 
           <p className="mb-4 text-lg font-semibold text-primaryred-700">
-            Take these steps today—real change starts now.
+            Take these steps today — <span className="italic">real</span> change
+            starts now.
           </p>
         </div>
       </div>
