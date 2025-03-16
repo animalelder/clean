@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import YoutubeVideo from "./youtube-video";
+import YoutubeVideo from "@/components/testimonials/youtube-video";
 
 interface Video {
   id: string;
