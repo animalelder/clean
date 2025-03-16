@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import YoutubeVideo from "@/components/testimonials/youtube-video";
+import Image from "next/image";
 
 interface Video {
   id: string;
@@ -102,7 +103,7 @@ export default function VideoCarousel() {
                     className="aspect-video group relative cursor-pointer overflow-hidden rounded-lg"
                     onClick={() => setActiveVideo(video.id)}
                   >
-                    <img
+                    <Image
                       src={getThumbnailUrl(video.id) || "/placeholder.svg"}
                       alt={video.title}
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
