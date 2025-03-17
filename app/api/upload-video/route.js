@@ -7,6 +7,7 @@ import {
 
 export async function POST(request) {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { filename, contentType, week, day } = await request.json();
 
     // Azure Storage account information
