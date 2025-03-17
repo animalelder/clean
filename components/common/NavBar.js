@@ -259,6 +259,12 @@ export default function NavBar() {
                   >
                     Donate
                   </NavLink>
+                  <NavLink
+                    href="/testimonials"
+                    className="text-sm text-gray-600 hover:text-gray-900"
+                  >
+                    Testimonials
+                  </NavLink>
                   {renderButtons()}
                 </div>
               </SheetContent>
