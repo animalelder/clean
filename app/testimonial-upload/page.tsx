@@ -11,8 +11,8 @@ export default function VideoUploadPage() {
   const [message, setMessage] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
 
-  // Generate options for weeks (1-52)
-  const weekOptions = Array.from({ length: 52 }, (_, i) => i + 1);
+  // Generate options for weeks (1-5)
+  const weekOptions = Array.from({ length: 5 }, (_, i) => i + 1);
 
   // Day options (1-7)
   const dayOptions = Array.from({ length: 7 }, (_, i) => (i + 1).toString());
@@ -161,7 +161,7 @@ export default function VideoUploadPage() {
 
         <button
           type="submit"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 disabled:bg-blue-300"
+          className="rounded bg-primary-red px-4 py-2 text-white hover:bg-red-700 disabled:bg-red-300"
           disabled={!file || !week || !day || uploading}
         >
           {uploading ? "Uploading..." : "Upload Video"}
@@ -170,7 +170,7 @@ export default function VideoUploadPage() {
         {uploading && (
           <div className="mt-2 h-2.5 w-full rounded-full bg-gray-200">
             <div
-              className="h-2.5 rounded-full bg-blue-600"
+              className="h-2.5 rounded-full bg-primary-red"
               style={{ width: `${uploadProgress}%` }}
             ></div>
           </div>
