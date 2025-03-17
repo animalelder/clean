@@ -71,7 +71,7 @@ export default function VideoCarousel() {
         {/* Featured Video */}
         <div className="mx-auto w-full max-w-full px-0 sm:px-4 md:px-6 lg:max-w-4xl">
           <div
-            className="mx-auto w-[80%] overflow-hidden rounded-lg bg-black md:w-full lg:w-[80%]"
+            className="mobile:w-[80%] mx-auto w-full overflow-hidden rounded-lg bg-black xs:w-[90%] sm:w-[85%] md:w-full lg:w-[80%]"
             style={{
               height: "calc(56.25vw - 2rem)",
               minHeight: "200px",
@@ -84,7 +84,7 @@ export default function VideoCarousel() {
             />
           </div>
           <div className="mt-2 md:mt-4">
-            <h3 className="text-base font-semibold md:text-xl">
+            <h3 className="w-[80%] text-base font-semibold md:text-xl">
               {getActiveVideoData().title}
             </h3>
             <p className="text-sm text-gray-600 md:text-base">

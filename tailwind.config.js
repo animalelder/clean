@@ -9,7 +9,11 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        xs: "360px",
+        "2xs": "200px",
+        xs: "400px",
+        sm: "600px",
+        iphone: "430px", // iPhone 14 Pro Max portrait
+        "iphone-landscape": "926px", // iPhone 14 Pro Max landscape
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
