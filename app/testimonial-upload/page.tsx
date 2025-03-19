@@ -4,6 +4,8 @@ import { useState } from "react";
 import Head from "next/head";
 
 export default function Home() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [week, setWeek] = useState("");
   const [day, setDay] = useState("");
   const [file, setFile] = useState(null);
@@ -35,8 +37,10 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!week || !day || !file) {
-      alert("Please select a week, day, and video file");
+    if (!week || !day || !file || !firstName || !lastName) {
+      alert(
+        "Please select a week, day, and video file, and be sure to include your name",
+      );
       return;
     }
 
@@ -45,6 +49,8 @@ export default function Home() {
 
     try {
       const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
       formData.append("week", week);
       formData.append("day", day);
       formData.append("video", file);
@@ -81,6 +87,8 @@ export default function Home() {
 
   // Handle reset of the form
   const handleReset = () => {
+    setFirstName("");
+    setLastName("");
     setWeek("");
     setDay("");
     setFile(null);
@@ -90,21 +98,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-bg">
-      <Head>
-        <title>Video Upload for Azure</title>
-        <meta
-          name="description"
-          content="Upload videos to Azure Blob Storage"
-        />
-        <link
-          rel="icon"
-          href="/favicon.ico"
-        />
-      </Head>
-
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <h1 className="mb-8 text-center text-3xl font-bold text-title-black">
-          Upload Video
+        <h1 className="mb-8 text-center text-3xl font-bold text-primary-red">
+          Upload Your Testimonial Video Here
         </h1>
 
         <div className="mx-auto max-w-md">
@@ -125,6 +121,24 @@ export default function Home() {
               onSubmit={handleSubmit}
               className="rounded-lg bg-white p-6 shadow-md"
             >
+              <div className="mb-4">
+                <label
+                  htmlFor="firstName"
+                  className="mb-2 block font-medium text-description-gray"
+                >
+                  First Name:
+                </label>
+                <input></input>
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="lastName"
+                  className="mb-2 block font-medium text-description-gray"
+                >
+                  Last Name:
+                </label>
+                <input></input>
+              </div>
               <div className="mb-4">
                 <label
                   htmlFor="week"
