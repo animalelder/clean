@@ -1,64 +1,97 @@
-import fs from "fs";
-import { BlobServiceClient } from "@azure/storage-blob";
-import { IncomingForm } from "formidable";
+import { writeFile } from "fs/promises";
+import os from "os";
+import path from "path";
+import { NextResponse } from "next/server";
+import {
+  getContainerClient,
+  uploadFileToBlob,
+} from "@/lib/azure-storage-utility";
 
-export const config = {
-  api: {
-    bodyParser: false, // Disable the default body parser
-  },
-};
+// Make route dynamic to handle form submissions
+export const dynamic = "force-dynamic";
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
+export async function POST(request) {
   try {
-    // Parse the form with formidable
-    const form = new IncomingForm();
-    const { fields, files } = await new Promise((resolve, reject) => {
-      form.parse(req, (err, fields, files) => {
-        if (err) reject(err);
-        resolve({ fields, files });
-      });
-    });
+    // Use the native FormData API for parsing the request
+    const formData = await request.formData();
 
-    // Get form data
-    const week = fields.week[0];
-    const day = fields.day[0];
-    const videoFile = files.video[0];
+    // Get form data fields
+    const week = formData.get("week");
+    const day = formData.get("day");
+    const videoFile = formData.get("video");
 
-    // Connect to Azure Blob Storage
-    const blobServiceClient = BlobServiceClient.fromConnectionString(
-      `DefaultEndpointsProtocol=https;AccountName=${process.env.AZURE_STORAGE_ACCOUNT_NAME};AccountKey=${process.env.AZURE_STORAGE_ACCOUNT_KEY};EndpointSuffix=core.windows.net`,
-    );
+    if (!week || !day || !videoFile) {
+      return NextResponse.json(
+        { error: "Missing required fields" },
+        { status: 400 },
+      );
+    }
 
-    const containerClient = blobServiceClient.getContainerClient(
-      process.env.AZURE_STORAGE_CONTAINER_NAME,
-    );
+    // Validate week and day values
+    const weekNum = parseInt(week, 10);
+    const dayNum = parseInt(day, 10);
 
-    // Create the path with week/day structure
-    const originalFilename = videoFile.originalFilename || "video.mp4";
-    const blobName = `${week}/${day}/${originalFilename}`;
-    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    if (isNaN(weekNum) || weekNum < 1 || weekNum > 5) {
+      return NextResponse.json(
+        { error: "Week must be between 1 and 5" },
+        { status: 400 },
+      );
+    }
 
-    // Upload the file
-    const fileBuffer = fs.readFileSync(videoFile.filepath);
-    const uploadResponse = await blockBlobClient.upload(
-      fileBuffer,
-      fileBuffer.length,
-    );
+    if (isNaN(dayNum) || dayNum < 1 || dayNum > 7) {
+      return NextResponse.json(
+        { error: "Day must be between 1 and 7" },
+        { status: 400 },
+      );
+    }
 
-    // Clean up the temporary file
-    fs.unlinkSync(videoFile.filepath);
+    // Check if videoFile is actually a File object
+    if (!(videoFile instanceof File)) {
+      return NextResponse.json(
+        { error: "Invalid file uploaded" },
+        { status: 400 },
+      );
+    }
 
-    res.status(200).json({
+    // Extract file information
+    const originalFilename = videoFile.name || "video.mp4";
+    // Remove special characters and spaces from filename
+    const cleanFilename = originalFilename.replace(/[^a-zA-Z0-9.-]/g, "_");
+
+    // Create the blob path with week/day structure
+    const blobName = `${weekNum}/${dayNum}/${cleanFilename}`;
+
+    // Get the container client
+    const containerClient = getContainerClient();
+
+    // Convert the file to a buffer
+    const fileArrayBuffer = await videoFile.arrayBuffer();
+    const fileBuffer = Buffer.from(fileArrayBuffer);
+
+    // Upload to Azure Blob Storage
+    await uploadFileToBlob(containerClient, blobName, fileBuffer);
+
+    // Return success response
+    return NextResponse.json({
       success: true,
       message: "Video uploaded successfully",
       path: blobName,
     });
   } catch (error) {
     console.error("Upload error:", error);
-    res.status(500).json({ error: "Upload failed", details: error.message });
+
+    // Return error response
+    return NextResponse.json(
+      {
+        error: "Upload failed",
+        details: error.message,
+      },
+      { status: 500 },
+    );
   }
+}
+
+// Handle GET requests (method not allowed)
+export async function GET() {
+  return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
 }

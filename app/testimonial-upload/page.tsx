@@ -49,7 +49,7 @@ export default function Home() {
       formData.append("day", day);
       formData.append("video", file);
 
-      const response = await fetch("/api/uploadVideo", {
+      const response = await fetch("/api/upload-video", {
         method: "POST",
         body: formData,
       });
