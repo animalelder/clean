@@ -105,6 +105,17 @@ export default function Home() {
         <h1 className="mb-8 text-center text-3xl font-bold text-primary-red">
           Upload Your Journeyman&apos;s Testimonial Video Here
         </h1>
+        <p className="mx-auto mb-4 max-w-4xl text-center font-bold">
+          Add the information for your journeyman to the fields below as you
+          receive video testimonials from your Journeyman.
+        </p>
+        <p className="mx-auto mb-8 max-w-3xl text-justify">
+          Please include their cohort number from Discord, their first and last
+          name, the week and day of the video, as well as the video file itself.
+          Hitting submit will store your file with the other testimonials to
+          create a catalogue of the transformation CLEAN has worked in each
+          brother&apos;s life!
+        </p>
 
         <div className="mx-auto max-w-md">
           {uploadStatus && uploadStatus.success ? (
