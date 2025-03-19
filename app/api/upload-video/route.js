@@ -1,6 +1,3 @@
-import { writeFile } from "fs/promises";
-import os from "os";
-import path from "path";
 import { NextResponse } from "next/server";
 import {
   getContainerClient,
@@ -16,11 +13,13 @@ export async function POST(request) {
     const formData = await request.formData();
 
     // Get form data fields
+    const firstName = formData.get("firstName");
+    const lastName = formData.get("lastName");
     const week = formData.get("week");
     const day = formData.get("day");
     const videoFile = formData.get("video");
 
-    if (!week || !day || !videoFile) {
+    if (!week || !day || !file || !firstName || !lastName || !videoFile) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -59,7 +58,7 @@ export async function POST(request) {
     const cleanFilename = originalFilename.replace(/[^a-zA-Z0-9.-]/g, "_");
 
     // Create the blob path with week/day structure
-    const blobName = `${weekNum}/${dayNum}/${cleanFilename}`;
+    const blobName = `${weekNum}/${dayNum}/${firstName}_${lastName}/${cleanFilename}`;
 
     // Get the container client
     const containerClient = getContainerClient();
