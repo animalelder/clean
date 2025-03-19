@@ -1,83 +1,64 @@
-import {
-  BlobSASPermissions,
-  BlobServiceClient,
-  generateBlobSASQueryParameters,
-  StorageSharedKeyCredential,
-} from "@azure/storage-blob";
+import fs from "fs";
+import { BlobServiceClient } from "@azure/storage-blob";
+import { IncomingForm } from "formidable";
 
-export async function POST(request) {
+export const config = {
+  api: {
+    bodyParser: false, // Disable the default body parser
+  },
+};
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { filename, contentType, week, day } = await request.json();
+    // Parse the form with formidable
+    const form = new IncomingForm();
+    const { fields, files } = await new Promise((resolve, reject) => {
+      form.parse(req, (err, fields, files) => {
+        if (err) reject(err);
+        resolve({ fields, files });
+      });
+    });
 
-    // Azure Storage account information
-    const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
-    const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY;
-    const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
+    // Get form data
+    const week = fields.week[0];
+    const day = fields.day[0];
+    const videoFile = files.video[0];
 
-    if (!accountName || !accountKey || !containerName) {
-      return new Response(
-        JSON.stringify({ error: "Azure Storage configuration missing" }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json" },
-        },
-      );
-    }
-
-    // Create a directory path based on week and day
-    const blobPath = `week${week}/day${day}/${filename}`;
-
-    // Create shared key credential
-    const sharedKeyCredential = new StorageSharedKeyCredential(
-      accountName,
-      accountKey,
+    // Connect to Azure Blob Storage
+    const blobServiceClient = BlobServiceClient.fromConnectionString(
+      `DefaultEndpointsProtocol=https;AccountName=${process.env.AZURE_STORAGE_ACCOUNT_NAME};AccountKey=${process.env.AZURE_STORAGE_ACCOUNT_KEY};EndpointSuffix=core.windows.net`,
     );
 
-    // Create blob service client
-    const blobServiceClient = new BlobServiceClient(
-      `https://${accountName}.blob.core.windows.net`,
-      sharedKeyCredential,
+    const containerClient = blobServiceClient.getContainerClient(
+      process.env.AZURE_STORAGE_CONTAINER_NAME,
     );
 
-    // Get container client
-    const containerClient = blobServiceClient.getContainerClient(containerName);
+    // Create the path with week/day structure
+    const originalFilename = videoFile.originalFilename || "video.mp4";
+    const blobName = `${week}/${day}/${originalFilename}`;
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-    // Generate SAS token with permissions to create the blob
-    const sasOptions = {
-      containerName,
-      blobName: blobPath,
-      permissions: BlobSASPermissions.parse("racwd"), // read, add, create, write, delete
-      startsOn: new Date(),
-      expiresOn: new Date(new Date().valueOf() + 3600 * 1000), // 1 hour from now
-    };
-
-    const sasToken = generateBlobSASQueryParameters(
-      sasOptions,
-      sharedKeyCredential,
-    ).toString();
-
-    // Construct the upload URL with SAS token
-    const uploadUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobPath}?${sasToken}`;
-
-    return new Response(
-      JSON.stringify({
-        uploadUrl,
-        blobPath,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-      },
+    // Upload the file
+    const fileBuffer = fs.readFileSync(videoFile.filepath);
+    const uploadResponse = await blockBlobClient.upload(
+      fileBuffer,
+      fileBuffer.length,
     );
+
+    // Clean up the temporary file
+    fs.unlinkSync(videoFile.filepath);
+
+    res.status(200).json({
+      success: true,
+      message: "Video uploaded successfully",
+      path: blobName,
+    });
   } catch (error) {
-    console.error("Error generating SAS URL:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to generate upload URL" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+    console.error("Upload error:", error);
+    res.status(500).json({ error: "Upload failed", details: error.message });
   }
 }
