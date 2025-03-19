@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Head from "next/head";
 
 export default function Home() {
+  const [cohort, setCohort] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [week, setWeek] = useState("");
@@ -16,6 +16,9 @@ export default function Home() {
   // Generate options for select inputs
   const weekOptions = Array.from({ length: 5 }, (_, i) => i + 1);
   const dayOptions = Array.from({ length: 7 }, (_, i) => i + 1);
+
+  // starts from Cohort 46 goes to Cohort 100
+  const cohortOptions = Array.from({ length: 56 }, (_, i) => i + 45);
 
   // Handle file selection
   const handleFileChange = (e) => {
@@ -37,10 +40,8 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!week || !day || !file || !firstName || !lastName) {
-      alert(
-        "Please select a week, day, and video file, and be sure to include your name",
-      );
+    if (!week || !day || !file || !firstName || !lastName || !cohort) {
+      alert("Please add all fields to submit this form successfully");
       return;
     }
 
@@ -49,6 +50,7 @@ export default function Home() {
 
     try {
       const formData = new FormData();
+      formData.append("cohort", cohort);
       formData.append("firstName", firstName);
       formData.append("lastName", lastName);
       formData.append("week", week);
@@ -87,6 +89,7 @@ export default function Home() {
 
   // Handle reset of the form
   const handleReset = () => {
+    setCohort("");
     setFirstName("");
     setLastName("");
     setWeek("");
@@ -100,7 +103,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-bg">
       <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <h1 className="mb-8 text-center text-3xl font-bold text-primary-red">
-          Upload Your Testimonial Video Here
+          Upload Your Journeyman&apos;s Testimonial Video Here
         </h1>
 
         <div className="mx-auto max-w-md">
@@ -123,12 +126,40 @@ export default function Home() {
             >
               <div className="mb-4">
                 <label
+                  htmlFor="cohort"
+                  className="mb-2 block font-medium text-description-gray"
+                >
+                  Cohort:
+                </label>
+                <select
+                  id="cohort"
+                  value={cohort}
+                  onChange={(e) => setCohort(e.target.value)}
+                  required
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                >
+                  <option value="">-- Select Cohort --</option>
+                  {cohortOptions.map((num) => (
+                    <option
+                      key={`cohort-${num}`}
+                      value={num}
+                    >
+                      Cohort {num}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
                   htmlFor="firstName"
                   className="mb-2 block font-medium text-description-gray"
                 >
                   First Name:
                 </label>
-                <input></input>
+                <input
+                  id="firstName"
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                />
               </div>
               <div className="mb-4">
                 <label
@@ -137,7 +168,10 @@ export default function Home() {
                 >
                   Last Name:
                 </label>
-                <input></input>
+                <input
+                  id="lastName"
+                  className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
+                />
               </div>
               <div className="mb-4">
                 <label

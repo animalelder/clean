@@ -13,13 +13,22 @@ export async function POST(request) {
     const formData = await request.formData();
 
     // Get form data fields
+    const cohort = formData.get("cohort");
     const firstName = formData.get("firstName");
     const lastName = formData.get("lastName");
     const week = formData.get("week");
     const day = formData.get("day");
     const videoFile = formData.get("video");
 
-    if (!week || !day || !file || !firstName || !lastName || !videoFile) {
+    if (
+      !week ||
+      !day ||
+      !file ||
+      !firstName ||
+      !lastName ||
+      !videoFile ||
+      !cohort
+    ) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
@@ -29,6 +38,7 @@ export async function POST(request) {
     // Validate week and day values
     const weekNum = parseInt(week, 10);
     const dayNum = parseInt(day, 10);
+    const cohortNum = parseInt(cohort, 10);
 
     if (isNaN(weekNum) || weekNum < 1 || weekNum > 5) {
       return NextResponse.json(
@@ -40,6 +50,13 @@ export async function POST(request) {
     if (isNaN(dayNum) || dayNum < 1 || dayNum > 7) {
       return NextResponse.json(
         { error: "Day must be between 1 and 7" },
+        { status: 400 },
+      );
+    }
+
+    if (isNaN(cohortNum) || cohortNum < 45 || cohortNum > 100) {
+      return NextResponse.json(
+        { error: "cohort must be between 45 and 100" },
         { status: 400 },
       );
     }
@@ -58,7 +75,7 @@ export async function POST(request) {
     const cleanFilename = originalFilename.replace(/[^a-zA-Z0-9.-]/g, "_");
 
     // Create the blob path with week/day structure
-    const blobName = `${weekNum}/${dayNum}/${firstName}_${lastName}/${cleanFilename}`;
+    const blobName = `cohort-${cohortNum}/wk-${weekNum}/day-${dayNum}/${firstName}_${lastName}/testimonial-${cleanFilename}_${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
 
     // Get the container client
     const containerClient = getContainerClient();
