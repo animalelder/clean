@@ -9,11 +9,31 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    // Parse the request body
-    const { filename, contentType } = await request.json();
+    // Parse the multipart form data
+    const formData = await request.formData();
+
+    // Extract form fields
+    const cohort = formData.get("cohort");
+    const firstName = formData.get("firstName");
+    const lastName = formData.get("lastName");
+    const week = formData.get("week");
+    const day = formData.get("day");
+    const videoFile = formData.get("video");
+
+    // Validate required fields
+    if (!cohort || !firstName || !lastName || !week || !day || !videoFile) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 },
+      );
+    }
+
+    // Get file details
+    const filename = videoFile.name;
+    const contentType = videoFile.type;
 
     // Validate that the content type is a video
-    if (contentType && !contentType.startsWith("video/")) {
+    if (!contentType.startsWith("video/")) {
       return NextResponse.json(
         { error: "Only video files are allowed" },
         { status: 400 },
@@ -32,33 +52,40 @@ export async function POST(request) {
       );
     }
 
-    if (filename) {
-      // Extract extension from the original filename if available
-      const fileExtMatch = filename.match(/\.\+$/);
-      if (fileExtMatch) {
-        extension = fileExtMatch[0];
-      } else if (contentType) {
-        // Set extension based on content type
-        switch (contentType) {
-          case "video/mp4":
-            extension = ".mp4";
-            break;
-          case "video/webm":
-            extension = ".webm";
-            break;
-          case "video/ogg":
-            extension = ".ogv";
-            break;
-          case "video/quicktime":
-            extension = ".mov";
-            break;
-          default:
-            extension = ".mp4"; // Default fallback
-        }
+    // Determine file extension
+    let extension = "";
+
+    // Extract extension from the original filename if available
+    const fileExtMatch = filename.match(/\.[^.]+$/);
+    if (fileExtMatch) {
+      extension = fileExtMatch[0];
+    } else if (contentType) {
+      // Set extension based on content type
+      switch (contentType) {
+        case "video/mp4":
+          extension = ".mp4";
+          break;
+        case "video/webm":
+          extension = ".webm";
+          break;
+        case "video/ogg":
+          extension = ".ogv";
+          break;
+        case "video/quicktime":
+          extension = ".mov";
+          break;
+        default:
+          extension = ".mp4"; // Default fallback
       }
     }
 
-    const blobName = `video-${Date.now()}-${Math.random().toString(36).substring(2, 15)}${extension}`;
+    // Create a structured blob name using form data
+    const sanitizedName =
+      `${firstName.toLowerCase()}-${lastName.toLowerCase()}`.replace(
+        /[^a-z0-9-]/g,
+        "",
+      );
+    const blobName = `cohort${cohort}/week${week}/day${day}/${sanitizedName}-${Date.now()}${extension}`;
 
     // Create Credentials
     const sharedKeyCredential = new StorageSharedKeyCredential(
@@ -89,17 +116,38 @@ export async function POST(request) {
     // Construct full upload URL
     const uploadUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}?${sasToken}`;
 
-    // Return upload URL and blob details to the client
+    // Read the file as ArrayBuffer
+    const arrayBuffer = await videoFile.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // Upload the file to Azure Blob Storage
+    const response = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": contentType,
+        "x-ms-blob-type": "BlockBlob",
+      },
+      body: buffer,
+    });
+
+    if (!response.ok) {
+      throw new Error(`Upload failed with status: ${response.status}`);
+    }
+
+    // Create a publicly accessible URL (without SAS token) for future reference
+    const publicUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+
+    // Return success response to the client
     return NextResponse.json({
-      uploadUrl,
+      success: true,
+      message: "Video uploaded successfully!",
       blobName,
-      containerUrl: `https://${accountName}.blob.core.windows.net/${containerName}`,
-      sasToken,
+      publicUrl,
     });
   } catch (error) {
-    console.error("Error generating SAS token:", error);
+    console.error("Error uploading video:", error);
     return NextResponse.json(
-      { error: "Failed to generate upload URL" },
+      { error: "Failed to upload video: " + error.message },
       { status: 500 },
     );
   }
@@ -112,7 +160,7 @@ export const OPTIONS = async () => {
     {
       headers: {
         "Access-Control-Allow-Origin": "*",
-        "Acess-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     },
