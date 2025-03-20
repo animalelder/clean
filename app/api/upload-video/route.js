@@ -1,15 +1,15 @@
-import { NextResponse } from "next/server";
 import {
   getContainerClient,
   uploadFileToBlob,
 } from "@/lib/azure-storage-utility";
 
-// Make route dynamic to handle form submissions
-export const dynamic = "force-dynamic";
+// For App Router, we need to use a different config approach
+export const dynamic = "force-dynamic"; // Equivalent to disabling static optimization
 
+// Export the POST method as a named function
 export async function POST(request) {
   try {
-    // Use the native FormData API for parsing the request
+    // Use the native FormData API with App Router
     const formData = await request.formData();
 
     // Get form data fields
@@ -20,10 +20,10 @@ export async function POST(request) {
     const day = formData.get("day");
     const videoFile = formData.get("video");
 
-    if (!week || !day || !firstName || !lastName || !videoFile || !cohort) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 },
+    if (!week || !day || !videoFile || !cohort || !firstName || !lastName) {
+      return new Response(
+        JSON.stringify({ error: "Missing required fields" }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -33,31 +33,23 @@ export async function POST(request) {
     const cohortNum = parseInt(cohort, 10);
 
     if (isNaN(weekNum) || weekNum < 1 || weekNum > 5) {
-      return NextResponse.json(
-        { error: "Week must be between 1 and 5" },
-        { status: 400 },
+      return new Response(
+        JSON.stringify({ error: "Week must be between 1 and 5" }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
     if (isNaN(dayNum) || dayNum < 1 || dayNum > 7) {
-      return NextResponse.json(
-        { error: "Day must be between 1 and 7" },
-        { status: 400 },
+      return new Response(
+        JSON.stringify({ error: "Day must be between 1 and 7" }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
     if (isNaN(cohortNum) || cohortNum < 45 || cohortNum > 100) {
-      return NextResponse.json(
-        { error: "cohort must be between 45 and 100" },
-        { status: 400 },
-      );
-    }
-
-    // Check if videoFile is actually a File object
-    if (!(videoFile instanceof File)) {
-      return NextResponse.json(
-        { error: "Invalid file uploaded" },
-        { status: 400 },
+      return new Response(
+        JSON.stringify({ error: "cohort must be between 45 and 100" }),
+        { status: 400, headers: { "Content-Type": "application/json" } },
       );
     }
 
@@ -72,34 +64,39 @@ export async function POST(request) {
     // Get the container client
     const containerClient = getContainerClient();
 
-    // Convert the file to a buffer
-    const fileArrayBuffer = await videoFile.arrayBuffer();
-    const fileBuffer = Buffer.from(fileArrayBuffer);
+    // Convert the file to buffer
+    const fileBuffer = await videoFile.arrayBuffer();
 
     // Upload to Azure Blob Storage
-    await uploadFileToBlob(containerClient, blobName, fileBuffer);
+    await uploadFileToBlob(containerClient, blobName, Buffer.from(fileBuffer));
 
     // Return success response
-    return NextResponse.json({
-      success: true,
-      message: "Video uploaded successfully",
-      path: blobName,
-    });
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: "Video uploaded successfully",
+        path: blobName,
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } },
+    );
   } catch (error) {
     console.error("Upload error:", error);
 
     // Return error response
-    return NextResponse.json(
-      {
+    return new Response(
+      JSON.stringify({
         error: "Upload failed",
         details: error.message,
-      },
-      { status: 500 },
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
 }
 
-// Handle GET requests (method not allowed)
+// If you want to handle other HTTP methods, export them as named functions
 export async function GET() {
-  return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
+  return new Response(JSON.stringify({ error: "Method not allowed" }), {
+    status: 405,
+    headers: { "Content-Type": "application/json" },
+  });
 }
