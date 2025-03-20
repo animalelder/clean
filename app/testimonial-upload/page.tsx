@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Home() {
+export default function TestimonialUploadPage() {
   const [cohort, setCohort] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
