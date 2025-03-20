@@ -169,6 +169,8 @@ export default function Home() {
                 </label>
                 <input
                   id="firstName"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
                 />
               </div>
@@ -181,6 +183,8 @@ export default function Home() {
                 </label>
                 <input
                   id="lastName"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                   className="block w-full rounded-lg border border-gray-300 bg-formfield px-4 py-2 focus:border-primaryred focus:ring-primaryred"
                 />
               </div>

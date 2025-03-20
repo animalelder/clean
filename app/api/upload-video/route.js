@@ -20,15 +20,7 @@ export async function POST(request) {
     const day = formData.get("day");
     const videoFile = formData.get("video");
 
-    if (
-      !week ||
-      !day ||
-      !file ||
-      !firstName ||
-      !lastName ||
-      !videoFile ||
-      !cohort
-    ) {
+    if (!week || !day || !firstName || !lastName || !videoFile || !cohort) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
