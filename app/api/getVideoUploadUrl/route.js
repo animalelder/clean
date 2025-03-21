@@ -7,6 +7,15 @@ import {
 } from "@azure/storage-blob";
 import { NextResponse } from "next/server";
 
+// configuration for accepting larger video sizes
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "100mb",
+    },
+  },
+};
+
 export async function POST(request) {
   try {
     // Parse the multipart form data
