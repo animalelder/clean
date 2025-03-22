@@ -1,27 +1,29 @@
-// app/api/getVideoUploadUrl/route.js
-
-import {
-  BlobSASPermissions,
-  generateBlobSASQueryParameters,
-  StorageSharedKeyCredential,
-} from "@azure/storage-blob";
+// /app/api/getVideoUploadUrl/route.js
+import { randomUUID } from "crypto";
+import { BlobServiceClient, BlockBlobClient } from "@azure/storage-blob";
 import { NextResponse } from "next/server";
 
-// configuration for accepting larger video sizes
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "100mb",
-    },
-  },
-};
+// Maximum size of each chunk in bytes (4MB)
+const CHUNK_SIZE = 4 * 1024 * 1024;
 
 export async function POST(request) {
   try {
-    // Parse the multipart form data
-    const formData = await request.formData();
+    // Extract environment variables
+    const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
+    const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY;
+    const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
 
-    // Extract form fields
+    // Check if Azure credentials are available
+    if (!accountName || !accountKey || !containerName) {
+      console.error("Azure Storage credentials are missing");
+      return NextResponse.json(
+        { error: "Storage configuration is missing" },
+        { status: 500 },
+      );
+    }
+
+    // Parse form data
+    const formData = await request.formData();
     const cohort = formData.get("cohort");
     const firstName = formData.get("firstName");
     const lastName = formData.get("lastName");
@@ -29,7 +31,7 @@ export async function POST(request) {
     const day = formData.get("day");
     const videoFile = formData.get("video");
 
-    // Validate required fields
+    // Validate form data
     if (!cohort || !firstName || !lastName || !week || !day || !videoFile) {
       return NextResponse.json(
         { error: "All fields are required" },
@@ -37,141 +39,74 @@ export async function POST(request) {
       );
     }
 
-    // Get file details
-    const filename = videoFile.name;
-    const contentType = videoFile.type;
-
-    // Validate that the content type is a video
-    if (!contentType.startsWith("video/")) {
+    // Validate that the file is a video
+    if (!videoFile.type.includes("video/")) {
       return NextResponse.json(
-        { error: "Only video files are allowed" },
+        { error: "Uploaded file must be a video" },
         { status: 400 },
       );
     }
 
-    // Azure Storage account details from environment variables
-    const accountName = process.env.AZURE_STORAGE_ACCOUNT_NAME;
-    const accountKey = process.env.AZURE_STORAGE_ACCOUNT_KEY;
-    const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
+    // Sanitize file name (remove special characters)
+    const sanitizedName = `${firstName.replace(/[^a-z0-9]/gi, "")}-${lastName.replace(/[^a-z0-9]/gi, "")}`;
 
-    if (!accountName || !accountKey || !containerName) {
-      return NextResponse.json(
-        { error: "Azure Storage configuration missing" },
-        { status: 500 },
-      );
-    }
+    // Get file extension
+    const fileName = videoFile.name;
+    const extension = fileName.substring(fileName.lastIndexOf("."));
 
-    // Determine file extension
-    let extension = "";
-
-    // Extract extension from the original filename if available
-    const fileExtMatch = filename.match(/\.[^.]+$/);
-    if (fileExtMatch) {
-      extension = fileExtMatch[0];
-    } else if (contentType) {
-      // Set extension based on content type
-      switch (contentType) {
-        case "video/mp4":
-          extension = ".mp4";
-          break;
-        case "video/webm":
-          extension = ".webm";
-          break;
-        case "video/ogg":
-          extension = ".ogv";
-          break;
-        case "video/quicktime":
-          extension = ".mov";
-          break;
-        default:
-          extension = ".mp4"; // Default fallback
-      }
-    }
-
-    // Create a structured blob name using form data
-    const sanitizedName =
-      `${firstName.toLowerCase()}-${lastName.toLowerCase()}`.replace(
-        /[^a-z0-9-]/g,
-        "",
-      );
+    // Create blob name using the specified convention
     const blobName = `cohort${cohort}/week${week}/day${day}/${sanitizedName}-${Date.now()}${extension}`;
 
-    // Create Credentials
-    const sharedKeyCredential = new StorageSharedKeyCredential(
-      accountName,
-      accountKey,
-    );
+    // Create Azure Blob Service connection string
+    const connectionString = `DefaultEndpointsProtocol=https;AccountName=${accountName};AccountKey=${accountKey};EndpointSuffix=core.windows.net`;
 
-    // Set Permissions and Expiry
-    const sasPermissions = new BlobSASPermissions();
-    sasPermissions.write = true; // Allow write permissions
+    // Create blob service client
+    const blobServiceClient =
+      BlobServiceClient.fromConnectionString(connectionString);
+    const containerClient = blobServiceClient.getContainerClient(containerName);
 
-    const startDate = new Date();
-    const expiryDate = new Date(startDate);
-    expiryDate.setMinutes(startDate.getMinutes() + 30); // Token valid for 30mins
+    // Create a block blob client for this specific upload
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
-    // Generate SAS token
-    const sasToken = generateBlobSASQueryParameters(
-      {
-        containerName,
-        blobName,
-        permissions: sasPermissions,
-        startsOn: startDate,
-        expiresOn: expiryDate,
-      },
-      sharedKeyCredential,
-    ).toString();
+    // Read the file as an ArrayBuffer
+    const fileBuffer = await videoFile.arrayBuffer();
 
-    // Construct full upload URL
-    const uploadUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}?${sasToken}`;
+    // Upload the file in chunks
+    const blockIds = [];
+    let startIndex = 0;
 
-    // Read the file as ArrayBuffer
-    const arrayBuffer = await videoFile.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    while (startIndex < fileBuffer.byteLength) {
+      const endIndex = Math.min(startIndex + CHUNK_SIZE, fileBuffer.byteLength);
+      const chunk = fileBuffer.slice(startIndex, endIndex);
 
-    // Upload the file to Azure Blob Storage
-    const response = await fetch(uploadUrl, {
-      method: "PUT",
-      headers: {
-        "Content-Type": contentType,
-        "x-ms-blob-type": "BlockBlob",
-      },
-      body: buffer,
-    });
+      // Create a unique block ID for each chunk (base64 encoded)
+      const blockId = Buffer.from(`block-${randomUUID()}`).toString("base64");
+      blockIds.push(blockId);
 
-    if (!response.ok) {
-      throw new Error(`Upload failed with status: ${response.status}`);
+      // Upload the chunk as a block
+      await blockBlobClient.stageBlock(blockId, chunk, chunk.byteLength);
+
+      startIndex = endIndex;
     }
 
-    // Create a publicly accessible URL (without SAS token) for future reference
-    const publicUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+    // Commit all blocks together to finalize the blob
+    await blockBlobClient.commitBlockList(blockIds, {
+      blobHTTPHeaders: {
+        blobContentType: videoFile.type,
+      },
+    });
 
-    // Return success response to the client
+    // Return success response with the blob URL
     return NextResponse.json({
       success: true,
-      message: "Video uploaded successfully!",
-      blobName,
-      publicUrl,
+      message: "Video uploaded successfully",
+      blobUrl: blockBlobClient.url,
     });
   } catch (error) {
-    console.error("Error uploading video:", error);
+    console.error("Error uploading to Azure:", error);
     return NextResponse.json(
       { error: "Failed to upload video: " + error.message },
       { status: 500 },
     );
   }
 }
-
-// Enable CORS by specifying allowed HTTP methods
-export const OPTIONS = async () => {
-  return NextResponse.json(
-    {},
-    {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
-    },
-  );
-};
