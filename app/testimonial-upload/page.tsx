@@ -99,7 +99,7 @@ export default function TestimonialUploadPage() {
       formData.append("day", day);
       formData.append("video", file);
 
-      const response = await fetch("/api/getVideoUploadUrl", {
+      const response = await fetch("/api/upload-video-v2", {
         method: "POST",
         body: formData,
       });
