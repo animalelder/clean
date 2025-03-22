@@ -4,7 +4,7 @@ import {
 } from "@azure/storage-blob";
 import { NextResponse } from "next/server";
 import StoreMetadata from "@/lib/video-upload/store-metadata";
-import UploadImageStream from "@/lib/video-upload/upload-image-stream";
+import UploadVideoStream from "@/lib/video-upload/upload-video-stream";
 
 // For App Router, we need to use a different config approach
 export const dynamic = "force-dynamic"; // Equivalent to disabling static optimization
@@ -85,7 +85,7 @@ export async function POST(request) {
 
     // helper function for uploading image as a stream to azure
     try {
-      imageUrl = await UploadImageStream(
+      imageUrl = await UploadVideoStream(
         containerClient,
         cleanFilename,
         videoFile,
