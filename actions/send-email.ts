@@ -11,7 +11,7 @@ export async function sendEmail({
 }) {
   const message = {
     to: to.toLowerCase().trim(),
-    from: process.env.EMAIL_FROM,
+    from: process.env.EMAIL_USER!,
     subject: subject.trim(),
     text: text.trim(),
   };
@@ -22,11 +22,9 @@ export async function sendEmail({
       <p style="color: #666; font-size: 16px; line-height: 1.5; margin: 10px;">${text}</p>
     `;
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      service: "gmail",
       auth: {
-        user: process.env.EMAIL_FROM!,
+        user: process.env.EMAIL_USER!,
         pass: process.env.EMAIL_PASS!,
       },
     });
