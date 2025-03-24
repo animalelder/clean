@@ -42,7 +42,12 @@ export const auth = betterAuth({
       redirectURI: process.env.PRODUCTION_URL + "/api/auth/google/callback",
     },
   },
-  plugins: [admin(), openAPI(), oAuthProxy(), nextCookies()],
+  plugins: [
+    admin({ adminUserIds: ["tlXib8JDBebVnPr50kn63MrfQY3FTNkr"] }),
+    openAPI(),
+    oAuthProxy(),
+    nextCookies(),
+  ],
 } satisfies BetterAuthOptions);
 
 export type Session = typeof auth.$Infer.Session;
