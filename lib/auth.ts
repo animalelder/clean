@@ -7,7 +7,11 @@ import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
 
 export const auth = betterAuth({
   baseURL: "http://localhost:3000",
-  trustedOrigins: ["http://localhost:3000", "https://thecleanprogram.org"],
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://thecleanprogram.org",
+    "https://30mmm*.vercel.app",
+  ],
   database: prismaAdapter(prisma, {
     provider: "mongodb",
   }),
