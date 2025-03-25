@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 export default function MainImage({ videoId }) {
   return (
     <div>
@@ -11,7 +9,7 @@ export default function MainImage({ videoId }) {
         width="640"
         height="390"
         src={`http://www.youtube.com/embed/${videoId}?enablejsapi=1`}
-        frameborder="0"
+        frameBorder="0"
       ></iframe>
     </div>
   );

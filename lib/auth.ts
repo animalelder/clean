@@ -6,6 +6,8 @@ import { nextCookies } from "better-auth/next-js";
 import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
 
 export const auth = betterAuth({
+  baseURL: "http://localhost:3000",
+  trustedOrigins: ["http://localhost:3000", "https://thecleanprogram.org"],
   database: prismaAdapter(prisma, {
     provider: "mongodb",
   }),
@@ -15,7 +17,7 @@ export const auth = betterAuth({
     minPasswordLength: 8,
     maxPasswordLength: 100,
     requireEmailVerification: true,
-    sendResetPassword: async ({ user, url, token }, request) => {
+    sendResetPassword: async ({ user, url }) => {
       await sendEmail({
         to: user.email,
         subject: "Reset your password",
@@ -37,9 +39,8 @@ export const auth = betterAuth({
   socialProviders: {
     google: {
       enabled: true,
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      redirectURI: process.env.PRODUCTION_URL + "/api/auth/google/callback",
+      clientId: process.env.NEW_GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.NEW_GOOGLE_CLIENT_SECRET!,
     },
   },
   plugins: [
