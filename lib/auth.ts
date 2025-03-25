@@ -10,7 +10,8 @@ export const auth = betterAuth({
   trustedOrigins: [
     "http://localhost:3000",
     "https://thecleanprogram.org",
-    "https://30mmm*.vercel.app",
+    "https://30mmm-frontend-fork-git-better-auth-thirty-mighty-men.vercel.app/",
+    "30mmm-frontend-fork-xi.vercel.app",
   ],
   database: prismaAdapter(prisma, {
     provider: "mongodb",
