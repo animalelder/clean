@@ -12,7 +12,11 @@ const proxyBaseUrl: string =
 
 export const auth = betterAuth({
   baseURL: proxyBaseUrl,
-
+  trustedOrigins: [
+    "https://thecleanprogram.org",
+    "*.vercel.app",
+    "localhost:3000",
+  ],
   database: prismaAdapter(prisma!, {
     provider: "mongodb",
   }),

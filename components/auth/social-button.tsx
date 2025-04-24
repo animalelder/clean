@@ -20,7 +20,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
   provider,
   icon,
   label,
-  callbackURL = "/Foundation/678d712c13f2973ca07079bf",
+  callbackURL = "/devotional/678d712c13f2973ca07079bf",
 }) => {
   const { setError, setSuccess, loading, setLoading, resetState } =
     useAuthState();
