@@ -56,7 +56,7 @@ export default function LogIn() {
           },
           onSuccess: () => {
             toast.success("Logged in successfully");
-            router.replace("/Settings");
+            router.replace("/dashboard");
           },
           onError: (ctx) => {
             toast.error(ctx.error.message);
@@ -165,7 +165,7 @@ export default function LogIn() {
             <div className="-mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-xs font-light">
               <span>
                 <Link
-                  href="/"
+                  href="/" //TODO: need to add a reset password page
                   className="tracking-tighter text-primary-red"
                 >
                   Forgot Password?
