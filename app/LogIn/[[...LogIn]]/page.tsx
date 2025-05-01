@@ -56,7 +56,7 @@ export default function LogIn() {
           },
           onSuccess: () => {
             toast.success("Logged in successfully");
-            router.replace("/dashboard");
+            router.replace("/payment");
           },
           onError: (ctx) => {
             toast.error(ctx.error.message);
