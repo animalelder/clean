@@ -8,6 +8,11 @@ export async function ExampleServerComponent() {
     headers: await headers(),
   });
   if (!session) {
+    // Otherwise, you can throw a redirect to the sign-in page like this:
+    //
+    // if (!session) {
+    //   throw redirect("/login");
+    // }
     return <div>Not authenticated</div>;
   }
   return (
