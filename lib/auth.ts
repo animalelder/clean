@@ -45,6 +45,7 @@ export const auth = betterAuth({
       enabled: true,
       clientId: process.env.NEW_GOOGLE_CLIENT_ID!,
       clientSecret: process.env.NEW_GOOGLE_CLIENT_SECRET!,
+      redirectURI: "https://thecleanprogram.org/api/auth/callback/google",
     },
   },
   plugins: [
