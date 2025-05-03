@@ -5,6 +5,17 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
 
+// Get the base URL based on environment
+const getBaseUrl = () => {
+  if (process.env.NODE_ENV === "production") {
+    return process.env.NEXT_PUBLIC_BASE_URL || "https://thecleanprogram.org";
+  }
+  return "http://localhost:3000";
+};
+
+// Get the base URL once
+const baseUrl = getBaseUrl();
+
 export const auth = betterAuth({
   trustedOrigins: [
     "https://thecleanprogram.org",
@@ -12,6 +23,7 @@ export const auth = betterAuth({
     "http://localhost:3000",
     "*.vercel.app",
   ],
+  baseURL: baseUrl,
   database: prismaAdapter(prisma!, {
     provider: "mongodb",
   }),
@@ -45,7 +57,7 @@ export const auth = betterAuth({
       enabled: true,
       clientId: process.env.NEW_GOOGLE_CLIENT_ID!,
       clientSecret: process.env.NEW_GOOGLE_CLIENT_SECRET!,
-      redirectURI: "https://thecleanprogram.org/api/auth/callback/google",
+      redirectURI: `${baseUrl}/api/auth/callback/google`,
     },
   },
   plugins: [
