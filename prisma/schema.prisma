@@ -5,10 +5,10 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output = "./generated/client"
+  provider      = "prisma-client-js"
+  output        = "./generated/client"
+  binaryTargets = ["native", "darwin-arm64"]
 }
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
