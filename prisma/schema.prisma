@@ -5,14 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-<<<<<<< Updated upstream
   provider      = "prisma-client-js"
   output        = "./generated/client"
-=======
-  provider = "prisma-client-js"
-  output = "./generated/client"
->>>>>>> Stashed changes
-  binaryTargets = ["native", "darwin-arm64"]
+
 }
 datasource db {
   provider = "mongodb"

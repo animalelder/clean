@@ -5,17 +5,12 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
 
-const proxyBaseUrl: string =
-  process.env.NODE_ENV !== "development"
-    ? "https://thecleanprogram.org"
-    : "http://localhost:3000";
-
 export const auth = betterAuth({
-  baseURL: proxyBaseUrl,
   trustedOrigins: [
     "https://thecleanprogram.org",
+    "https://localhost:3000",
+    "http://localhost:3000",
     "*.vercel.app",
-    "localhost:3000",
   ],
   database: prismaAdapter(prisma!, {
     provider: "mongodb",
