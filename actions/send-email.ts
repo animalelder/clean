@@ -30,7 +30,7 @@ export async function sendEmail({
     });
 
     const info = await transporter.sendMail({
-      from: "Clean Program <aarondantley@gmail.com>",
+      from: `Clean Program <${process.env.EMAIL_USER}>`,
       to: message.to,
       subject: message.subject,
       html: html,

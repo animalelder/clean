@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 
 import { toast } from "sonner";
@@ -22,21 +23,24 @@ const SocialButton: React.FC<SocialButtonProps> = ({
   label,
   callbackURL = "/payment",
 }) => {
+  const router = useRouter();
   const { setError, setSuccess, loading, setLoading, resetState } =
     useAuthState();
 
   const handleSignIn = async () => {
     try {
       await signIn.social(
-        { provider, callbackURL },
+        { provider, callbackURL, disableRedirect: true },
         {
           onResponse: () => setLoading(false),
           onRequest: () => {
             resetState();
+            toast.info("Signing in...");
             setLoading(true);
           },
           onSuccess: () => {
-            setSuccess("You are logged in successfully");
+            toast.success("You are logged in successfully");
+            router.push(callbackURL);
           },
           onError: (ctx) => {
             setError(ctx.error.message);

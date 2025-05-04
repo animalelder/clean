@@ -8,14 +8,17 @@ import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
 // Get the base URL based on environment
 const getBaseUrl = () => {
   if (process.env.NODE_ENV === "production") {
-    return process.env.NEXT_PUBLIC_BASE_URL || "https://thecleanprogram.org";
+    return (
+      "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+      process.env.BETTER_AUTH_URL
+    );
   }
   return "http://localhost:3000";
 };
 
 // Get the base URL once
 const baseUrl = getBaseUrl();
-
+console.log("Base URL:", baseUrl);
 export const auth = betterAuth({
   trustedOrigins: [
     "https://thecleanprogram.org",
@@ -23,7 +26,6 @@ export const auth = betterAuth({
     "http://localhost:3000",
     "*.vercel.app",
   ],
-  baseURL: baseUrl,
   database: prismaAdapter(prisma!, {
     provider: "mongodb",
   }),

@@ -42,8 +42,6 @@ next-env.d.ts
 /.clerk/
 
 # prisma still recommends not tracking the generated client
-prisma/generated
+generated
 certificates
-prisma/generated/client/edge.js
-prisma/generated/client/index.js
-prisma/generated/client/package.json
+

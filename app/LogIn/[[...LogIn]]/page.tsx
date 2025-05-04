@@ -90,6 +90,7 @@ export default function LogIn() {
           provider="google"
           icon={<FaGoogle className="hover:fill-white" />}
           label="Sign in with Google"
+          callbackURL="/payment"
         ></SocialButton>
         <div className="flex w-full items-center gap-x-5 px-52 md:my-2">
           <hr className="border-1 w-2/6 flex-auto border-gray-300" />
