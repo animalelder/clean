@@ -19,6 +19,7 @@ const getBaseUrl = () => {
 // Get the base URL once
 const baseUrl = getBaseUrl();
 console.log("Base URL:", baseUrl);
+
 export const auth = betterAuth({
   trustedOrigins: [
     "https://thecleanprogram.org",

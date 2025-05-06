@@ -2,19 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-
-/* 
-  This is a version of the registration page that tracks state and "submits" the form data to the console. It also has a tabbed interface for personal information and address information. 
-  The form data is stored in the formData state object and every form field is updated with one dynamic handleChange function. formData holds the initial state of the form fields.
-
-  The onSubmit function logs the form data to the console and alerts the user with the same data.
-
-  Until we confirm the shape of our data and their types, the form fields are very generic.
-
-  The form fields are conditionally rendered based on the firstTabActive state variable. The first tab fields are rendered when firstTabActive is true and the second tab fields are rendered when firstTabActive is false.
-
- */
 
 export default function Profile() {
   const [firstTabActive, setFirstTabActive] = useState(true);
@@ -45,10 +32,32 @@ export default function Profile() {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(`Submitted: ${JSON.stringify(formData)}`);
-    alert(`Submitted: ${JSON.stringify(formData)}`);
+    console.log(`Submitting: ${JSON.stringify(formData)}`);
+
+    try {
+      const response = await fetch("/api/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save profile");
+      }
+
+      const data = await response.json();
+      console.log("Profile saved:", data);
+
+      // Redirect to payment page
+      window.location.href = "/payment";
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      alert("Error saving profile. Please try again.");
+    }
   };
 
   return (
