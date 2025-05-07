@@ -5,12 +5,8 @@ import { auth } from "@/lib/auth"; // Import your auth instance
 
 export async function POST(request) {
   try {
-    //TODO: fix this to use the auth instance properly to retrieve the session information
-    const authContext = auth.getAuthContext(request);
-    const session = await authContext.getSession(request);
-
-    // Check if user is authenticated
-    if (!session || !session.data?.user) {
+    const session = await auth.api.getSession(request);
+    if (!session) {
       return NextResponse.json(
         { error: "You must be logged in to update your profile" },
         { status: 401 },
@@ -18,7 +14,7 @@ export async function POST(request) {
     }
 
     // Get the user ID from the session
-    const userId = !session.data?.user.id;
+    const userId = session.user.id;
 
     // Parse the request body
     const profileData = await request.json();
@@ -66,9 +62,9 @@ export async function POST(request) {
       profile: updatedProfile,
     });
   } catch (error) {
-    console.error("Error updating profile:", error);
+    console.error("Error creating profile:", error);
     return NextResponse.json(
-      { error: "Failed to update profile" },
+      { error: "Failed to create profile" },
       { status: 500 },
     );
   }
