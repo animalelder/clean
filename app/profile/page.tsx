@@ -37,7 +37,7 @@ export default function Profile() {
     console.log(`Submitting: ${JSON.stringify(formData)}`);
 
     try {
-      const response = await fetch("/api/profile", {
+      const response = await fetch("/api/create-profile", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
