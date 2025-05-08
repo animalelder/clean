@@ -5,6 +5,8 @@ import { auth } from "@/lib/auth"; // Import your auth instance
 
 export async function POST(request) {
   try {
+    // TODO: review this auth method, it may not be the best way to check if a user is logged in
+    // also, may need to check how to mock a user session existing
     const session = await auth.api.getSession(request);
     if (!session) {
       return NextResponse.json(
