@@ -32,6 +32,7 @@ model User {
   accounts      Account[]
 
   @@map("user")
+  userProfile userProfile[]
 }
 
 model Session {
@@ -79,4 +80,27 @@ model Verification {
   updatedAt  DateTime @updatedAt
 
   @@map("verification")
+}
+
+model userProfile {
+  id        String   @id @default(cuid()) @map("_id")
+  userId    String   @unique
+  firstName String?
+  lastName  String?
+  birthDate       DateTime?
+  maritalStatus String?
+  childrenCount Int?
+  churchAffiliation String?
+  email String?
+  phoneNumber String?
+  address   String?
+  city      String?
+  state     String?
+  zipcode   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_profile")
 }

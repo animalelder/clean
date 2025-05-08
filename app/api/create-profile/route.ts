@@ -25,14 +25,14 @@ export async function POST(request) {
       update: {
         firstName: profileData.firstName,
         lastName: profileData.lastName,
-        birthdate: profileData.birthdate
+        birthDate: profileData.birthdate
           ? new Date(profileData.birthdate)
           : null,
         maritalStatus: profileData.maritalStatus,
         childrenCount: parseInt(profileData.childrenCount) || 0,
         churchAffiliation: profileData.churchAffiliation,
         email: profileData.email,
-        telephone: profileData.telephone,
+        phoneNumber: profileData.telephone,
         address: profileData.address,
         city: profileData.city,
         state: profileData.state,
@@ -42,14 +42,14 @@ export async function POST(request) {
         userId: userId,
         firstName: profileData.firstName,
         lastName: profileData.lastName,
-        birthdate: profileData.birthdate
+        birthDate: profileData.birthdate
           ? new Date(profileData.birthdate)
           : null,
         maritalStatus: profileData.maritalStatus,
         childrenCount: parseInt(profileData.childrenCount) || 0,
         churchAffiliation: profileData.churchAffiliation,
         email: profileData.email,
-        telephone: profileData.telephone,
+        phoneNumber: profileData.telephone,
         address: profileData.address,
         city: profileData.city,
         state: profileData.state,
