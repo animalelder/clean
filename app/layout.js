@@ -19,6 +19,9 @@ export default function RootLayout({ children }) {
       lang="en"
       suppressHydrationWarning
     >
+      <head>
+        <script async="async" src="https://www.pledge.to/assets/widget.js"></script>
+      </head>
       <body className={`${alexandria.className} antialiased`}>
         <NavBar />
         <main className="mt-20">{children}</main>
