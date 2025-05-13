@@ -20,6 +20,7 @@ model User {
   name          String
   email         String    @unique
   emailVerified Boolean   @default(false)
+  profileComplete Boolean   @default(false)  // New field added here
   image         String?
   premium       Boolean   @default(false)
   role          String    @default("user")
