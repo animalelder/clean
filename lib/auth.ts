@@ -75,7 +75,10 @@ export const auth = betterAuth({
     admin({ adminUserIds: ["tlXib8JDBebVnPr50kn63MrfQY3FTNkr"] }),
     oneTap(),
     openAPI(),
-    oAuthProxy({ productionURL: "https://thecleanprogram.org" }),
+    oAuthProxy({
+      productionURL: "https://thecleanprogram.org",
+      currentURL: process.env.BETTER_AUTH_URL,
+    }),
     nextCookies(),
   ],
 } satisfies BetterAuthOptions);
