@@ -30,7 +30,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({
   const handleSignIn = async () => {
     try {
       await signIn.social(
-        { provider, callbackURL, disableRedirect: true },
+        { provider, callbackURL },
         {
           onResponse: () => setLoading(false),
           onRequest: () => {
