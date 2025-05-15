@@ -3,7 +3,7 @@ import prisma from "@/db";
 import { betterAuth, BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
-import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
+import { admin, oAuthProxy, oneTap, openAPI } from "better-auth/plugins";
 
 // Get the base URL based on environment
 // const getBaseUrl = () => {
@@ -72,8 +72,9 @@ export const auth = betterAuth({
   },
   plugins: [
     admin({ adminUserIds: ["tlXib8JDBebVnPr50kn63MrfQY3FTNkr"] }),
+    oneTap(),
     openAPI(),
-    oAuthProxy(),
+    oAuthProxy({ productionURL: "https://thecleanprogram.org" }),
     nextCookies(),
   ],
 } satisfies BetterAuthOptions);
