@@ -8,6 +8,12 @@ import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
 // Get the base URL based on environment
 const getBaseUrl = () => {
   if (process.env.NODE_ENV === "production") {
+    console.log(
+      "VERCEL_PROJECT_PRODUCTION_URL",
+      process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    );
+    console.log("BETTER_AUTH_URL", process.env.BETTER_AUTH_URL);
+    console.log("VERCEL_URL", process.env.VERCEL_URL);
     return (
       "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL ||
       process.env.BETTER_AUTH_URL
