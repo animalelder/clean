@@ -18,7 +18,7 @@ interface SocialButtonProps {
 }
 
 const SocialButton: React.FC<SocialButtonProps> = ({
-  provider,
+  provider = "google",
   icon,
   label,
   callbackURL = "/payment",
@@ -29,9 +29,10 @@ const SocialButton: React.FC<SocialButtonProps> = ({
 
   const handleSignIn = async () => {
     try {
-      await signIn.social(
-        { provider, callbackURL },
-        {
+      await signIn.social({
+        provider,
+        callbackURL: callbackURL,
+        fetchOptions: {
           onResponse: () => setLoading(false),
           onRequest: () => {
             resetState();
@@ -40,14 +41,14 @@ const SocialButton: React.FC<SocialButtonProps> = ({
           },
           onSuccess: () => {
             toast.success("You are logged in successfully");
-            router.push(callbackURL);
+            router.replace(callbackURL);
           },
           onError: (ctx) => {
             setError(ctx.error.message);
             toast.error(ctx.error.message);
           },
         },
-      );
+      });
     } catch (error) {
       toast.error(error?.message ?? "Something went wrong");
       setError("Something went wrong");

@@ -6,28 +6,28 @@ import { nextCookies } from "better-auth/next-js";
 import { admin, oAuthProxy, oneTap, openAPI } from "better-auth/plugins";
 
 // Get the base URL based on environment
-// const getBaseUrl = () => {
-//   if (process.env.NODE_ENV === "production") {
-//     console.log(
-//       "VERCEL_PROJECT_PRODUCTION_URL",
-//       process.env.VERCEL_PROJECT_PRODUCTION_URL,
-//     );
-//     console.log("BETTER_AUTH_URL", process.env.BETTER_AUTH_URL);
-//     console.log("VERCEL_URL", process.env.VERCEL_URL);
-//     return (
-//       "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-//       process.env.BETTER_AUTH_URL
-//     );
-//   }
-//   return "http://localhost:3000";
-// };
+const getBaseUrl = () => {
+  if (process.env.NODE_ENV === "production") {
+    console.log(
+      "VERCEL_PROJECT_PRODUCTION_URL",
+      process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    );
+    console.log("BETTER_AUTH_URL", process.env.BETTER_AUTH_URL);
+    console.log("VERCEL_URL", process.env.VERCEL_URL);
+    return (
+      "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL ||
+      process.env.BETTER_AUTH_URL
+    );
+  }
+  return "http://localhost:3000";
+};
 
 // Get the base URL once
-// const baseUrl = getBaseUrl();
-// console.log("Base URL:", baseUrl);
+const baseUrl = process.env.BETTER_AUTH_URL!;
+console.log("Base URL:", baseUrl);
 
 export const auth = betterAuth({
-  // baseURL: baseUrl,
+  baseURL: baseUrl,
   trustedOrigins: [
     "https://thecleanprogram.org",
     "https://localhost:3000",
@@ -68,7 +68,6 @@ export const auth = betterAuth({
       enabled: true,
       clientId: process.env.NEW_GOOGLE_CLIENT_ID!,
       clientSecret: process.env.NEW_GOOGLE_CLIENT_SECRET!,
-      redirectURI: "https://thecleanprogram.org/api/auth/callback/google",
     },
   },
   plugins: [
@@ -77,7 +76,7 @@ export const auth = betterAuth({
     openAPI(),
     oAuthProxy({
       productionURL: "https://thecleanprogram.org",
-      currentURL: process.env.BETTER_AUTH_URL,
+      currentURL: process.env.BETTER_AUTH_URL!,
     }),
     nextCookies(),
   ],
