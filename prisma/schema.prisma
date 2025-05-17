@@ -8,32 +8,33 @@ generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native"]
   output        = "../generated/client"
-
 }
+
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id @default(cuid()) @map("_id")
-  name          String
-  email         String    @unique
-  emailVerified Boolean   @default(false)
-  profileComplete Boolean   @default(false)  // New field added here
-  image         String?
-  premium       Boolean   @default(false)
-  role          String    @default("user")
-  banned        Boolean   @default(false)
-  banReason     String?
-  banExpires    Int? /// Unix timestamp for ban expiration
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id               String       @id @default(cuid()) @map("_id")
+  name             String
+  email            String       @unique
+  emailVerified    Boolean      @default(false)
+  image            String?
+  role             String       @default("user")
+  banned           Boolean      @default(false)
+  banReason        String?
+  banExpires       Int? /// Unix timestamp for ban expiration
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  sessions         Session[]
+  accounts         Account[]
+  UserProfile      UserProfile?
+  premium          Boolean      @default(false)
+  paidAt           DateTime?
+  profileCompleted Boolean?     @default(false) // New field added here
 
   @@map("user")
-  userProfile userProfile[]
 }
 
 model Session {
@@ -83,25 +84,25 @@ model Verification {
   @@map("verification")
 }
 
-model userProfile {
-  id        String   @id @default(cuid()) @map("_id")
-  userId    String   @unique
-  firstName String?
-  lastName  String?
-  birthDate       DateTime?
-  maritalStatus String?
-  childrenCount Int?
+model UserProfile {
+  id                String    @id @default(cuid()) @map("_id")
+  userId            String    @unique
+  firstName         String?
+  lastName          String?
+  birthDate         DateTime?
+  maritalStatus     String?
+  childrenCount     Int?
   churchAffiliation String?
-  email String?
-  phoneNumber String?
-  address   String?
-  city      String?
-  state     String?
-  zipcode   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  email             String?
+  phoneNumber       String?
+  address           String?
+  city              String?
+  state             String?
+  zipcode           String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id])
 
   @@map("user_profile")
 }
