@@ -65,8 +65,9 @@ export default function LogIn() {
         },
       );
     } catch (error) {
-      setError(error);
-      alert(error + "error");
+      setError(error?.message);
+      toast.error(error?.message ?? "Something went wrong");
+      setLoading(false);
     }
   };
 
