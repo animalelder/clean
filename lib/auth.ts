@@ -5,6 +5,9 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin, oAuthProxy, openAPI } from "better-auth/plugins";
 
+console.log("process.env.BETTER_AUTH_URL", process.env.BETTER_AUTH_URL);
+
+const REDIRECT_URL = process.env.BETTER_AUTH_URL + "/api/auth/callback/google";
 export const auth = betterAuth({
   // baseURL: baseUrl,
   trustedOrigins: [
@@ -44,9 +47,9 @@ export const auth = betterAuth({
   },
   socialProviders: {
     google: {
-      enabled: true,
       clientId: process.env.NEW_GOOGLE_CLIENT_ID!,
       clientSecret: process.env.NEW_GOOGLE_CLIENT_SECRET!,
+      redirectURI: REDIRECT_URL,
     },
   },
   plugins: [
