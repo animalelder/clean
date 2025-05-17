@@ -29,7 +29,7 @@ model User {
   updatedAt        DateTime     @updatedAt
   sessions         Session[]
   accounts         Account[]
-  UserProfile      UserProfile?
+  userProfile      UserProfile?
   premium          Boolean      @default(false)
   paidAt           DateTime?
   profileCompleted Boolean?     @default(false) // New field added here

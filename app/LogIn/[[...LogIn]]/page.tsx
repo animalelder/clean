@@ -37,6 +37,7 @@ export default function LogIn() {
       email: "",
       password: "",
     },
+    mode: "onTouched",
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -70,19 +71,19 @@ export default function LogIn() {
   };
 
   return (
-    <div className="inset-auto flex min-h-screen w-screen min-w-[400px] flex-col md:flex-row">
-      <div className="fixed left-2 top-2 z-20 rounded-md bg-white/80 py-1 before:static max-md:shadow-md"></div>
-      <div className="-z-50 aspect-[773/499] min-h-72 bg-white bg-jesus-hero bg-cover bg-center bg-no-repeat max-md:h-fit max-md:w-full max-md:bg-top max-xs:scale-x-125 sm:self-stretch md:order-2 md:w-3/4 md:overflow-x-clip md:bg-cover md:bg-clip-border md:bg-top-4 md:bg-origin-border"></div>
-      <div className="z-10 flex w-full flex-col gap-1 max-md:justify-between md:h-full md:w-1/2 md:items-center md:justify-between md:gap-3 md:pt-7">
+    <div className="inset-auto flex md:flex-row flex-col w-screen min-w-[400px] min-h-screen">
+      <div className="top-2 left-2 z-20 before:static fixed bg-white/80 max-md:shadow-md py-1 rounded-md"></div>
+      <div className="-z-50 sm:self-stretch md:order-2 bg-jesus-hero bg-white md:bg-clip-border md:bg-origin-border bg-cover md:bg-cover bg-no-repeat bg-center max-md:bg-top md:bg-top-4 max-md:w-full md:w-3/4 max-md:h-fit min-h-72 aspect-[773/499] md:overflow-x-clip max-xs:scale-x-125"></div>
+      <div className="z-10 flex flex-col max-md:justify-between md:justify-between md:items-center gap-1 md:gap-3 md:pt-7 w-full md:w-1/2 md:h-full">
         <Image
-          className="z-10 mx-auto -mt-16 block md:mt-16"
+          className="block z-10 mx-auto -mt-16 md:mt-16"
           src="/logo.png"
           alt="Logo"
           width={120}
           height={120}
         />
         {/* The LOGO has a negative top margin "-mt-16" to pull it halfway up over the image on small screens. */}
-        <h1 className="text-center text-4xl font-semibold md:mb-6">
+        <h1 className="md:mb-6 font-semibold text-4xl text-center">
           Welcome Back!
         </h1>
 
@@ -92,15 +93,15 @@ export default function LogIn() {
           label="Sign in with Google"
           callbackURL="/payment"
         ></SocialButton>
-        <div className="flex w-full items-center gap-x-5 px-52 md:my-2">
-          <hr className="border-1 w-2/6 flex-auto border-gray-300" />
-          <p className="text-base text-black">or</p>
-          <hr className="border-1 w-2/6 flex-auto border-gray-300" />
+        <div className="flex items-center gap-x-5 md:my-2 px-52 w-full">
+          <hr className="flex-auto border-1 border-gray-300 w-2/6" />
+          <p className="text-black text-base">or</p>
+          <hr className="flex-auto border-1 border-gray-300 w-2/6" />
         </div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="h-full w-full flex-auto space-y-4 lg:px-8"
+            className="flex-auto space-y-4 lg:px-8 w-full h-full"
           >
             <FormField
               control={form.control}
@@ -112,7 +113,7 @@ export default function LogIn() {
                     <Input
                       type="email"
                       disabled={loading}
-                      className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                      className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
                       placeholder="your.email@gmail.com"
                       {...field}
                     />
@@ -132,7 +133,7 @@ export default function LogIn() {
                     <Input
                       type="password"
                       disabled={loading}
-                      className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
+                      className="block bg-blue-50/75 focus:bg-blue-50/50 focus:shadow-md mt-1 focus:border-white border-transparent rounded-xl focus:ring-0 w-full"
                       placeholder="Password"
                       {...field}
                     />
@@ -146,28 +147,28 @@ export default function LogIn() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="relative my-6 flow-root w-full place-self-center rounded-2xl bg-primary-red py-2 hover:bg-primary-red/90"
+                className="flow-root relative place-self-center bg-primary-red hover:bg-primary-red/90 my-6 py-2 rounded-2xl w-full"
               >
-                <span className="text-center text-lg font-medium tracking-wider text-white">
+                <span className="font-medium text-white text-lg text-center tracking-wider">
                   LOGIN
                 </span>
               </Button>
             </div>
-            <div className="-mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-xs font-light">
+            <div className="inline-flex justify-center items-center gap-2 -mt-8 w-full font-light text-xs text-center">
               {!!error && <p className="text-red-500">{error}</p>}
               <span className="gap-2 tracking-tight">Not registered yet?</span>
               <Link
                 href="/SignUp"
-                className="tracking-tighter text-primary-red"
+                className="text-primary-red tracking-tighter"
               >
                 Create an Account
               </Link>
             </div>
-            <div className="-mt-8 inline-flex w-full items-center justify-center gap-2 text-center text-xs font-light">
+            <div className="inline-flex justify-center items-center gap-2 -mt-8 w-full font-light text-xs text-center">
               <span>
                 <Link
                   href="/" //TODO: need to add a reset password page
-                  className="tracking-tighter text-primary-red"
+                  className="text-primary-red tracking-tighter"
                 >
                   Forgot Password?
                 </Link>
