@@ -1,8 +1,8 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// If you want to be able to use BetterAuth/ authClient to access any custom fields added to the User model
+// They need to be added to the user object in auth.ts first so that BetterAuth can pick them up.
+// Then you can run npx @better-auth/cli generate to generate the schema for the custom fields or add them manually. 
+// *** If you make changes to this file, run `npx prisma validate` and `npx prisma format` to ensure the schema is valid and formatted correctly. ***
+// *** Then make sure to run `npx prisma generate` to update your Prisma client so you can use it to write code. ***
 
 generator client {
   provider      = "prisma-client-js"
@@ -16,31 +16,31 @@ datasource db {
 }
 
 model User {
-  id               String       @id @default(cuid()) @map("_id")
+  id               String           @id @default(cuid()) @map("_id")
   name             String
-  email            String       @unique
-  emailVerified    Boolean      @default(false)
+  email            String           @unique
+  emailVerified    Boolean          @default(false)
   image            String?
-  role             String       @default("user")
-  banned           Boolean      @default(false)
+  role             String           @default("user")
+  banned           Boolean          @default(false)
   banReason        String?
   banExpires       Int? /// Unix timestamp for ban expiration
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
   sessions         Session[]
   accounts         Account[]
   userProfile      UserProfile?
-  premium          Boolean      @default(false)
-  paymentDetails PaymentDetails[]    // Changed to an array
-  profileCompleted Boolean?     @default(false) // New field added here
+  premium          Boolean          @default(false)
+  paymentDetails   PaymentDetails[] // Changed to an array
+  profileCompleted Boolean?         @default(false) // New field added here
 
   @@map("user")
 }
 
 type PaymentDetails {
-  paymentMethod String    // 'pledge' or any other payment method
-  paymentType   String    // 'Sign-Up Fee', 'Donation'
-  amountPaid    Float?    // Use Float for monetary values
+  paymentMethod String // 'pledge' or any other payment method
+  paymentType   String // 'Sign-Up Fee', 'Donation'
+  amountPaid    Float? // Use Float for monetary values
   paidAt        DateTime?
   pledgeEmail   String?
 }
