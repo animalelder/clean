@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { signIn, signUp } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
+import { cn, convertImageToBase64 } from "@/lib/utils";
 import { Loader2, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -44,7 +44,7 @@ export default function SignUp() {
   };
 
   return (
-    <Card className="z-50 max-w-md rounded-md rounded-t-none">
+    <Card className="z-50 rounded-md rounded-t-none max-w-md">
       <CardHeader>
         <CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
         <CardDescription className="text-xs md:text-sm">
@@ -52,9 +52,9 @@ export default function SignUp() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
+        <div className="gap-4 grid">
+          <div className="gap-4 grid grid-cols-2">
+            <div className="gap-2 grid">
               <Label htmlFor="first-name">First name</Label>
               <Input
                 id="first-name"
@@ -66,7 +66,7 @@ export default function SignUp() {
                 value={firstName}
               />
             </div>
-            <div className="grid gap-2">
+            <div className="gap-2 grid">
               <Label htmlFor="last-name">Last name</Label>
               <Input
                 id="last-name"
@@ -79,7 +79,7 @@ export default function SignUp() {
               />
             </div>
           </div>
-          <div className="grid gap-2">
+          <div className="gap-2 grid">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -92,7 +92,7 @@ export default function SignUp() {
               value={email}
             />
           </div>
-          <div className="grid gap-2">
+          <div className="gap-2 grid">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
@@ -103,7 +103,7 @@ export default function SignUp() {
               placeholder="Password"
             />
           </div>
-          <div className="grid gap-2">
+          <div className="gap-2 grid">
             <Label htmlFor="password">Confirm Password</Label>
             <Input
               id="password_confirmation"
@@ -114,11 +114,11 @@ export default function SignUp() {
               placeholder="Confirm Password"
             />
           </div>
-          <div className="grid gap-2">
+          <div className="gap-2 grid">
             <Label htmlFor="image">Profile Image (optional)</Label>
             <div className="flex items-end gap-4">
               {imagePreview && (
-                <div className="relative h-16 w-16 overflow-hidden rounded-sm">
+                <div className="relative rounded-sm w-16 h-16 overflow-hidden">
                   <Image
                     src={imagePreview}
                     alt="Profile preview"
@@ -127,7 +127,7 @@ export default function SignUp() {
                   />
                 </div>
               )}
-              <div className="flex w-full items-center gap-2">
+              <div className="flex items-center gap-2 w-full">
                 <Input
                   id="image"
                   type="file"
@@ -243,13 +243,4 @@ export default function SignUp() {
       </CardFooter>
     </Card>
   );
-}
-
-async function convertImageToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
 }
