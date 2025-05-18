@@ -31,7 +31,7 @@ model User {
   accounts         Account[]
   userProfile      UserProfile?
   premium          Boolean      @default(false)
-  paymentDetails PaymentDetails?    // New field added here
+  paymentDetails PaymentDetails[]    // Changed to an array
   profileCompleted Boolean?     @default(false) // New field added here
 
   @@map("user")
