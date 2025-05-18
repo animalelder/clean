@@ -39,7 +39,7 @@ model User {
 
 type PaymentDetails {
   paymentMethod String    // 'pledge' or any other payment method
-  paymentStatus String    // 'pending', 'processing', 'complete', 'failed'
+  paymentType   String    // 'Sign-Up Fee', 'Donation'
   amountPaid    Float?    // Use Float for monetary values
   paidAt        DateTime?
   pledgeEmail   String?
