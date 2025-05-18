@@ -1,18 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { signIn, signUp } from "@/lib/auth-client";
+import { signUp } from "@/lib/auth-client";
 import { cn, convertImageToBase64 } from "@/lib/utils";
 import { Loader2, X } from "lucide-react";
 import Image from "next/image";
@@ -44,21 +36,16 @@ export default function SignUp() {
   };
 
   return (
-    <Card className="z-50 rounded-md rounded-t-none max-w-md">
-      <CardHeader>
-        <CardTitle className="text-lg md:text-xl">Sign Up</CardTitle>
-        <CardDescription className="text-xs md:text-sm">
-          Enter your information to create an account
-        </CardDescription>
-      </CardHeader>
+    <Card className="w-full border-none shadow-none outline-none">
       <CardContent>
-        <div className="gap-4 grid">
-          <div className="gap-4 grid grid-cols-2">
-            <div className="gap-2 grid">
+        <div className="grid gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-2">
               <Label htmlFor="first-name">First name</Label>
               <Input
                 id="first-name"
                 placeholder="Max"
+                className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                 required
                 onChange={(e) => {
                   setFirstName(e.target.value);
@@ -66,11 +53,12 @@ export default function SignUp() {
                 value={firstName}
               />
             </div>
-            <div className="gap-2 grid">
+            <div className="grid gap-2">
               <Label htmlFor="last-name">Last name</Label>
               <Input
                 id="last-name"
                 placeholder="Robinson"
+                className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
                 required
                 onChange={(e) => {
                   setLastName(e.target.value);
@@ -79,12 +67,13 @@ export default function SignUp() {
               />
             </div>
           </div>
-          <div className="gap-2 grid">
+          <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"
               placeholder="m@example.com"
+              className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
               required
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -92,21 +81,23 @@ export default function SignUp() {
               value={email}
             />
           </div>
-          <div className="gap-2 grid">
+          <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
               type="password"
+              className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="new-password"
               placeholder="Password"
             />
           </div>
-          <div className="gap-2 grid">
+          <div className="grid gap-2">
             <Label htmlFor="password">Confirm Password</Label>
             <Input
               id="password_confirmation"
+              className="mt-1 block w-full rounded-xl border-transparent bg-blue-50/75 focus:border-white focus:bg-blue-50/50 focus:shadow-md focus:ring-0"
               type="password"
               value={passwordConfirmation}
               onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -114,11 +105,11 @@ export default function SignUp() {
               placeholder="Confirm Password"
             />
           </div>
-          <div className="gap-2 grid">
+          <div className="grid gap-2">
             <Label htmlFor="image">Profile Image (optional)</Label>
-            <div className="flex items-end gap-4">
+            <div className="flex items-end justify-center gap-4">
               {imagePreview && (
-                <div className="relative rounded-sm w-16 h-16 overflow-hidden">
+                <div className="relative h-16 w-16 overflow-hidden rounded-sm">
                   <Image
                     src={imagePreview}
                     alt="Profile preview"
@@ -127,13 +118,13 @@ export default function SignUp() {
                   />
                 </div>
               )}
-              <div className="flex items-center gap-2 w-full">
+              <div className="flex items-center gap-2">
                 <Input
                   id="image"
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="w-full"
+                  className="flex-1"
                 />
                 {imagePreview && (
                   <X
@@ -163,12 +154,14 @@ export default function SignUp() {
                     setLoading(false);
                   },
                   onRequest: () => {
+                    toast.info("Creating your account...");
                     setLoading(true);
                   },
                   onError: (ctx) => {
                     toast.error(ctx.error.message);
                   },
                   onSuccess: async () => {
+                    toast.success("Account created successfully");
                     router.push("/profile");
                   },
                 },
@@ -193,7 +186,7 @@ export default function SignUp() {
             "flex-col justify-between",
           )}
         >
-          <Button
+          {/* <Button
             variant="outline"
             className={cn("w-full gap-2")}
             disabled={loading}
@@ -238,7 +231,7 @@ export default function SignUp() {
               ></path>
             </svg>
             Sign up with Google
-          </Button>
+          </Button> */}
         </div>
       </CardFooter>
     </Card>
