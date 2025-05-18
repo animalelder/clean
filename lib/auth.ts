@@ -3,7 +3,13 @@ import prisma from "@/db";
 import { betterAuth, BetterAuthOptions } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
-import { admin, oAuthProxy, oneTap, openAPI } from "better-auth/plugins";
+import {
+  admin,
+  emailOTP,
+  oAuthProxy,
+  oneTap,
+  openAPI,
+} from "better-auth/plugins";
 
 console.info("BETTER_AUTH_URL is currently: ", process.env.BETTER_AUTH_URL);
 
@@ -34,7 +40,7 @@ export const auth = betterAuth({
     autoSignIn: true,
     minPasswordLength: 8,
     maxPasswordLength: 100,
-    requireEmailVerification: true,
+    requireEmailVerification: false,
     sendResetPassword: async ({ user, url }) => {
       await sendEmail({
         to: user.email,
@@ -44,7 +50,7 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
-    sendOnSignUp: true,
+    sendOnSignUp: false,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url }) => {
       await sendEmail({
@@ -72,6 +78,37 @@ export const auth = betterAuth({
     oneTap(),
     oAuthProxy(),
     nextCookies(),
+    emailOTP({
+      expiresIn: 600,
+      sendVerificationOnSignUp: true,
+      sendVerificationOTP: async ({ email, otp, type }) => {
+        switch (type) {
+          case "email-verification":
+            await sendEmail({
+              to: email,
+              subject: "Use this code to verify your email address",
+              text: `Your OTP code is: ${otp}`,
+            });
+            break;
+          case "forget-password":
+            await sendEmail({
+              to: email,
+              subject: "Use this code to reset your password",
+              text: `Your OTP code is: ${otp}`,
+            });
+            break;
+          case "sign-in":
+            await sendEmail({
+              to: email,
+              subject: "Use this code to sign in",
+              text: `Your OTP code is: ${otp}`,
+            });
+            break;
+          default:
+            throw new Error("Invalid OTP type!");
+        }
+      },
+    }),
   ],
   trustedOrigins: [
     "https://thecleanprogram.org",
@@ -83,24 +120,4 @@ export const auth = betterAuth({
 } satisfies BetterAuthOptions);
 
 export type Session = typeof auth.$Infer.Session;
-
-// Get the base URL based on environment
-// const getBaseUrl = () => {
-//   if (process.env.NODE_ENV === "production") {
-//     console.log(
-//       "VERCEL_PROJECT_PRODUCTION_URL",
-//       process.env.VERCEL_PROJECT_PRODUCTION_URL,
-//     );
-//     console.log("BETTER_AUTH_URL", process.env.BETTER_AUTH_URL);
-//     console.log("VERCEL_URL", process.env.VERCEL_URL);
-//     return (
-//       "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-//       process.env.BETTER_AUTH_URL
-//     );
-//   }
-//   return "http://localhost:3000";
-// };
-
-// Get the base URL once
-// const baseUrl = process.env.BETTER_AUTH_URL!;
-// console.log("Base URL:", baseUrl);
+export type User = typeof auth.$Infer.Session.user;
