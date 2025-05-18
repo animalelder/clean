@@ -5,9 +5,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin, oAuthProxy, oneTap, openAPI } from "better-auth/plugins";
 
-console.log("process.env.BETTER_AUTH_URL", process.env.BETTER_AUTH_URL);
-
-// const REDIRECT_URL = process.env.BETTER_AUTH_URL + "/api/auth/callback/google";
+console.info("BETTER_AUTH_URL is currently: ", process.env.BETTER_AUTH_URL);
 
 export const auth = betterAuth({
   // baseURL: baseUrl,
