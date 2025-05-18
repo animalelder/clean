@@ -63,7 +63,13 @@ export const auth = betterAuth({
     },
   },
   plugins: [
-    admin({ adminUserIds: ["tlXib8JDBebVnPr50kn63MrfQY3FTNkr"] }),
+    admin({
+      adminUserIds: [
+        "5aubsivaw25JiBcV12FnTRLV4j9IC03e",
+        "lDaPBbCxexAPMZ5VGUb20Qolv2uBIVlW",
+        "6wI3AifiigBBar2lH9e8M9TZ9jbSVx7k",
+      ],
+    }),
     openAPI(),
     oneTap(),
     oAuthProxy(),
