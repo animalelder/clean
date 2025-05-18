@@ -40,6 +40,20 @@ export default function LogIn() {
         },
       },
     });
+    // Some Notes on useEffect and the Dependency Array:
+    //
+    // ESLint think the router goes in the dependency array, but it is not
+    // necessary because the effect is not dependent on the state of the router.
+    // Weirdly, ESLint doesn't want toast to be added to the dependency array.
+    //
+    // If router is a dependency, it creates a weird non-fatal dev error
+    // that does not seem to happen when the dependency array is empty.
+    // The error is related to FedCM, which is the new API for federated login
+    // used in OneTap. I have not tested the page on a browser with Intelligent
+    // Tracking Prevention (ITP) enabled, but the Sign In With Google button
+    // is there as a fallback. The UX is nicer with OneTap.
+    //
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const formSchema = z.object({
