@@ -31,10 +31,18 @@ model User {
   accounts         Account[]
   userProfile      UserProfile?
   premium          Boolean      @default(false)
-  paidAt           DateTime?
+  paymentDetails PaymentDetails?    // New field added here
   profileCompleted Boolean?     @default(false) // New field added here
 
   @@map("user")
+}
+
+type PaymentDetails {
+  paymentMethod String    // 'pledge' or any other payment method
+  paymentStatus String    // 'pending', 'processing', 'complete', 'failed'
+  amountPaid    Float?    // Use Float for monetary values
+  paidAt        DateTime?
+  pledgeEmail   String?
 }
 
 model Session {
